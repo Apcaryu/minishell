@@ -1,0 +1,3 @@
+[submodule "libft_42"]
+	path = libft_42
+	url = https://github.com/melsh96/libft_42.git
