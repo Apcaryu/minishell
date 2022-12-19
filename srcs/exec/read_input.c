@@ -10,6 +10,8 @@ void	check_command(char *input)
 		pwd_exec();
 	else if (!ft_strncmp("export", input, ft_strlen("export")))
 		export_exec();
+	else if (!ft_strncmp("unset", input, ft_strlen("unset")))
+		unset_exec();
 }
 
 void	read_input(char *input)
