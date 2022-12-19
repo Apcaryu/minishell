@@ -14,6 +14,8 @@ void	check_command(char *input)
 		unset_exec();
 	else if (!ft_strncmp("env", input, ft_strlen("env")))
 		env_exec();
+	else if (!ft_strncmp("exit", input, ft_strlen("exit")))
+		exit_exec();
 }
 
 void	read_input(char *input)

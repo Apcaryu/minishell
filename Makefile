@@ -16,7 +16,8 @@ SRC_BUILTINS = echo.c \
 				pwd.c \
 				export.c \
 				unset.c \
-				env.c
+				env.c \
+				exit.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
