@@ -7,7 +7,7 @@ int	main(int argc, char *argv[])
 	while (1)
 	{
 		input = readline("minishell-0.1$ ");
-		printf("input = %s\n", input);
+		read_input(input);
 		free(input);
 	}
 	

@@ -3,19 +3,23 @@ NAME = minishell
 
 SRC_PATH	= srcs/
 OBJ_PATH	= obj/
+SRC_EXEC_PATH = srcs/exec/
 
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
 
-SRC = main.c \
-		builtins/echo.c
+SRC = main.c
+SRC_EXEC = read_input.c
 
-SRCS	= $(addprefix $(SRC_PATH), $(SRC))
-OBJ		= $(SRC:.c=.o)
-OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
-DEPS	= $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
-HEADERS	= -I./headers/
-LIB 	= -L./libft_42/ -lft -lreadline
+SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
+SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC))
+OBJ		  = $(SRC:.c=.o)
+OBJ_EXEC  = $(SRC_EXEC:.c=.o)
+OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC))
+# OBJS_EXEC = $(addprefix $(OBJ_EXEC_PATH), $(OBJ_EXEC))
+DEPS	  = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
+HEADERS	  = -I./headers/
+LIB 	  = -L./libft_42/ -lft -lreadline
 
 GREEN = "\033[38;5;150m"
 CYAN = "\033[38;5;140m"
@@ -29,6 +33,10 @@ $(NAME) : $(OBJS)
 	$(CC) $(OBJS) $(LIB) -o $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(HEADERS) -o $@ -c $<
+
+$(OBJ_PATH)%.o: $(SRC_EXEC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(HEADERS) -o $@ -c $<
 
