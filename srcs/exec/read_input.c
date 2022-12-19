@@ -3,7 +3,7 @@
 void	check_command(char *input)
 {
 	if (!ft_strncmp("echo", input, ft_strlen("echo")))
-		printf("output echo command\n");
+		echo_exec();
 }
 
 void	read_input(char *input)
