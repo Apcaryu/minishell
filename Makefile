@@ -5,6 +5,7 @@ SRC_PATH	= srcs/
 OBJ_PATH	= obj/
 SRC_EXEC_PATH = srcs/exec/
 SRC_BUILTINS_PATH = srcs/builtins/
+SRC_LEXER_PATH = srcs/lexer/
 
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
@@ -18,14 +19,17 @@ SRC_BUILTINS = echo.c \
 				unset.c \
 				env.c \
 				exit.c
+SRC_LEXER = lexer.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
 SRCS_BUILTINS = $(addprefix $(SRC_BUILTINS_PATH), $(SRC_BUILTINS))
+SRCS_LEXER = $(addprefix $(SRC_LEXER_PATH), $(SRC_LEXER))
 OBJ		  = $(SRC:.c=.o)
 OBJ_EXEC  = $(SRC_EXEC:.c=.o)
 OBJ_BUILTINS = $(SRC_BUILTINS:.c=.o)
-OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS))
+OBJ_LEXER = $(SRC_LEXER:.c=.o)
+OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS) $(OBJ_LEXER))
 DEPS	  = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 HEADERS	  = -I./headers/
 LIB 	  = -L./libft_42/ -lft -lreadline
@@ -50,6 +54,10 @@ $(OBJ_PATH)%.o: $(SRC_EXEC_PATH)%.c
 	@$(CC) $(HEADERS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_BUILTINS_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(HEADERS) -o $@ -c $<
+
+$(OBJ_PATH)%.o: $(SRC_LEXER_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(HEADERS) -o $@ -c $<
 
