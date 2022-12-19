@@ -12,6 +12,8 @@ void	check_command(char *input)
 		export_exec();
 	else if (!ft_strncmp("unset", input, ft_strlen("unset")))
 		unset_exec();
+	else if (!ft_strncmp("env", input, ft_strlen("env")))
+		env_exec();
 }
 
 void	read_input(char *input)
