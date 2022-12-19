@@ -13,7 +13,8 @@ SRC = main.c
 SRC_EXEC = read_input.c
 SRC_BUILTINS = echo.c \
 				cd.c \
-				pwd.c
+				pwd.c \
+				export.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))

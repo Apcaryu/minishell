@@ -8,6 +8,8 @@ void	check_command(char *input)
 		cd_exec();
 	else if (!ft_strncmp("pwd", input, ft_strlen("pwd")))
 		pwd_exec();
+	else if (!ft_strncmp("export", input, ft_strlen("export")))
+		export_exec();
 }
 
 void	read_input(char *input)
