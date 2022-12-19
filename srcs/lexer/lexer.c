@@ -1,6 +1,6 @@
 #include "../../headers/lexer.h"
 
-void lexer(void)
+void lexer(char *input)
 {
 
 }

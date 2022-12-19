@@ -1,6 +1,13 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-void lexer(void);
+typedef struct s_token
+{
+	int type;
+	char *content;
+}	t_token;
+
+
+void lexer(char *input);
 
 #endif
