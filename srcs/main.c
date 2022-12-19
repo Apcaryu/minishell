@@ -1,4 +1,4 @@
-#include "headers/minishell.h"
+#include "../headers/minishell.h"
 
 int	main(int argc, char *argv[])
 {

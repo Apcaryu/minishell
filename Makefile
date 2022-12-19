@@ -14,7 +14,7 @@ OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
 DEPS	= $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 HEADERS	= -I./headers/
-#LIB 	= -L./libft/ -lft
+LIB 	= -L./libft_42/ -lft
 
 GREEN = "\033[38;5;150m"
 CYAN = "\033[38;5;140m"
@@ -24,9 +24,12 @@ NC = "\033[0m"
 all : $(NAME) thanks
 
 $(NAME) : $(OBJS)
+	make -C ./libft_42/
+	$(CC) $(OBJS) $(LIB) -o $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(HEADERS) -o $@ -c $<
 
 clean :
 	@rm -rf $(OBJ_PATH)
