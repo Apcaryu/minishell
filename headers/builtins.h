@@ -4,5 +4,6 @@
 
 void	echo_exec(void);
 void	cd_exec(void);
+void	pwd_exec(void);
 
 #endif

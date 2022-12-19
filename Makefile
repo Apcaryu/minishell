@@ -12,7 +12,8 @@ CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
 SRC = main.c
 SRC_EXEC = read_input.c
 SRC_BUILTINS = echo.c \
-				cd.c
+				cd.c \
+				pwd.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))

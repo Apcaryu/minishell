@@ -6,6 +6,8 @@ void	check_command(char *input)
 		echo_exec();
 	else if (!ft_strncmp("cd", input, ft_strlen("cd")))
 		cd_exec();
+	else if (!ft_strncmp("pwd", input, ft_strlen("pwd")))
+		pwd_exec();
 }
 
 void	read_input(char *input)
