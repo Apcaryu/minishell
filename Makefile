@@ -7,14 +7,15 @@ OBJ_PATH	= obj/
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
 
-SRC = main.c
+SRC = main.c \
+		builtins/echo.c
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 OBJ		= $(SRC:.c=.o)
 OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
 DEPS	= $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 HEADERS	= -I./headers/
-LIB 	= -L./libft_42/ -lft
+LIB 	= -L./libft_42/ -lft -lreadline
 
 GREEN = "\033[38;5;150m"
 CYAN = "\033[38;5;140m"
