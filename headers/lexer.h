@@ -1,5 +1,6 @@
 #ifndef LEXER_H
 # define LEXER_H
+# include <limits.h>
 # include "../libft_42/includes_libft/libft.h"
 
 typedef enum	e_type
