@@ -45,6 +45,12 @@ void	output_or_append(char *input, unsigned int *idx, t_token *token)
 	}
 }
 
+void	pass_cmd(char *input, unsigned int *idx, t_token *token)
+{
+	while (ft_isalnum(input[*idx]))
+		*idx += 1;
+}
+
 void	set_token(char *input, unsigned int *idx, t_token *token)
 {
 	unsigned int tmp_idx = *idx;
@@ -62,8 +68,14 @@ void	set_token(char *input, unsigned int *idx, t_token *token)
 	{
 		token->type = PIPE;
 	}
+	else if (ft_isalnum(input[*idx]))
+	{
+		token->type = COMMAND;
+		pass_cmd(input, idx, token);
+	}
 //	printf("4 idx = %u | operateur = %c\n", *idx, input[*idx]); // TODO remove
-	if ((input[*idx] == '>' || input[*idx] == '<' || input[*idx] == '|') && tmp_idx != *idx)
+	if ((input[*idx] == '>' || input[*idx] == '<' || input[*idx] == '|' || \
+		ft_isalnum(input[*idx])) && tmp_idx != *idx)
 		*idx -= 1;
 }
 
