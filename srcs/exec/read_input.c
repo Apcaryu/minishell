@@ -21,5 +21,6 @@ void	check_command(char *input)
 void	read_input(char *input)
 {
 	printf("input = %s\n", input);
-	check_command(input);
+	lexer(input);
+//	check_command(input);
 }
