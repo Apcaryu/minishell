@@ -58,8 +58,12 @@ void	set_token(char *input, unsigned int *idx, t_token *token)
 		token->type = OUTPUT;
 		output_or_append(input, idx, token);
 	}
+	else if (input[*idx] == '|')
+	{
+		token->type = PIPE;
+	}
 //	printf("4 idx = %u | operateur = %c\n", *idx, input[*idx]); // TODO remove
-	if ((input[*idx] == '>' || input[*idx] == '<') && tmp_idx != *idx)
+	if ((input[*idx] == '>' || input[*idx] == '<' || input[*idx] == '|') && tmp_idx != *idx)
 		*idx -= 1;
 }
 
