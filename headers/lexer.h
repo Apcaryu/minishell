@@ -3,6 +3,12 @@
 # include <limits.h>
 # include "../libft_42/includes_libft/libft.h"
 
+typedef enum	e_bool
+{
+	false,
+	true
+}	t_bool;
+
 typedef enum	e_type
 {
 	NONE,
@@ -20,6 +26,7 @@ typedef struct s_token
 {
 	t_type type;
 	char *content;
+	t_bool is_closed;
 }	t_token;
 
 
