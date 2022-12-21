@@ -6,4 +6,9 @@
 # include <readline/history.h>
 # include "exec.h"
 
+typedef struct s_data
+{
+	t_token *lexer_lst;
+}	t_data;
+
 #endif

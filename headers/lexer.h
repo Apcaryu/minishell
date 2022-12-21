@@ -27,8 +27,8 @@ typedef struct s_token
 	t_type type;
 	char *content;
 	t_bool is_closed;
+	struct s_token	*next;
 }	t_token;
-
 
 void lexer(char *input);
 
