@@ -2,6 +2,8 @@
 # define LEXER_H
 # include <limits.h>
 # include "../libft_42/includes_libft/libft.h"
+# include "../libft_42/includes_libft/garbage.h"
+//# include "utils.h"
 
 typedef enum	e_bool
 {
@@ -30,6 +32,20 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-void lexer(char *input);
+# ifndef T_DATA
+#  define T_DATA
+
+typedef struct s_data
+{
+	char *input;
+	t_list *garb_lst;
+	t_token *lexer_lst;
+}	t_data;
+# endif
+
+t_token *new_token(t_list **garb_lst);
+void	token_add_back(t_token **token_lst, t_token *token);
+
+void lexer(t_data *data);
 
 #endif

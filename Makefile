@@ -19,7 +19,8 @@ SRC_BUILTINS = echo.c \
 				unset.c \
 				env.c \
 				exit.c
-SRC_LEXER = lexer.c
+SRC_LEXER = lexer.c \
+			lst_lexer.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
@@ -67,6 +68,9 @@ fclean : clean
 	@rm -f $(NAME)
 
 re : fclean all
+
+check_leaks:
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
 thanks :
 

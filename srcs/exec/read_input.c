@@ -18,9 +18,9 @@ void	check_command(char *input)
 		exit_exec();
 }
 
-void	read_input(char *input)
+void	read_input(t_data *data)
 {
-	printf("input = %s\n", input);
-	lexer(input);
+	printf("input = %s\n", data->input);
+	lexer(data);
 //	check_command(input);
 }

@@ -5,6 +5,6 @@
 # include "lexer.h"
 # include "builtins.h"
 
-void	read_input(char *input);
+void	read_input(t_data *data);
 
 #endif

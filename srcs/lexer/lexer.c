@@ -1,4 +1,4 @@
-#include "../../headers/lexer.h"
+#include "../../headers/minishell.h"
 
 void	init_token(t_token *token)
 {
@@ -125,20 +125,21 @@ void	set_token(char *input, unsigned int *idx, t_token *token)
 		*idx -= 1;
 }
 
-void lexer(char *input)
+void lexer(t_data *data)
 {
-	t_token tmp_content;
+	t_token *tmp_content;
 	unsigned int	idx;
 
 	idx = 0;
-	init_token(&tmp_content);
-	while (idx < strlen(input))
+	while (idx < strlen(data->input))
 	{
-		while (input[idx] == ' ')
+		tmp_content = new_token(&data->garb_lst);
+		init_token(tmp_content);
+		while (data->input[idx] == ' ')
 			idx++;
-		set_token(input, &idx, &tmp_content);
+		set_token(data->input, &idx, tmp_content);
 		idx++;
-		printf("type = %i | content = %s | is_closed = %d | idx = %d\n", tmp_content.type, tmp_content.content, tmp_content.is_closed, idx);
-		init_token(&tmp_content);
+		printf("type = %i | content = %s | is_closed = %d | idx = %d\n", tmp_content->type, tmp_content->content, tmp_content->is_closed, idx);
+		token_add_back(&data->lexer_lst, tmp_content);
 	}
 }
