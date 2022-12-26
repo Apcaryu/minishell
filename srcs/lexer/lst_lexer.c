@@ -1,10 +1,13 @@
-#include "lexer.h"
+#include "../../headers/lexer.h"
+#include "../../headers/minishell.h"
+
+extern t_data g_data;
 
 t_token *new_token(t_list **garb_lst)
 {
 	t_token *new;
 
-	new = garbage_alloc(garb_lst, sizeof(t_token));
+	new = garbage_alloc(garb_lst, sizeof(t_token) * 1);
 	if (new == NULL)
 		return (NULL);
 	new->next = NULL;

@@ -14,9 +14,9 @@ typedef enum	e_bool
 typedef enum	e_type
 {
 	NONE,
-	INPUT,
+	INFILE,
 	HEREDOC,
-	OUTPUT,
+	OUTFILE,
 	APPEND,
 	PIPE,
 	COMMAND,

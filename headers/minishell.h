@@ -7,6 +7,8 @@
 # include "exec.h"
 # include "lexer.h"
 
+//t_data g_data;
+
 # ifndef T_DATA
 #  define T_DATA
 
@@ -16,6 +18,6 @@ typedef struct s_data
 	t_list *garb_lst;
 	t_token *lexer_lst;
 }	t_data;
-
 # endif
+
 #endif

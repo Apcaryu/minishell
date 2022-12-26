@@ -1,10 +1,41 @@
 #include "../../headers/minishell.h"
 
+extern t_data g_data;
+
 void	init_token(t_token *token)
 {
 	token->type = NONE;
 	token->content = NULL;
 	token->is_closed = true;
+	token->next = NULL;
+}
+
+char	*set_content(char *input, unsigned int *idx, t_token *token)
+{
+	unsigned int	sub_idx;
+	int	size;
+	char			*content;
+//	extern t_data	g_data;
+
+	sub_idx = *idx;
+	size = 0;
+	content = NULL;
+	while (input[sub_idx] != '>' && input[sub_idx] != '<' && input[sub_idx] != '|' && input[sub_idx] != '\0'  \
+	&& *idx + size < ft_strlen(input))
+	{
+	    size++;
+	    sub_idx++;
+	}
+//	printf("size = %u | sub_idx = %u\n", size, sub_idx);
+	if (size == 0)
+		return (NULL);
+	content = garbage_alloc(&g_data.garb_lst, (int)sizeof(char) * (size + 1));
+//	printf("content = %p\n", content);
+	if (!content)
+		return (NULL);
+	ft_strlcpy(content, input + *idx, size + 1);
+	*idx = *idx + size;
+	return (content);
 }
 
 void	input_or_heredoc(char *input, unsigned int *idx, t_token *token)
@@ -21,8 +52,9 @@ void	input_or_heredoc(char *input, unsigned int *idx, t_token *token)
 //		printf("2 idx = %u\n", *idx); // TODO remove
 		if (ft_isprint(input[*idx]))
 		{
-			while (input[*idx] == ' ' || ft_isalnum(input[*idx]))
-				*idx += 1;
+			token->content = set_content(input, idx, token);
+//			while (input[*idx] == ' ' || ft_isalnum(input[*idx]))
+//				*idx += 1;
 //			printf("3 midx = %u\n", *idx); //TODO remove
 		}
 	}
@@ -40,16 +72,18 @@ void	output_or_append(char *input, unsigned int *idx, t_token *token)
 		}
 		if (ft_isprint(input[*idx + 1]))
 		{
-			while (input[*idx] == ' ' || ft_isalnum(input[*idx]))
-				*idx += 1;
+			token->content = set_content(input, idx, token);
+//			while (input[*idx] == ' ' || ft_isalnum(input[*idx]))
+//				*idx += 1;
 		}
 	}
 }
 
 void	pass_cmd(char *input, unsigned int *idx, t_token *token)
 {
-	while (ft_isalnum(input[*idx]))
-		*idx += 1;
+	token->content = set_content(input, idx, token);
+//	while (ft_isalnum(input[*idx]))
+//		*idx += 1;
 }
 
 t_bool	single_or_double_quote(char *input, unsigned int *idx, t_token *token)
@@ -98,12 +132,12 @@ void	set_token(char *input, unsigned int *idx, t_token *token)
 	unsigned int tmp_idx = *idx;
 	if (input[*idx] == '<')
 	{
-		token->type = INPUT;
+		token->type = INFILE;
 		input_or_heredoc(input, idx, token);
 	}
 	else if (input[*idx] == '>')
 	{
-		token->type = OUTPUT;
+		token->type = OUTFILE;
 		output_or_append(input, idx, token);
 	}
 	else if (input[*idx] == '|')
