@@ -48,4 +48,6 @@ void	token_add_back(t_token **token_lst, t_token *token);
 
 void lexer(t_data *data);
 
+void p_lex_lst(t_token *lst);
+
 #endif

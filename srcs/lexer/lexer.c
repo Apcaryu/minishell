@@ -159,6 +159,11 @@ void	set_token(char *input, unsigned int *idx, t_token *token)
 		*idx -= 1;
 }
 
+void p_lex_lst(t_token *lst)
+{
+	printf("case = %p\ntype = %d\ncontent = %s\nis_closed = %d\nnext =%p\n\n", lst, lst->type, lst->content, lst->is_closed, lst->next);
+}
+
 void lexer(t_data *data)
 {
 	t_token *tmp_content;
@@ -173,7 +178,7 @@ void lexer(t_data *data)
 			idx++;
 		set_token(data->input, &idx, tmp_content);
 		idx++;
-		printf("type = %i | content = %s | is_closed = %d | idx = %d\n", tmp_content->type, tmp_content->content, tmp_content->is_closed, idx);
+		printf("case = %p | type = %i | content = %s | is_closed = %d | idx = %d\n", tmp_content, tmp_content->type, tmp_content->content, tmp_content->is_closed, idx);
 		token_add_back(&data->lexer_lst, tmp_content);
 	}
 }

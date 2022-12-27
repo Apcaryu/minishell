@@ -18,7 +18,9 @@ t_token *token_last(t_token *token_lst)
 {
 	if (token_lst != NULL)
 	{
+		// p_lex_lst(token_lst);
 		while (token_lst->next != NULL)
+			// p_lex_lst(token_lst);
 			token_lst = token_lst->next;
 	}
 	return (token_lst);
@@ -28,6 +30,7 @@ void	token_add_back(t_token **token_lst, t_token *token)
 {
 	t_token *last_token;
 
+	// p_lex_lst(token);
 	if (!token_lst || !token)
 		return ;
 	last_token = token_last(*token_lst);
