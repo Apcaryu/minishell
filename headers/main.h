@@ -50,4 +50,6 @@ typedef struct s_data
 	t_elem_pars	*parser_lst;
 }	t_data;
 
+char	**garb_split(char const *s, char c, t_list *garb_lst);
+
 #endif

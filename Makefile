@@ -11,7 +11,8 @@ SRC_PARSER_PATH = srcs/parser/
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
 
-SRC = main.c
+SRC = main.c \
+		garb_split.c
 SRC_EXEC = read_input.c
 SRC_BUILTINS = echo.c \
 				cd.c \

@@ -21,7 +21,7 @@ char	*set_cmd(t_elem_pars *elem_pars, t_token token)
 void	set_elem_pars(t_elem_pars *elem_pars, t_token token)
 {
 	elem_pars->type = token.type;
-	if (token.type == COMMAND)
+	if (token.type == COMMAND || token.type == HEREDOC)
 		elem_pars->cmd = set_cmd(elem_pars, token);
 }
 
