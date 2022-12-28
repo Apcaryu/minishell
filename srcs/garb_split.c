@@ -36,7 +36,7 @@ char	*ft_strddup(const char *s, char c, t_list *garb_lst)
 	char	*str;
 
 	i = 0;
-	str = garbage_alloc(&garb_lst, sizeof(char) * tot_len(s, c));
+	str = garbage_alloc(&garb_lst, sizeof(char) * tot_len(s, c) + 1);
 //	str = ft_calloc(tot_len(s, c) + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
