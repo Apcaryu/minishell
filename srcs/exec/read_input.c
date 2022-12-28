@@ -1,4 +1,4 @@
-#include "../../headers/exec.h"
+#include "../../headers/minishell.h"
 
 void	check_command(char *input)
 {
