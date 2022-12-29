@@ -1,4 +1,4 @@
-#include "../../headers/exec.h"
+#include "../../headers/minishell.h"
 
 void	check_command(char *input)
 {
@@ -22,5 +22,6 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	lexer(data);
+	parser();
 //	check_command(input);
 }

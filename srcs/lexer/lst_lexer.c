@@ -1,5 +1,4 @@
 #include "../../headers/lexer.h"
-#include "../../headers/minishell.h"
 
 extern t_data g_data;
 
