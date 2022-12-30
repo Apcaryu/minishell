@@ -47,11 +47,20 @@
 //}	t_data;
 //# endif
 
-t_token *new_token(t_list **garb_lst);
-void	token_add_back(t_token **token_lst, t_token *token);
+//t_token *new_token(t_list **garb_lst);
+//void	token_add_back(t_token **token_lst, t_token *token);
+//
+//void lexer(t_data *data);
+//
+//void p_lex_lst(t_token *lst);
 
-void lexer(t_data *data);
+// ---------- NEW LEXER ----------- //
 
-void p_lex_lst(t_token *lst);
+t_ntoken	*new_ntoken(t_list **garb_lst);
+t_ntoken	*ntoken_last(t_ntoken *token_lst);
+void		ntoken_add_back(t_ntoken **token_lst, t_ntoken *token);
 
+void n_lexer(void);
+
+// ---------- END ---------- //
 #endif

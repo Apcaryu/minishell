@@ -1,7 +1,7 @@
 #include "../../headers/parser.h"
 
 extern t_data g_data;
-
+/*
 t_elem_pars *new_elem_pars(t_list **garb_list)
 {
 	t_elem_pars  *new;
@@ -38,3 +38,4 @@ void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem)
 	else
 		last_elem_pars->next = elem;
 }
+*/

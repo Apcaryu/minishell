@@ -2,6 +2,7 @@
 
 extern t_data	g_data;
 
+/*
 char	*set_cmd(t_elem_pars *elem_pars, t_token token, unsigned int *idx)
 {
 //	unsigned int	idx;
@@ -71,3 +72,4 @@ void	parser(void)
 		lex_lst = lex_lst->next;
 	}
 }
+*/

@@ -12,8 +12,39 @@ typedef enum	e_bool
 	false,
 	true
 }	t_bool;
+// ---------- OLD TOKEN ---------- //
+//typedef enum	e_type
+//{
+//	NONE,
+//	INFILE,
+//	HEREDOC,
+//	OUTFILE,
+//	APPEND,
+//	PIPE,
+//	COMMAND,
+//	SINGLE_QUOTE,
+//	DOUBLE_QUOTE
+//}	t_type;
 
-typedef enum	e_type
+//typedef struct s_token
+//{
+//	t_type type;
+//	char *content;
+//	t_bool is_closed;
+//	struct s_token	*next;
+//}	t_token;
+
+typedef struct s_elem_pars
+{
+//	t_type				type;
+	char				*cmd;
+	char				**args;
+	struct s_elem_pars	*next;
+}	t_elem_pars;
+// ---------- END ---------- //
+
+// ---------- NEW TOKEN ---------- //
+typedef enum	s_ntype
 {
 	NONE,
 	INFILE,
@@ -21,32 +52,25 @@ typedef enum	e_type
 	OUTFILE,
 	APPEND,
 	PIPE,
-	COMMAND,
 	SINGLE_QUOTE,
-	DOUBLE_QUOTE
-}	t_type;
+	DOUBLE_QUOTE,
+	WORD,
+}	t_ntype;
 
-typedef struct s_token
+typedef struct s_ntoken
 {
-	t_type type;
+	t_ntype type;
 	char *content;
 	t_bool is_closed;
 	struct s_token	*next;
-}	t_token;
-
-typedef struct s_elem_pars
-{
-	t_type				type;
-	char				*cmd;
-	char				**args;
-	struct s_elem_pars	*next;
-}	t_elem_pars;
+}	t_ntoken;
 
 typedef struct s_data
 {
 	char *input;
 	t_list *garb_lst;
-	t_token *lexer_lst;
+	t_ntoken	*nlexer_lst;
+//	t_token *lexer_lst;
 	t_elem_pars	*parser_lst;
 }	t_data;
 
