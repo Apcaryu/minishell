@@ -44,16 +44,33 @@ t_ntoken	*new_ntoken(t_list **garb_lst)
 {
 	t_ntoken *new;
 
+	new = garbage_alloc(garb_lst, sizeof(t_ntoken) + 1);
+	if (new == NULL)
+		return (new);
+	new->next = NULL;
 	return (new);
 }
 
 t_ntoken *ntoken_last(t_ntoken *token_lst)
 {
+	if (token_lst != NULL)
+	{
+		while (token_lst->next != NULL)
+			token_lst = token_lst->next;
+	}
 	return (token_lst);
 }
 
 void	ntoken_add_back(t_ntoken **token_lst, t_ntoken *token)
 {
-	return ;
+	t_ntoken *last_token;
+
+	if (!token_lst || !token)
+		return ;
+	last_token = ntoken_last(*token_lst);
+	if (!last_token)
+		*token_lst = token;
+	else
+		last_token->next = token;
 }
 // ---------- END ---------- //

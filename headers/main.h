@@ -62,7 +62,7 @@ typedef struct s_ntoken
 	t_ntype type;
 	char *content;
 	t_bool is_closed;
-	struct s_token	*next;
+	struct s_ntoken	*next;
 }	t_ntoken;
 
 typedef struct s_data
