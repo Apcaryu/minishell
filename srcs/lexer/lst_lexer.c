@@ -47,6 +47,9 @@ t_ntoken	*new_ntoken(t_list **garb_lst)
 	new = garbage_alloc(garb_lst, sizeof(t_ntoken) + 1);
 	if (new == NULL)
 		return (new);
+	new->type = NONE;
+	new->content = NULL;
+	new->is_closed = true;
 	new->next = NULL;
 	return (new);
 }
