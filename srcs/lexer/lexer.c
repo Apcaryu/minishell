@@ -227,6 +227,31 @@ void	outfile_or_append(t_ntoken *token, unsigned int *idx)
 	}
 }
 
+t_bool	is_pipe(t_ntoken *token, unsigned int *idx)
+{
+	if (g_data.input[*idx] == '|')
+	{
+		token->type = PIPE;
+		*idx += 1;
+		return (true);
+	}
+	return (false);
+}
+
+t_bool is_quote(t_ntoken *token, unsigned int *idx)
+{
+	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
+	{
+		if (g_data.input[*idx] == '\'')
+			token->type = SINGLE_QUOTE;
+		else if (g_data.input[*idx] == '\"')
+			token->type = DOUBLE_QUOTE;
+		*idx += 1;
+		return (true);
+	}
+	return (false);
+}
+
 void	set_ntoken(t_ntoken *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '<')
@@ -235,6 +260,10 @@ void	set_ntoken(t_ntoken *token, unsigned int *idx)
 	}
 	else if (g_data.input[*idx] == '>')
 		outfile_or_append(token, idx);
+	else if (is_pipe(token, idx))
+		return ;
+	else if (is_quote(token, idx))
+		return ;
 }
 
 void n_lexer(void)
