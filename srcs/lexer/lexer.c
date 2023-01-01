@@ -213,12 +213,28 @@ void	infile_or_heredoc(t_ntoken *token, unsigned int *idx)
 	}
 }
 
+void	outfile_or_append(t_ntoken *token, unsigned int *idx)
+{
+	if (g_data.input[*idx + 1] == '>')
+	{
+		token->type = APPEND;
+		*idx += 2;
+	}
+	else
+	{
+		token->type = OUTFILE;
+		*idx  += 1;
+	}
+}
+
 void	set_ntoken(t_ntoken *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '<')
 	{
 		infile_or_heredoc(token, idx);
 	}
+	else if (g_data.input[*idx] == '>')
+		outfile_or_append(token, idx);
 }
 
 void n_lexer(void)
@@ -233,7 +249,7 @@ void n_lexer(void)
 		set_ntoken(token, &idx);
 		printf("case = %p | type = %i | content = %s | is_closed = %d | idx = %d\n", token, token->type, token->content, token->is_closed, idx);
 		ntoken_add_back(&g_data.nlexer_lst, token);
-		sleep(2);
+//		sleep(2);
 		while (g_data.input[idx] == ' ')
 			idx++;
 	}
