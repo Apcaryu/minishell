@@ -199,6 +199,13 @@ void	print_lst(t_ntoken *ntoken_lst)
 	printf("case = %p | type = %d\n", ntoken_lst, ntoken_lst->type);
 }
 
+t_bool	is_word(char chr)
+{
+	if (chr != '<' && chr != '>' && chr != '|' && chr != ' ')
+		return (true);
+	return (false);
+}
+
 void	infile_or_heredoc(t_ntoken *token, unsigned int *idx)
 {
 	if (g_data.input[*idx + 1] == '<')
@@ -252,6 +259,22 @@ t_bool is_quote(t_ntoken *token, unsigned int *idx)
 	return (false);
 }
 
+void	space(t_ntoken *token, unsigned int *idx)
+{
+	token->type = C_SPACE;
+	while (g_data.input[*idx] == ' ')
+		*idx += 1;
+}
+
+void	word(t_ntoken *token, unsigned int *idx)
+{
+	token->type = WORD;
+	while (is_word(g_data.input[*idx]) && g_data.input[*idx] != '\0')
+	{
+		*idx += 1;
+	}
+}
+
 void	set_ntoken(t_ntoken *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '<')
@@ -264,6 +287,10 @@ void	set_ntoken(t_ntoken *token, unsigned int *idx)
 		return ;
 	else if (is_quote(token, idx))
 		return ;
+	else if (g_data.input[*idx] == ' ')
+		space(token, idx);
+	else if (is_word(g_data.input[*idx]))
+		word(token, idx);
 }
 
 void n_lexer(void)
@@ -279,8 +306,8 @@ void n_lexer(void)
 		printf("case = %p | type = %i | content = %s | is_closed = %d | idx = %d\n", token, token->type, token->content, token->is_closed, idx);
 		ntoken_add_back(&g_data.nlexer_lst, token);
 //		sleep(2);
-		while (g_data.input[idx] == ' ')
-			idx++;
+//		while (g_data.input[idx] == ' ')
+//			idx++;
 	}
 	print_lst(g_data.nlexer_lst);
 }
