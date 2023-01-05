@@ -74,22 +74,49 @@ void	parser(void)
 }
 */
 
-void	set_elem_pars(t_nelem *elem_pars, t_ntoken token)
+unsigned int	infile(t_nelem *elem, t_ntoken *token)
 {
-	return ;
+	unsigned int	nb_move;
+
+	nb_move = 1;
+	elem->type = INFILE;
+	nb_move++;
+	return(nb_move);
+}
+
+unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
+{
+	unsigned int	nb_move;
+
+	nb_move = 0;
+	if (token->type == INFILE)
+		nb_move = infile(elem_pars, token);
+	// ----- ONLY FOR TEST -----//
+	if (nb_move == 0)
+		nb_move++;
+	// ----- END -----//
+	return (nb_move);
 }
 
 void	parser(void)
 {
 	t_ntoken	*lex_lst;
 	t_nelem		*elem;
+	unsigned int	nb_move;
 
 	lex_lst = g_data.nlexer_lst;
 	while (lex_lst != NULL)
 	{
+		nb_move = 0;
+		printf("lex_lst = %p\n", lex_lst);
 		elem = new_elem_pars(&g_data.garb_lst);
-		set_elem_pars(elem, *lex_lst);
+		nb_move = set_elem_pars(elem, lex_lst);
 		elem_pars_add_back(&g_data.parser_lst, elem);
-		lex_lst = lex_lst->next;
+		while (nb_move != 0)
+		{
+			lex_lst = lex_lst->next;
+			nb_move--;
+		}
+		printf("lex_lst = %p\n", lex_lst);
 	}
 }
