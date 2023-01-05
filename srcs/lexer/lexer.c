@@ -327,7 +327,7 @@ void n_lexer(void)
 	{
 		token = new_ntoken(&g_data.garb_lst);
 		set_ntoken(token, &idx);
-		printf("case = %p | type = %i | content = %s | is_closed = %d | idx = %d\n", token, token->type, token->content, token->is_closed, idx);
+		printf("case = %p | type = %i | content = %s | idx = %d\n", token, token->type, token->content, idx);
 		ntoken_add_back(&g_data.nlexer_lst, token);
 //		sleep(1);
 	}

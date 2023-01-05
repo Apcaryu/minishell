@@ -49,7 +49,6 @@ t_ntoken	*new_ntoken(t_list **garb_lst)
 		return (new);
 	new->type = NONE;
 	new->content = NULL;
-	new->is_closed = true;
 	new->next = NULL;
 	return (new);
 }
