@@ -1,12 +1,12 @@
 #include "../../headers/parser.h"
 
 extern t_data g_data;
-/*
-t_elem_pars *new_elem_pars(t_list **garb_list)
-{
-	t_elem_pars  *new;
 
-	new = garbage_alloc(garb_list, sizeof(t_elem_pars));
+t_nelem *new_elem_pars(t_list **garb_list)
+{
+	t_nelem  *new;
+
+	new = garbage_alloc(garb_list, sizeof(t_nelem));
 	if (new == NULL)
 		return (NULL);
 	new->type = NONE;
@@ -16,7 +16,7 @@ t_elem_pars *new_elem_pars(t_list **garb_list)
 	return (new);
 }
 
-t_elem_pars *elem_pars_last(t_elem_pars *elem_lst)
+t_nelem *elem_pars_last(t_nelem *elem_lst)
 {
 	if (elem_lst != NULL)
 	{
@@ -26,9 +26,9 @@ t_elem_pars *elem_pars_last(t_elem_pars *elem_lst)
 	return (elem_lst);
 }
 
-void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem)
+void	elem_pars_add_back(t_nelem **elem_lst, t_nelem *elem)
 {
-	t_elem_pars *last_elem_pars;
+	t_nelem *last_elem_pars;
 
 	if (!elem_lst || !elem)
 		return ;
@@ -38,4 +38,3 @@ void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem)
 	else
 		last_elem_pars->next = elem;
 }
-*/

@@ -34,13 +34,13 @@ typedef enum	e_bool
 //	struct s_token	*next;
 //}	t_token;
 
-typedef struct s_elem_pars
-{
-//	t_type				type;
-	char				*cmd;
-	char				**args;
-	struct s_elem_pars	*next;
-}	t_elem_pars;
+//typedef struct s_elem_pars
+//{
+////	t_type				type;
+//	char				*cmd;
+//	char				**args;
+//	struct s_elem_pars	*next;
+//}	t_elem_pars;
 // ---------- END ---------- //
 
 // ---------- NEW TOKEN ---------- //
@@ -65,13 +65,22 @@ typedef struct s_ntoken
 	struct s_ntoken	*next;
 }	t_ntoken;
 
+typedef struct s_nelem
+{
+	t_ntype			type;
+	char			*cmd;
+	char			**args;
+	t_bool			is_closed;
+	struct s_nelem	*next;
+}	t_nelem;
+
 typedef struct s_data
 {
 	char *input;
 	t_list *garb_lst;
 	t_ntoken	*nlexer_lst;
 //	t_token *lexer_lst;
-	t_elem_pars	*parser_lst;
+	t_nelem		*parser_lst;
 }	t_data;
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);
