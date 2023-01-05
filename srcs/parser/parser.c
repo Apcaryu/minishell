@@ -87,7 +87,7 @@ void	parser(void)
 	lex_lst = g_data.nlexer_lst;
 	while (lex_lst != NULL)
 	{
-		new_elem_pars(&g_data.garb_lst);
+		elem = new_elem_pars(&g_data.garb_lst);
 		set_elem_pars(elem, *lex_lst);
 		elem_pars_add_back(&g_data.parser_lst, elem);
 		lex_lst = lex_lst->next;

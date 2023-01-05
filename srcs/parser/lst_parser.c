@@ -6,12 +6,13 @@ t_nelem *new_elem_pars(t_list **garb_list)
 {
 	t_nelem  *new;
 
-	new = garbage_alloc(garb_list, sizeof(t_nelem));
+	new = garbage_alloc(garb_list, sizeof(t_nelem) + 1);
 	if (new == NULL)
 		return (NULL);
 	new->type = NONE;
 	new->cmd = NULL;
 	new->args = NULL;
+	new->is_closed = true;
 	new->next = NULL;
 	return (new);
 }
