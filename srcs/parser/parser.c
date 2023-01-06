@@ -74,18 +74,18 @@ void	parser(void)
 }
 */
 
-unsigned int	infile(t_nelem *elem, t_ntoken *token)
+unsigned int	infile_heredoc(t_nelem *elem, t_ntoken *token)
 {
 	unsigned int	nb_move;
 
 	nb_move = 0;
-	elem->type = INFILE;
+	elem->type = token->type;
 	nb_move++;
 	if (token->next != NULL)
 		token = token->next;
 	else
 		return(nb_move);
-	if (token->type == SPACE)
+	if (token->type == C_SPACE)
 	{
 		nb_move++;
 		if (token->next == NULL)
@@ -99,8 +99,8 @@ unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 	unsigned int	nb_move;
 
 	nb_move = 0;
-	if (token->type == INFILE)
-		nb_move = infile(elem_pars, token);
+	if (token->type == INFILE || token->type == HEREDOC)
+		nb_move = infile_heredoc(elem_pars, token);
 	// ----- ONLY FOR TEST -----//
 	if (nb_move == 0)
 		nb_move++;
