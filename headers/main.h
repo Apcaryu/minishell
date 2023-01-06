@@ -44,10 +44,8 @@ typedef struct s_elem_pars
 
 typedef struct s_exec
 {
-	t_type				type;
-	char				*cmd;
-	char				**args;
-	struct s_exec		*next;
+	int	pid[2];
+	int	pipefd[2];
 }	t_exec;
 
 typedef struct s_data
@@ -56,7 +54,7 @@ typedef struct s_data
 	t_list 		*garb_lst;
 	t_token		*lexer_lst;
 	t_elem_pars	*parser_lst;
-	t_exec		*exec_lst;
+	t_exec		*exec_struct;
 	char		**env;
 }	t_data;
 

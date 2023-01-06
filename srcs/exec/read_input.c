@@ -115,6 +115,51 @@ void	print_elem_lst(t_elem_pars *lst) // TODO remove
 	printf("elem = %p | type = %d | cmd = %s | arg = %s | next %p\n", lst, lst->type, lst->cmd, lst->args[0], lst->next);
 }
 
+void	print_exec_struct(t_exec *exec)
+{
+	if (exec == NULL)
+		return;
+	printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
+}
+
+t_exec	*init_exec_structure()
+{
+	t_exec *exec;
+
+	exec->pid[0] = INT_MIN;
+	exec->pid[1] = INT_MIN;
+	exec->pipefd[0] = -1;
+	exec->pipefd[1] = -1;
+	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
+	return (exec);
+}
+
+void	main_loop(t_exec *exec)
+{
+	// int	i;
+
+	// i = 0;
+	// while (g_data.parser_lst->next != NULL)
+	// {
+		if (pipe(exec->pipefd) == -1)
+			perror("minishell: ");
+		exec->pid[0] = fork();
+		if (exec->pid[0] == -1)
+		{
+			perror("minishell: ");
+			exit (1);
+		}
+		if (exec->pid[0] == 0)
+		{
+			
+		}
+		
+		printf("pid = %d\n", exec->pid[0]);
+		// i++;
+		g_data.parser_lst = g_data.parser_lst->next;
+	// }
+}
+
 void	executer(void)
 {
 	// t_token *lex_lst;
@@ -122,20 +167,17 @@ void	executer(void)
 	int		i;
 
 	i = 0;
-//	g_data.exec_lst = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
 	init_test_exec();
+	// init_open_fd(); // TODO
+	exec = init_exec_structure(); // TODO
+	// print_exec_struct(g_data.exec_struct);
 	printf("input = < in cat | ls > out\n");
-	print_elem_lst(g_data.parser_lst);
-	// while (g_data.input[i] == ' ')
-		// 	i++;
-		// exec = new_exec(&g_data.garb_lst);
-		// printf("cmd = %s | args = %p | idx = %d\n | next = %p\n", exec->cmd, exec->args, i, exec->next);
-		// exec_add_back(&g_data.exec_lst, exec);
+	// print_elem_lst(g_data.parser_lst);
+	main_loop(exec); // TODO
 }
 
 void	read_input(t_data *data)
 {
-	printf("hello\n");
 //	printf("input = %s\n", data->input);
 	// lexer(data);
 	// parser();

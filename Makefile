@@ -15,7 +15,7 @@ SRC 			= main.c \
 					garb_split.c
 
 SRC_EXEC 		= read_input.c \
-					lst_exec.c
+					# lst_exec.c
 
 SRC_BUILTINS 	= echo.c \
 					cd.c \
