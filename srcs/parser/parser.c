@@ -74,6 +74,38 @@ void	parser(void)
 }
 */
 
+void	p_elem(t_nelem *elem)
+{
+	unsigned int	idx;
+
+	idx = 0;
+	if (elem == NULL)
+		return ;
+	printf("elem = %p | type = %d | cmd = %s | ", elem, elem->type, elem->cmd);
+	if (elem->args != NULL)
+	{
+		while (elem->args[idx] != NULL)
+		{
+			printf("arg = %s | ", elem->args[idx]);
+			idx++;
+		}
+	}
+	printf("next = %p\n", elem->next);
+}
+
+void p_lst_elem(t_nelem *lst)
+{
+	if (lst == NULL) {
+		return;
+	}
+	while (lst->next != NULL)
+	{
+		p_elem(lst);
+		lst = lst->next;
+	}
+	p_elem(lst);
+}
+
 unsigned int	infile_heredoc(t_nelem *elem, t_ntoken *token)
 {
 	unsigned int	nb_move;
@@ -90,6 +122,15 @@ unsigned int	infile_heredoc(t_nelem *elem, t_ntoken *token)
 		nb_move++;
 		if (token->next == NULL)
 			return (nb_move);
+		else
+			token = token->next;
+	}
+	if (token->type == WORD)
+	{
+		nb_move++;
+		elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * 2);
+		elem->args[0] = token->content;
+		elem->args[1] = NULL;
 	}
 	return(nb_move);
 }
@@ -121,17 +162,21 @@ void	parser(void)
 //		printf("lex_lst = %p\n", lex_lst);
 		elem = new_elem_pars(&g_data.garb_lst);
 		nb_move = set_elem_pars(elem, lex_lst);
-		printf("elem = %p | type = %d | cmd = %s | next = %p\n", elem, elem->type, elem->cmd, elem->next);
+		p_elem(elem);
+//		printf("elem = %p | type = %d | cmd = %s | next = %p\n", elem, elem->type, elem->cmd, elem->next);
 		elem_pars_add_back(&g_data.parser_lst, elem);
 		while (nb_move != 0)
 		{
 			if (lex_lst->next == NULL)
-				return ;
+				break ;
 			lex_lst = lex_lst->next;
 //			printf("lex_lst = %p | next = %p\n", lex_lst, lex_lst->next);
 			nb_move--;
 //			printf("nb_move = %u\n", nb_move);
 		}
+		if (lex_lst->next == NULL)
+			break ;
 //		sleep(1);
 	}
+	p_lst_elem(g_data.parser_lst);
 }
