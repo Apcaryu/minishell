@@ -26,36 +26,41 @@ void	init_test_exec()
 
 	/*for: < in cat | ls > out*/
 
+	element = NULL;
+
 	g_data.parser_lst = NULL;
-	element = new_elem_pars(g_data.garb_lst);
+	element = new_elem_pars(&g_data.garb_lst);
 	element->type = INFILE;
 	element->cmd = NULL;
+	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
 	element->args[0] = "in";
-	elem_pars_add_back(g_data.parser_lst, element);
+	elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(g_data.garb_lst);
+	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
 	element->cmd = "cat";
 	element->args = NULL;
-	elem_pars_add_back(g_data.parser_lst, element);
+	elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(g_data.garb_lst);
+	element = new_elem_pars(&g_data.garb_lst);
 	element->type = PIPE;
 	element->cmd = NULL;
 	element->args = NULL;
-	elem_pars_add_back(g_data.parser_lst, element);
+	elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(g_data.garb_lst);
+	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
 	element->cmd = "ls";
 	element->args = NULL;
-	elem_pars_add_back(g_data.parser_lst, element);
+	elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(g_data.garb_lst);
+	element = new_elem_pars(&g_data.garb_lst);
 	element->type = OUTFILE;
 	element->cmd = NULL;
+	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
 	element->args[0] = "out";
-	elem_pars_add_back(g_data.parser_lst, element);
+	elem_pars_add_back(&g_data.parser_lst, element);
+
 }
 
 // void	init_structure()
@@ -91,6 +96,25 @@ void	init_test_exec()
 // 	exec.cmd = NULL;
 // }
 
+void	print_elem_lst(t_elem_pars *lst) // TODO remove
+{
+	if (lst == NULL)
+		return;
+//	while (lst->next != NULL) {
+//		printf("elem = %p | type = %d | cmd = %s | arg = %s | next %p\n", lst, lst->type, lst->cmd, lst->args[0], lst->next);
+//		lst = lst->next;
+//	}
+	printf("elem = %p | type = %d | cmd = %s | arg = %s | next %p\n", lst, lst->type, lst->cmd, lst->args[0], lst->next);
+	lst = lst->next;
+	printf("elem = %p | type = %d | cmd = %s | next %p\n", lst, lst->type, lst->cmd, lst->next);
+	lst = lst->next;
+	printf("elem = %p | type = %d | cmd = %s | next %p\n", lst, lst->type, lst->cmd, lst->next);
+	lst = lst->next;
+	printf("elem = %p | type = %d | cmd = %s | next %p\n", lst, lst->type, lst->cmd, lst->next);
+	lst = lst->next;
+	printf("elem = %p | type = %d | cmd = %s | arg = %s | next %p\n", lst, lst->type, lst->cmd, lst->args[0], lst->next);
+}
+
 void	executer(void)
 {
 	// t_token *lex_lst;
@@ -98,8 +122,10 @@ void	executer(void)
 	int		i;
 
 	i = 0;
-	g_data.exec_lst = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
+//	g_data.exec_lst = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
 	init_test_exec();
+	printf("input = < in cat | ls > out\n");
+	print_elem_lst(g_data.parser_lst);
 	// while (g_data.input[i] == ' ')
 		// 	i++;
 		// exec = new_exec(&g_data.garb_lst);
@@ -110,7 +136,7 @@ void	executer(void)
 void	read_input(t_data *data)
 {
 	printf("hello\n");
-	printf("input = %s\n", data->input);
+//	printf("input = %s\n", data->input);
 	// lexer(data);
 	// parser();
 	executer();
