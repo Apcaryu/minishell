@@ -138,6 +138,12 @@ unsigned int	in_her_out_app(t_nelem *elem, t_ntoken *token)
 	return(nb_move);
 }
 
+unsigned int	pipe_operator(t_nelem *elem, t_ntoken *token)
+{
+	elem->type = token->type;
+	return (1);
+}
+
 unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 {
 	unsigned int	nb_move;
@@ -146,6 +152,8 @@ unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 	if (token->type == INFILE || token->type == HEREDOC || \
 		token->type == OUTFILE || token->type == APPEND)
 		nb_move = in_her_out_app(elem_pars, token);
+	else if (token->type == PIPE)
+		nb_move = pipe_operator(elem_pars, token);
 	// ----- ONLY FOR TEST -----//
 	if (nb_move == 0)
 		nb_move++;
@@ -178,8 +186,17 @@ void	parser(void)
 			nb_move--;
 //			printf("nb_move = %u\n", nb_move);
 		}
-		if (lex_lst->next == NULL)
+//		if (lex_lst->next == NULL)
+//			break ;
+		if (lex_lst->type == C_SPACE && lex_lst->next != NULL)
+			lex_lst = lex_lst->next;
+		if (lex_lst->next == NULL) {
+			elem = new_elem_pars(&g_data.garb_lst);
+			set_elem_pars(elem, lex_lst);
+			p_elem(elem);
+			elem_pars_add_back(&g_data.parser_lst, elem);
 			break ;
+		}
 //		sleep(1);
 	}
 	p_lst_elem(g_data.parser_lst);
