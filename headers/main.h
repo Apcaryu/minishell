@@ -28,10 +28,10 @@ typedef enum	e_type
 
 typedef struct s_token
 {
-	t_type type;
-	char *content;
-	t_bool is_closed;
-	struct s_token	*next;
+	t_type				type;
+	char 				*content;
+	t_bool 				is_closed;
+	struct s_token		*next;
 }	t_token;
 
 typedef struct s_elem_pars
@@ -42,12 +42,22 @@ typedef struct s_elem_pars
 	struct s_elem_pars	*next;
 }	t_elem_pars;
 
+typedef struct s_exec
+{
+	t_type				type;
+	char				*cmd;
+	char				**args;
+	struct s_exec		*next;
+}	t_exec;
+
 typedef struct s_data
 {
-	char *input;
-	t_list *garb_lst;
-	t_token *lexer_lst;
+	char 		*input;
+	t_list 		*garb_lst;
+	t_token		*lexer_lst;
 	t_elem_pars	*parser_lst;
+	t_exec		*exec_lst;
+	char		**env;
 }	t_data;
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);

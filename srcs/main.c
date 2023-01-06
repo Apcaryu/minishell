@@ -2,17 +2,18 @@
 
 t_data g_data;
 
-void	init_data(t_data *data)
+void	init_data(t_data *data, char **env)
 {
 	data->garb_lst = NULL;
 	data->lexer_lst = NULL;//new_token(&data->garb_lst);
+	data->env = env;
 }
 
 int	main(int argc, char *argv[], char  **envp)
 {
 //	t_data data;
 
-	init_data(&g_data);
+	init_data(&g_data, envp);
 	while (1)
 	{
 		g_data.input = readline("minishell-0.1$ ");
@@ -24,6 +25,7 @@ int	main(int argc, char *argv[], char  **envp)
 		g_data.lexer_lst = NULL;
 		g_data.parser_lst = NULL;
 		g_data.input = NULL;
+		g_data.exec_lst = NULL;
 	}
 	
 	return(0);

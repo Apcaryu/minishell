@@ -8,23 +8,28 @@ SRC_BUILTINS_PATH = srcs/builtins/
 SRC_LEXER_PATH = srcs/lexer/
 SRC_PARSER_PATH = srcs/parser/
 
-CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
+CC				= cc
+CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
 
-SRC = main.c \
-		garb_split.c
-SRC_EXEC = read_input.c
-SRC_BUILTINS = echo.c \
-				cd.c \
-				pwd.c \
-				export.c \
-				unset.c \
-				env.c \
-				exit.c
-SRC_LEXER = lexer.c \
-			lst_lexer.c
-SRC_PARSER = parser.c \
-				lst_parser.c
+SRC 			= main.c \
+					garb_split.c
+
+SRC_EXEC 		= read_input.c \
+					lst_exec.c
+
+SRC_BUILTINS 	= echo.c \
+					cd.c \
+					pwd.c \
+					export.c \
+					unset.c \
+					env.c \
+					exit.c
+
+SRC_LEXER 		= lexer.c \
+					lst_lexer.c
+
+SRC_PARSER 		= parser.c \
+					lst_parser.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
