@@ -193,10 +193,10 @@ void	print_lst(t_ntoken *ntoken_lst)
 		return ;
 	while (ntoken_lst->next != NULL)
 	{
-		printf("case = %p | type = %d\n", ntoken_lst, ntoken_lst->type);
+		printf("case = %p | type = %d | next = %p\n", ntoken_lst, ntoken_lst->type, ntoken_lst->next);
 		ntoken_lst = ntoken_lst->next;
 	}
-	printf("case = %p | type = %d\n", ntoken_lst, ntoken_lst->type);
+	printf("case = %p | type = %d | next = %p\n", ntoken_lst, ntoken_lst->type, ntoken_lst->next);
 }
 
 t_bool	is_word(char chr)

@@ -78,7 +78,7 @@ unsigned int	infile(t_nelem *elem, t_ntoken *token)
 {
 	unsigned int	nb_move;
 
-	nb_move = 1;
+	nb_move = 0;
 	elem->type = INFILE;
 	nb_move++;
 	return(nb_move);
@@ -108,15 +108,20 @@ void	parser(void)
 	while (lex_lst != NULL)
 	{
 		nb_move = 0;
-		printf("lex_lst = %p\n", lex_lst);
+//		printf("lex_lst = %p\n", lex_lst);
 		elem = new_elem_pars(&g_data.garb_lst);
 		nb_move = set_elem_pars(elem, lex_lst);
+		printf("elem = %p | type = %d | cmd = %s | next = %p\n", elem, elem->type, elem->cmd, elem->next);
 		elem_pars_add_back(&g_data.parser_lst, elem);
 		while (nb_move != 0)
 		{
+			if (lex_lst->next == NULL)
+				return ;
 			lex_lst = lex_lst->next;
+//			printf("lex_lst = %p | next = %p\n", lex_lst, lex_lst->next);
 			nb_move--;
+//			printf("nb_move = %u\n", nb_move);
 		}
-		printf("lex_lst = %p\n", lex_lst);
+//		sleep(1);
 	}
 }
