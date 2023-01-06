@@ -81,6 +81,16 @@ unsigned int	infile(t_nelem *elem, t_ntoken *token)
 	nb_move = 0;
 	elem->type = INFILE;
 	nb_move++;
+	if (token->next != NULL)
+		token = token->next;
+	else
+		return(nb_move);
+	if (token->type == SPACE)
+	{
+		nb_move++;
+		if (token->next == NULL)
+			return (nb_move);
+	}
 	return(nb_move);
 }
 
