@@ -74,6 +74,8 @@ void	parser(void)
 }
 */
 
+// ---------- ONLY FOR TEST ---------- //
+// TODO remove
 void	p_elem(t_nelem *elem)
 {
 	unsigned int	idx;
@@ -105,8 +107,38 @@ void p_lst_elem(t_nelem *lst)
 	}
 	p_elem(lst);
 }
+// ---------- END ---------- //
 
 unsigned int	infile_heredoc(t_nelem *elem, t_ntoken *token)
+{
+	unsigned int	nb_move;
+
+	nb_move = 0;
+	elem->type = token->type;
+	nb_move++;
+	if (token->next != NULL)
+		token = token->next;
+	else
+		return(nb_move);
+	if (token->type == C_SPACE)
+	{
+		nb_move++;
+		if (token->next == NULL)
+			return (nb_move);
+		else
+			token = token->next;
+	}
+	if (token->type == WORD)
+	{
+		nb_move++;
+		elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * 2);
+		elem->args[0] = token->content;
+		elem->args[1] = NULL;
+	}
+	return(nb_move);
+}
+
+unsigned int	outfile_append(t_nelem *elem, t_ntoken *token)
 {
 	unsigned int	nb_move;
 
@@ -141,6 +173,8 @@ unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 
 	nb_move = 0;
 	if (token->type == INFILE || token->type == HEREDOC)
+		nb_move = infile_heredoc(elem_pars, token);
+	else if (token->type == OUTFILE || token->type == APPEND)
 		nb_move = infile_heredoc(elem_pars, token);
 	// ----- ONLY FOR TEST -----//
 	if (nb_move == 0)
