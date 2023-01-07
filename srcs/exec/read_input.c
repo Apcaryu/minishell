@@ -122,10 +122,8 @@ void	print_exec_struct(t_exec *exec)
 	printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 }
 
-t_exec	*init_exec_structure()
+t_exec	*init_exec_structure(t_exec *exec)
 {
-	t_exec *exec;
-
 	exec->pid[0] = INT_MIN;
 	exec->pid[1] = INT_MIN;
 	exec->pipefd[0] = -1;
@@ -141,14 +139,14 @@ t_exec	*init_exec_structure()
 			exec->nbr_pipes++;
 			printf("pipes = %d\n", exec->nbr_pipes);
 		}
-		else if (g_data.parser_lst->type == COMMAND)
+		if (g_data.parser_lst->type == COMMAND)
 		{
 			exec->nbr_cmd++;
 			printf("cmds = %d\n", exec->nbr_cmd);
 		}
-		else if (g_data.parser_lst->next == NULL)
-            break;
-        g_data.parser_lst = g_data.parser_lst->next;
+		if (g_data.parser_lst->next == NULL)
+			break;
+		g_data.parser_lst = g_data.parser_lst->next;
 	}
 	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 	return (exec);
@@ -190,12 +188,14 @@ void	executer(void)
 	int		i;
 
 	i = 0;
+	exec = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
 	init_test_exec();
 	printf("input = < in cat | ls > out\n");
-	print_elem_lst(g_data.parser_lst);
+	// print_elem_lst(g_data.parser_lst);
 	// init_open_fd(); // TODO
-	exec = init_exec_structure(); // TODO
+	exec = init_exec_structure(exec); // TODO
 	// print_exec_struct(g_data.exec_struct);
+	// print_exec_struct(exec);
 	main_loop(exec); // TODO
 }
 

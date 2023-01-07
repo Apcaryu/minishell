@@ -26,8 +26,9 @@ int	main(int argc, char *argv[], char  **envp)
 //		g_data.lexer_lst = NULL;
 //		g_data.parser_lst = NULL;
 //		g_data.input = NULL;
-//		g_data.exec_lst = NULL;
+		g_data.exec_struct = NULL;
 //	}
+	ft_lstclear(&g_data.garb_lst, &free);
 	
 	return(0);
 }
