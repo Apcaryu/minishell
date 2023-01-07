@@ -130,8 +130,31 @@ t_exec	*init_exec_structure()
 	exec->pid[1] = INT_MIN;
 	exec->pipefd[0] = -1;
 	exec->pipefd[1] = -1;
+	exec->nbr_cmd = 0;
+	exec->nbr_pipes = 0;
+	exec->exit_code = 0;
+	exec->status = 0;
+	while (g_data.parser_lst->next != NULL)
+	{
+		if (g_data.parser_lst->type == PIPE)
+		{
+			exec->nbr_pipes++;
+			printf("pipes = %d\n", exec->nbr_pipes);
+		}
+		if (g_data.parser_lst->type == COMMAND)
+		{
+			exec->nbr_cmd++;
+			printf("cmds = %d\n", exec->nbr_cmd);
+		}
+		g_data.parser_lst = g_data.parser_lst->next;
+	}
 	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 	return (exec);
+}
+
+void	child_process()
+{
+
 }
 
 void	main_loop(t_exec *exec)
@@ -143,20 +166,18 @@ void	main_loop(t_exec *exec)
 	// {
 		if (pipe(exec->pipefd) == -1)
 			perror("minishell: ");
-		exec->pid[0] = fork();
-		if (exec->pid[0] == -1)
+		*exec->pid = fork();
+		if (*exec->pid == -1)
 		{
 			perror("minishell: ");
 			exit (1);
 		}
-		if (exec->pid[0] == 0)
-		{
-			
-		}
-		
-		printf("pid = %d\n", exec->pid[0]);
+		// else if (*exec->pid == 0)
+		// 	child_process();		
+		printf("pid = %d\n", *exec->pid);
 		// i++;
-		g_data.parser_lst = g_data.parser_lst->next;
+		waitpid(-1, NULL, 0);
+		// g_data.parser_lst = g_data.parser_lst->next;
 	// }
 }
 
@@ -168,11 +189,11 @@ void	executer(void)
 
 	i = 0;
 	init_test_exec();
+	printf("input = < in cat | ls > out\n");
+	print_elem_lst(g_data.parser_lst);
 	// init_open_fd(); // TODO
 	exec = init_exec_structure(); // TODO
 	// print_exec_struct(g_data.exec_struct);
-	printf("input = < in cat | ls > out\n");
-	// print_elem_lst(g_data.parser_lst);
 	main_loop(exec); // TODO
 }
 
