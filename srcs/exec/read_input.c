@@ -141,12 +141,14 @@ t_exec	*init_exec_structure()
 			exec->nbr_pipes++;
 			printf("pipes = %d\n", exec->nbr_pipes);
 		}
-		if (g_data.parser_lst->type == COMMAND)
+		else if (g_data.parser_lst->type == COMMAND)
 		{
 			exec->nbr_cmd++;
 			printf("cmds = %d\n", exec->nbr_cmd);
 		}
-		g_data.parser_lst = g_data.parser_lst->next;
+		else if (g_data.parser_lst->next == NULL)
+            break;
+        g_data.parser_lst = g_data.parser_lst->next;
 	}
 	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 	return (exec);
