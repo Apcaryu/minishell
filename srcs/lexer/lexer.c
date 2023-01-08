@@ -245,6 +245,48 @@ t_bool	is_pipe(t_ntoken *token, unsigned int *idx)
 	return (false);
 }
 
+char	*set_content(t_ntoken *token, unsigned int *idx)
+{
+	unsigned int	sub_idx;
+	int				size;
+	char			*content;
+
+	sub_idx = *idx;
+	size = 0;
+	content = NULL;
+	if (is_word(g_data.input[*idx]))
+	{
+		while (is_word(g_data.input[sub_idx]) && g_data.input[sub_idx] != '\0'  \
+ 				&& *idx + size < ft_strlen(g_data.input)) {
+			size++;
+			sub_idx++;
+		}
+	}
+	else if (g_data.input[*idx] == '\"' || g_data.input[*idx] == '\'')
+	{
+		while (g_data.input[sub_idx] != '\0'  \
+				&& *idx + size < ft_strlen(g_data.input)) {
+			size++;
+			sub_idx++;
+			if (g_data.input[sub_idx] == '\'' || g_data.input[sub_idx] == '\"')
+			{
+				size++;
+				sub_idx++;
+			}
+		}
+	}
+//	printf("size = %u | sub_idx = %u\n", size, sub_idx);
+	if (size == 0)
+		return (NULL);
+	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
+//	printf("content = %p\n", content);
+	if (!content)
+		return (NULL);
+	ft_strlcpy(content, g_data.input + *idx, size + 1);
+	*idx = *idx + size;
+	return (content);
+}
+
 t_bool is_quote(t_ntoken *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
@@ -253,6 +295,7 @@ t_bool is_quote(t_ntoken *token, unsigned int *idx)
 			token->type = SINGLE_QUOTE;
 		else if (g_data.input[*idx] == '\"')
 			token->type = DOUBLE_QUOTE;
+		token->content = set_content(token, idx);
 		*idx += 1;
 		return (true);
 	}
@@ -264,33 +307,6 @@ void	space(t_ntoken *token, unsigned int *idx)
 	token->type = C_SPACE;
 	while (g_data.input[*idx] == ' ')
 		*idx += 1;
-}
-
-char	*set_content(t_ntoken *token, unsigned int *idx)
-{
-	unsigned int	sub_idx;
-	int				size;
-	char			*content;
-
-	sub_idx = *idx;
-	size = 0;
-	content = NULL;
-	while (is_word(g_data.input[sub_idx]) && g_data.input[sub_idx] != '\0'  \
-	&& *idx + size < ft_strlen(g_data.input))
-	{
-	    size++;
-	    sub_idx++;
-	}
-//	printf("size = %u | sub_idx = %u\n", size, sub_idx);
-	if (size == 0)
-		return (NULL);
-	content = garbage_alloc(&g_data.garb_lst, (int)sizeof(char) * (size + 1));
-//	printf("content = %p\n", content);
-	if (!content)
-		return (NULL);
-	ft_strlcpy(content, g_data.input + *idx, size + 1);
-	*idx = *idx + size;
-	return (content);
 }
 
 void	word(t_ntoken *token, unsigned int *idx)
