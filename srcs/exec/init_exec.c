@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/09 13:57:51 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:40:43 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	init_test_exec()
 
 t_exec	*init_exec_structure(t_exec *exec)
 {
+	t_elem_pars *elem_lst;
+	
 	exec->pid[0] = INT_MIN;
 	exec->pid[1] = INT_MIN;
 	exec->pipefd[0] = -1;
@@ -69,21 +71,44 @@ t_exec	*init_exec_structure(t_exec *exec)
 	exec->status = 0;
 	exec->cmds = NULL;
 	
-	while (g_data.parser_lst->next != NULL)
+	if (g_data.parser_lst->args != NULL && g_data.parser_lst->type == INFILE)
 	{
-		if (g_data.parser_lst->type == PIPE)
+		exec->infile = open(g_data.parser_lst->args[0], O_RDONLY);
+		if (exec->infile == -1)
+		{
+			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			write(2, "\n", 1);
+			exit (0);
+		}
+	}
+	if (g_data.parser_lst->args != NULL && g_data.parser_lst->type == OUTFILE)
+	{
+		exec->outfile = open(g_data.parser_lst->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (exec->outfile == -1)
+		{
+			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			write(2, "\n", 1);
+			close(exec->infile);
+			exit (1);
+		}
+	}
+	
+	elem_lst = g_data.parser_lst;
+	while (elem_lst->next != NULL)
+	{
+		if (elem_lst->type == PIPE)
 		{
 			exec->nbr_pipes++;
 			printf("pipes = %d\n", exec->nbr_pipes);
 		}
-		if (g_data.parser_lst->type == COMMAND)
+		if (elem_lst->type == COMMAND)
 		{
 			exec->nbr_cmd++;
 			printf("cmds = %d\n", exec->nbr_cmd);
 		}
-		if (g_data.parser_lst->next == NULL)
+		if (elem_lst->next == NULL)
 			break;
-		g_data.parser_lst = g_data.parser_lst->next;
+		elem_lst = elem_lst->next;
 	}
 	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 	return (exec);

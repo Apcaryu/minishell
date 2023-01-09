@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/09 16:18:09 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:57:29 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,27 +88,87 @@ void	pipe_process(t_exec *exec)
 		}
 		printf("pipefd[0] : %d\n", exec->pipefd[0]);
 		printf("pipefd[1] : %d\n", exec->pipefd[1]);
+		
 		i++;
 	}
 }
 
+// int	child_exec(t_exec *exec, t_data *data, int invalid)
+// {
+// 	char	*cmd;
+// 	int		fork_nbr;
+	
+// 	fork_nbr = 0;
+// 	exec->pid[fork_nbr] = fork();
+// 	if (exec->pid[fork_nbr] == -1)
+// 	{
+// 		perror("minishell: ");
+// 		exit (1);
+// 	}
+// 	if (exec->pid[fork_nbr] == 0)
+// 	{
+		
+// 	}
+// 	return (fork_nbr ++, 0);
+// }
+
+// void	exec_process()
+// {
+	
+// }
+
+void	wait_loop(t_exec *exec)
+{
+	int wait;
+	int	j;
+	t_elem_pars	*elem_pars;
+
+	elem_pars = g_data.parser_lst;
+	j = -1;
+	close(exec->pipefd[1]);
+	close(exec->pipefd[0]);
+	while (elem_pars->next != NULL && j < 2)
+	{
+		wait = waitpid(exec->pid[j], &exec->status, 0);
+		// printf("wait : %d\n", wait);
+		if (WIFEXITED(exec->status))
+			exec->exit_code = WEXITSTATUS(exec->status);
+		j++;
+		elem_pars = elem_pars->next;
+	}
+	exit (exec->exit_code);
+}
+
 void	main_loop(t_exec *exec)
 {
-		*exec->pid = fork();
-		if (*exec->pid == -1)
+	int i;
+	t_elem_pars	*elem_pars;
+
+	i = 1;
+	elem_pars = g_data.parser_lst;
+	// printf("type : %d | next : %p\n", g_data.parser_lst->type, g_data.parser_lst->next);
+	while (elem_pars->next != NULL)
+	{
+		pipe_process(exec);
+		exec->pid[i] = fork();
+		if (exec->pid[i] == -1)
 		{
 			perror("minishell: ");
 			exit (1);
 		}
-		else if (*exec->pid == 0)
+		else if (exec->pid[i] == 0)
 		{
-			pipe_process(exec);
+			// child_process(exec);
 			close_fd(exec);
 		}
-		printf("pid = %d\n", *exec->pid);
+		printf("pid = %d\n", exec->pid[i]);
 		printf("pipefd[0] : %d\n", exec->pipefd[0]);
 		printf("pipefd[1] : %d\n", exec->pipefd[1]);
-		waitpid(-1, NULL, 0);
+		i++;
+		elem_pars = elem_pars->next;
+	}
+	wait_loop(exec);
+	// waitpid(-1, NULL, 0);
 }
 
 void	executer(void)
