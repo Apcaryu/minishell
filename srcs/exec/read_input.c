@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/09 13:54:05 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:18:09 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	close_fd(t_exec *exec)
 	close(exec->pipefd[1]);
 }
 
-void	child_process(t_exec *exec)
+void	pipe_process(t_exec *exec)
 {
 	int i;
 
@@ -94,13 +94,6 @@ void	child_process(t_exec *exec)
 
 void	main_loop(t_exec *exec)
 {
-	// int	i;
-
-	// i = 0;
-	// while (g_data.parser_lst->next != NULL)
-	// {
-		// if (pipe(exec->pipefd) == -1)
-		// 	perror("minishell: ");
 		*exec->pid = fork();
 		if (*exec->pid == -1)
 		{
@@ -108,13 +101,14 @@ void	main_loop(t_exec *exec)
 			exit (1);
 		}
 		else if (*exec->pid == 0)
-			child_process(exec);
+		{
+			pipe_process(exec);
+			close_fd(exec);
+		}
 		printf("pid = %d\n", *exec->pid);
-		close_fd(exec);
-		// i++;
+		printf("pipefd[0] : %d\n", exec->pipefd[0]);
+		printf("pipefd[1] : %d\n", exec->pipefd[1]);
 		waitpid(-1, NULL, 0);
-		// g_data.parser_lst = g_data.parser_lst->next;
-	// }
 }
 
 void	executer(void)

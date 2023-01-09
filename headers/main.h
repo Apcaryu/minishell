@@ -58,8 +58,8 @@ typedef struct s_exec
 	int		nbr_cmd;
 	int		nbr_pipes;
 	char	**cmds;
-	// int		infile;
-	// int		outfile;
+	int		infile;
+	int		outfile;
 }	t_exec;
 
 typedef struct s_data

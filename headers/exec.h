@@ -9,7 +9,7 @@
 // Exec functions
 void	check_command(char *input);
 void	read_input(t_data *data);
-void	child_process(t_exec *exec);
+void	pipe_process(t_exec *exec);
 void	main_loop(t_exec *exec);
 void	executer(void);
 
