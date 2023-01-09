@@ -76,6 +76,13 @@ void	parser(void)
 
 // ---------- ONLY FOR TEST ---------- //
 // TODO remove
+void	p_token(t_ntoken *token)
+{
+	if (token == NULL)
+		return ;
+	printf("token = %p | type = %d | content = %s | next = %p\n", token, token->type, token->content, token->next);
+}
+
 void	p_elem(t_nelem *elem)
 {
 	unsigned int	idx;
@@ -188,10 +195,12 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	elem->type = token->type;
 	elem->cmd = token->content;
 	nb_move++;
+	p_token(token);
 	if (token->next != NULL)
 		token = token->next;
 	else
 		return (nb_move);
+	p_token(token);
 	if (token->type == C_SPACE)
 	{
 		nb_move++;
@@ -200,6 +209,10 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 		else
 			token = token->next;
 	}
+	p_token(token);
+	if (token->type == INFILE || token->type == HEREDOC || \
+		token->type == OUTFILE || token->type == APPEND || token->type == PIPE)
+		return (nb_move);
 	args = nb_arg(token);
 //	printf("nb_args = %u\n", args); // TODO remove
 	elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * args + 1);
@@ -214,7 +227,8 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 			else
 				token = token->next;
 		}
-		else
+		else if (token->type != INFILE && token->type != HEREDOC && \
+		token->type != OUTFILE && token->type != APPEND && token->type != PIPE)
 		{
 			elem->args[idx] = token->content;
 			if (token->next == NULL)
@@ -309,6 +323,7 @@ void	parser(void)
 			}
 			break ;
 		}
+		elem = NULL;
 //		sleep(1);
 	}
 	p_lst_elem(g_data.parser_lst);
