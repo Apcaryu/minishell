@@ -51,12 +51,15 @@ typedef struct s_elem_pars
 
 typedef struct s_exec
 {
-	int	pid[2];
-	int	pipefd[2];
-	int	status;
-	int exit_code;
-	int	nbr_cmd;
-	int	nbr_pipes;
+	int		pid[2];
+	int		pipefd[2];
+	int		status;
+	int 	exit_code;
+	int		nbr_cmd;
+	int		nbr_pipes;
+	char	**cmds;
+	// int		infile;
+	// int		outfile;
 }	t_exec;
 
 typedef struct s_data
