@@ -9,9 +9,9 @@ t_bool	is_type_word(t_ntype type)
 	return (false);
 }
 
-unsigned int	detect_dollar(char *word)
+unsigned int	detect_dollar(char *word, unsigned int idx)
 {
-	unsigned int	idx;
+//	unsigned int	idx;
 
 	while (word[idx] != '\0')
 	{
@@ -22,6 +22,21 @@ unsigned int	detect_dollar(char *word)
 	return (UINT_MAX);
 }
 
+void	set_var_content(t_ntoken *token)
+{
+	unsigned int	idx;
+
+	idx = 0;
+	while (token->content[idx] != '\0' && idx != UINT_MAX)
+	{
+		idx = detect_dollar(token->content, idx);
+		if (idx == UINT_MAX || token->content[idx] == '\0')
+			break ;
+		printf("content[%u] = %c\n", idx, token->content[idx]);
+		idx++;
+	}
+}
+
 void	expend(void)
 {
 	t_ntoken *token_lst;
@@ -30,7 +45,7 @@ void	expend(void)
 	while (token_lst != NULL)
 	{
 		if (is_type_word(token_lst->type))
-			printf("is_word | '$' pos = %u\n", detect_dollar(token_lst->content));
+			set_var_content(token_lst);
 		token_lst = token_lst->next;
 	}
 }
