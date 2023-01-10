@@ -9,6 +9,19 @@ t_bool	is_type_word(t_ntype type)
 	return (false);
 }
 
+unsigned int	detect_dollar(char *word)
+{
+	unsigned int	idx;
+
+	while (word[idx] != '\0')
+	{
+		if (word[idx] == '$')
+			return (idx);
+		idx++;
+	}
+	return (UINT_MAX);
+}
+
 void	expend(void)
 {
 	t_ntoken *token_lst;
@@ -17,7 +30,7 @@ void	expend(void)
 	while (token_lst != NULL)
 	{
 		if (is_type_word(token_lst->type))
-			printf("is_word\n");
+			printf("is_word | '$' pos = %u\n", detect_dollar(token_lst->content));
 		token_lst = token_lst->next;
 	}
 }
