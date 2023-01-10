@@ -22,6 +22,7 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	n_lexer();
+	expend();
 //	lexer(data);
 	parser();
 //	check_command(input);

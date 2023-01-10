@@ -7,6 +7,7 @@ SRC_EXEC_PATH = srcs/exec/
 SRC_BUILTINS_PATH = srcs/builtins/
 SRC_LEXER_PATH = srcs/lexer/
 SRC_PARSER_PATH = srcs/parser/
+SRC_EXPEND_PATH = srcs/expend/
 
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
@@ -25,18 +26,21 @@ SRC_LEXER = lexer.c \
 			lst_lexer.c
 SRC_PARSER = parser.c \
 				lst_parser.c
+SRC_EXPEND = expend.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
 SRCS_BUILTINS = $(addprefix $(SRC_BUILTINS_PATH), $(SRC_BUILTINS))
 SRCS_LEXER = $(addprefix $(SRC_LEXER_PATH), $(SRC_LEXER))
 SRCS_PARSER =$(addprefix $(SRC_PARSER_PATH), $(SRC_PARSER))
+SRCS_EXPEND = $(addprefix $(SRC_EXPEND_PATH), $(SRC_EXPEND))
 OBJ		  = $(SRC:.c=.o)
 OBJ_EXEC  = $(SRC_EXEC:.c=.o)
 OBJ_BUILTINS = $(SRC_BUILTINS:.c=.o)
 OBJ_LEXER = $(SRC_LEXER:.c=.o)
 OBJ_PARSER = $(SRC_PARSER:.c=.o)
-OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS) $(OBJ_LEXER) $(OBJ_PARSER))
+OBJ_EXPEND = $(SRC_EXPEND:.c=.o)
+OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS) $(OBJ_LEXER) $(OBJ_PARSER) $(OBJ_EXPEND))
 DEPS	  = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 HEADERS	  = -I./headers/
 LIB 	  = -L./libft_42/ -lft -lreadline
@@ -69,6 +73,10 @@ $(OBJ_PATH)%.o: $(SRC_LEXER_PATH)%.c
 	@$(CC) $(HEADERS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_PARSER_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(HEADERS) -o $@ -c $<
+
+$(OBJ_PATH)%.o: $(SRC_EXPEND_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(HEADERS) -o $@ -c $<
 
