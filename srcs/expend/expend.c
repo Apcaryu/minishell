@@ -36,6 +36,27 @@ unsigned int	variable_size(const char *str, unsigned int idx)
 	return (len_out);
 }
 
+void	remove_quote(char *str)
+{
+	unsigned int	idx;
+	unsigned int	size;
+
+	idx = 0;
+	size = ft_strlen(str);
+	printf("str = %s\n", str);
+	printf("size = %u\n", size);
+	while(idx < size - 1/*str[idx + 1] != '\0'*/)
+	{
+		str[idx] = str[idx + 1];
+		idx++;
+	}
+	if (idx == 0)
+		str[idx] = '\0';
+	else
+		str[idx - 1] = '\0';
+	printf("str = %s\n", str);
+}
+
 void	set_var_content(t_ntoken *token)
 {
 	unsigned int	idx;
@@ -50,6 +71,9 @@ void	set_var_content(t_ntoken *token)
 		printf("content[%u] = %c\n", idx, token->content[idx]);
 		idx++;
 	}
+	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
+		remove_quote(token->content);
+	printf("content = %s\n", token->content);
 }
 
 void	expend(void)
