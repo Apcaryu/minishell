@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/09 18:40:43 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:08:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,10 @@ void	init_test_exec()
 	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
 	element->args[0] = "out";
 	elem_pars_add_back(&g_data.parser_lst, element);
-
 }
 
-t_exec	*init_exec_structure(t_exec *exec)
+void	open_inout_fds(t_exec *exec)
 {
-	t_elem_pars *elem_lst;
-	
-	exec->pid[0] = INT_MIN;
-	exec->pid[1] = INT_MIN;
-	exec->pipefd[0] = -1;
-	exec->pipefd[1] = -1;
-	exec->nbr_cmd = 0;
-	exec->nbr_pipes = 0;
-	exec->exit_code = 0;
-	exec->status = 0;
-	exec->cmds = NULL;
-	
 	if (g_data.parser_lst->args != NULL && g_data.parser_lst->type == INFILE)
 	{
 		exec->infile = open(g_data.parser_lst->args[0], O_RDONLY);
@@ -92,6 +79,21 @@ t_exec	*init_exec_structure(t_exec *exec)
 			exit (1);
 		}
 	}
+}
+
+t_exec	*init_exec_structure(t_exec *exec)
+{
+	t_elem_pars *elem_lst;
+	
+	exec->pid[0] = 0;
+	exec->pid[1] = 0;
+	exec->pipefd[0] = -1;
+	exec->pipefd[1] = -1;
+	exec->nbr_cmd = 0;
+	exec->nbr_pipes = 0;
+	exec->exit_code = 0;
+	exec->status = 0;
+	exec->cmds = NULL;
 	
 	elem_lst = g_data.parser_lst;
 	while (elem_lst->next != NULL)

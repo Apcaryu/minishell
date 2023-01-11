@@ -10,15 +10,16 @@
 void	check_command(char *input);
 void	read_input(t_data *data);
 void	pipe_process(t_exec *exec);
-void	main_loop(t_exec *exec);
+int		main_loop(t_exec *exec);
 void	executer(void);
 
 // Close fds
 void	close_fd(t_exec *exec);
 
 // Init exec
-void	init_test_exec();
-t_exec	*init_exec_structure(t_exec *exec);
+void		init_test_exec();
+void		open_inout_fds(t_exec *exec);
+t_exec		*init_exec_structure(t_exec *exec);
 
 // Print elements
 void	print_elem_lst(t_elem_pars *lst); // TODO remove;

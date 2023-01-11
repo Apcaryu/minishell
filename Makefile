@@ -10,6 +10,7 @@ SRC_PARSER_PATH = srcs/parser/
 
 CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
+CFLAGS			= -MMD -MP -g3 # TODO remove
 
 SRC 			= main.c \
 					garb_split.c
@@ -60,23 +61,23 @@ $(NAME) : $(OBJS)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_EXEC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_BUILTINS_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_LEXER_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_PARSER_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 clean :
 	@rm -rf $(OBJ_PATH)
