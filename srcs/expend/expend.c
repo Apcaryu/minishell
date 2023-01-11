@@ -22,6 +22,20 @@ unsigned int	detect_dollar(char *word, unsigned int idx)
 	return (UINT_MAX);
 }
 
+unsigned int	variable_size(const char *str, unsigned int idx)
+{
+	unsigned int	len_out;
+
+	len_out = 0;
+	idx++;
+	while (isalnum(str[idx]) || str[idx] == '_')
+	{
+		idx++;
+		len_out++;
+	}
+	return (len_out);
+}
+
 void	set_var_content(t_ntoken *token)
 {
 	unsigned int	idx;
@@ -32,6 +46,7 @@ void	set_var_content(t_ntoken *token)
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
+		printf("var_size = %u\n", variable_size(token->content, idx));
 		printf("content[%u] = %c\n", idx, token->content[idx]);
 		idx++;
 	}
