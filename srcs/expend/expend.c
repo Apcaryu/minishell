@@ -36,6 +36,16 @@ unsigned int	variable_size(const char *str, unsigned int idx)
 	return (len_out);
 }
 
+char	*variable_name(char *str, unsigned int idx, unsigned int var_size)
+{
+	char	*var_name;
+
+	var_name = garbage_alloc(&g_data.garb_lst, sizeof(char *) * var_size + 1);
+	ft_strlcpy(var_name, str + idx, var_size + 2);
+	printf("var_name = %s\n", var_name);
+	return (var_name);
+}
+
 void	remove_quote(char *str)
 {
 	unsigned int	idx;
@@ -62,12 +72,13 @@ void	set_var_content(t_ntoken *token)
 	unsigned int	idx;
 
 	idx = 0;
-	while (token->content[idx] != '\0' && idx != UINT_MAX)
+	while (token->content[idx] != '\0' && idx != UINT_MAX && token->type != SINGLE_QUOTE)
 	{
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
-		printf("var_size = %u\n", variable_size(token->content, idx));
+		variable_name(token->content, idx, variable_size(token->content, idx));
+//		printf("var_size = %u\n", variable_size(token->content, idx));
 		printf("content[%u] = %c\n", idx, token->content[idx]);
 		idx++;
 	}
