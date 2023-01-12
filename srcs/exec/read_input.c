@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/11 20:20:08 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:23:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void	child_process(t_exec *exec, t_elem_pars *elem)
 		printf("infile->exit_code = %d\n", exec->exit_code);
 		close(exec->infile);
 	}
-	else if (elem->type == OUTFILE)
+	if (elem->type == OUTFILE)
 	{
 		printf("OUTFILE = %d\n", exec->outfile);
 		exec->exit_code = dup2(exec->outfile, STDOUT_FILENO);
@@ -176,18 +176,22 @@ int	main_loop(t_exec *exec)
 {
 	int i;
 	t_elem_pars	*elem_pars;
+	t_bool is_fork = false;
 
 	i = 1;
 	elem_pars = g_data.parser_lst;
 	// printf("type : %d | next : %p\n", g_data.parser_lst->type, g_data.parser_lst->next);
 	while (elem_pars->next != NULL)
 	{
-		while (elem_pars->next != NULL && elem_pars->cmd == NULL)
-			elem_pars = elem_pars->next;
 		open_inout_fds(exec);
 		pipe_process(exec);
-		// if (elem_pars->type == COMMAND)
+		if (!is_fork)
+		{
+			is_fork = true;
 			exec->pid[i] = fork();
+		}
+		if (elem_pars->type == PIPE)
+			is_fork = false;
 	// 	fork_cmds(exec, i);
 	// 	// printf("exec->pid[%d] : %d\n", i, exec->pid[i]);
 		if (exec->pid[i] == -1)
