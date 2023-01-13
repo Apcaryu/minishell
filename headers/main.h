@@ -51,7 +51,7 @@ typedef struct s_elem_pars
 
 typedef struct s_exec
 {
-	int		pid[2];
+	pid_t	pid;
 	int		pipefd[2];
 	int		status;
 	int 	exit_code;
@@ -61,6 +61,21 @@ typedef struct s_exec
 	int		infile;
 	int		outfile;
 }	t_exec;
+
+// typedef struct s_proc
+// {
+// 	t_elem_pars *elem_list;
+// 	int		infile;
+// 	int		outfile;
+// 	char * cmd;
+// 	char** args;
+// 	int		pid[2];
+// 	int		pipefd[2];
+// 	int		status;
+// 	int 	exit_code;
+
+// };
+
 
 typedef struct s_data
 {

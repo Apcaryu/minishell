@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/11 20:08:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:16:21 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_test_exec()
 	t_elem_pars *element;
 
 	/*for: < in cat | ls > out*/
-
+	
 	element = NULL;
 
 	g_data.parser_lst = NULL;
@@ -33,7 +33,8 @@ void	init_test_exec()
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
 	element->cmd = "cat";
-	element->args = NULL;
+	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+	element->args[0] = "cat";
 	elem_pars_add_back(&g_data.parser_lst, element);
 
 	element = new_elem_pars(&g_data.garb_lst);
@@ -44,8 +45,9 @@ void	init_test_exec()
 
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
-	element->cmd = "ls";
-	element->args = NULL;
+	element->cmd = "cat";
+	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+	element->args[0] = "cat";
 	elem_pars_add_back(&g_data.parser_lst, element);
 
 	element = new_elem_pars(&g_data.garb_lst);
@@ -56,11 +58,12 @@ void	init_test_exec()
 	elem_pars_add_back(&g_data.parser_lst, element);
 }
 
-void	open_inout_fds(t_exec *exec)
+void	open_inout_fds(t_exec *exec, t_elem_pars *elem)
 {
-	if (g_data.parser_lst->args != NULL && g_data.parser_lst->type == INFILE)
+	// dprintf(2, "type = %d\n", elem->type);
+	if (elem->args != NULL && elem->type == INFILE)
 	{
-		exec->infile = open(g_data.parser_lst->args[0], O_RDONLY);
+		exec->infile = open(elem->args[0], O_RDONLY);
 		if (exec->infile == -1)
 		{
 			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
@@ -68,9 +71,9 @@ void	open_inout_fds(t_exec *exec)
 			exit (0);
 		}
 	}
-	if (g_data.parser_lst->args != NULL && g_data.parser_lst->type == OUTFILE)
+	if (elem->args != NULL && elem->type == OUTFILE)
 	{
-		exec->outfile = open(g_data.parser_lst->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		exec->outfile = open(elem->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (exec->outfile == -1)
 		{
 			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
@@ -85,8 +88,7 @@ t_exec	*init_exec_structure(t_exec *exec)
 {
 	t_elem_pars *elem_lst;
 	
-	exec->pid[0] = 0;
-	exec->pid[1] = 0;
+	exec->pid = 0;
 	exec->pipefd[0] = -1;
 	exec->pipefd[1] = -1;
 	exec->nbr_cmd = 0;
@@ -94,6 +96,9 @@ t_exec	*init_exec_structure(t_exec *exec)
 	exec->exit_code = 0;
 	exec->status = 0;
 	exec->cmds = NULL;
+	exec->infile = INT_MIN;
+	exec->outfile = INT_MIN;
+	
 	
 	elem_lst = g_data.parser_lst;
 	while (elem_lst->next != NULL)
@@ -112,6 +117,19 @@ t_exec	*init_exec_structure(t_exec *exec)
 			break;
 		elem_lst = elem_lst->next;
 	}
-	// printf("exec structure = %p | pid[0] = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid[0], exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
+	// printf("exec structure = %p | pid = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid, exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
 	return (exec);
 }
+
+// start = elem;
+// while(elem){
+// 	if (elem->type == PIPE){
+// 		pipe()
+// 		fork()
+// 		if (pid == 0)
+// 			child(start, elem)
+// 		else
+// 			elem->next = start;
+// 	}
+// 	elem->next;
+// }

@@ -18,7 +18,7 @@ void	close_fd(t_exec *exec);
 
 // Init exec
 void		init_test_exec();
-void		open_inout_fds(t_exec *exec);
+void		open_inout_fds(t_exec *exec, t_elem_pars *elem);
 t_exec		*init_exec_structure(t_exec *exec);
 
 // Print elements
