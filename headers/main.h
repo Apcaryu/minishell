@@ -82,6 +82,7 @@ typedef struct s_data
 	t_ntoken	*nlexer_lst;
 //	t_token *lexer_lst;
 	t_nelem		*parser_lst;
+	char		**env;
 }	t_data;
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);
