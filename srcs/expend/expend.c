@@ -40,7 +40,7 @@ char	*variable_name(char *str, unsigned int idx, unsigned int var_size)
 {
 	char	*var_name;
 
-	var_name = garbage_alloc(&g_data.garb_lst, sizeof(char *) * var_size + 1);
+	var_name = garbage_alloc(&g_data.garb_lst, sizeof(char *) * var_size + 2);
 	ft_strlcpy(var_name, str + idx, var_size + 2);
 	printf("var_name = %s\n", var_name);
 	return (var_name);
