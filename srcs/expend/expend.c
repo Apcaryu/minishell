@@ -48,9 +48,13 @@ char	*variable_name(char *str, unsigned int idx, unsigned int var_size)
 
 unsigned int	var_content_size(char *var_name)
 {
-	unsigned int size;
+	unsigned int	size;
+	char			*tmp;
 
-	size = ft_strlen(getenv(var_name+1));
+	tmp = getenv(var_name + 1);
+	if (tmp == NULL)
+		return (0);
+	size = ft_strlen(tmp);
 	printf("size = %u\n", size);
 	return (size);
 }
@@ -79,6 +83,7 @@ void	remove_quote(char *str)
 void	set_var_content(t_ntoken *token)
 {
 	unsigned int	idx;
+	t_varenv		var;
 
 	idx = 0;
 	while (token->content[idx] != '\0' && idx != UINT_MAX && token->type != SINGLE_QUOTE)
@@ -86,7 +91,15 @@ void	set_var_content(t_ntoken *token)
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
-		var_content_size(variable_name(token->content, idx, variable_size(token->content, idx)));
+		var.var_size = variable_size(token->content, idx);
+		var.var_name = variable_name(token->content, idx, var.var_size);
+		if (ft_isalnum(var.var_name[1]) || var.var_name[1] == '_')
+		{
+			var.var_content_size = var_content_size(var.var_name);
+			var.var_content = getenv(var.var_name + 1);
+			printf("content of %s = %s\n", var.var_name, var.var_content);
+		}
+//		var_content_size(variable_name(token->content, idx, variable_size(token->content, idx)));
 //		printf("var_size = %u\n", variable_size(token->content, idx));
 		printf("content[%u] = %c\n", idx, token->content[idx]);
 		idx++;
