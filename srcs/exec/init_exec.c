@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/13 14:16:21 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:53:47 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,46 @@ void	init_test_exec()
 {
 	t_elem_pars *element;
 
-	/*for: < in cat | ls > out*/
+	/*for: < in cat | ls | rev > out*/
 	
 	element = NULL;
+
+	// g_data.parser_lst = NULL;
+	// element = new_elem_pars(&g_data.garb_lst);
+	// element->type = INFILE;
+	// element->cmd = NULL;
+	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+	// element->args[0] = "in";
+	// elem_pars_add_back(&g_data.parser_lst, element);
+
+	element = new_elem_pars(&g_data.garb_lst);
+	element->type = COMMAND;
+	element->cmd = "cat";
+	element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
+	element->args[0] = "cat";
+	element->args[1] = NULL;
+	elem_pars_add_back(&g_data.parser_lst, element);
+	
+	element = new_elem_pars(&g_data.garb_lst);
+	element->type = PIPE;
+	element->cmd = NULL;
+	element->args = NULL;
+	elem_pars_add_back(&g_data.parser_lst, element);
 
 	g_data.parser_lst = NULL;
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = INFILE;
 	element->cmd = NULL;
 	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	element->args[0] = "in";
+	element->args[0] = "in2";
 	elem_pars_add_back(&g_data.parser_lst, element);
 
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
-	element->cmd = "cat";
-	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	element->args[0] = "cat";
+	element->cmd = "rev";
+	element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
+	element->args[0] = "rev";
+	element->args[1] = NULL;
 	elem_pars_add_back(&g_data.parser_lst, element);
 
 	element = new_elem_pars(&g_data.garb_lst);
@@ -45,17 +68,18 @@ void	init_test_exec()
 
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
-	element->cmd = "cat";
-	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	element->args[0] = "cat";
+	element->cmd = "rev";
+	element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
+	element->args[0] = "rev";
+	element->args[1] = NULL;
 	elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(&g_data.garb_lst);
-	element->type = OUTFILE;
-	element->cmd = NULL;
-	element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	element->args[0] = "out";
-	elem_pars_add_back(&g_data.parser_lst, element);
+	// element = new_elem_pars(&g_data.garb_lst);
+	// element->type = OUTFILE;
+	// element->cmd = NULL;
+	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+	// element->args[0] = "out";
+	// elem_pars_add_back(&g_data.parser_lst, element);
 }
 
 void	open_inout_fds(t_exec *exec, t_elem_pars *elem)

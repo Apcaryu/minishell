@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/13 14:23:49 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:52:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ int exiteur(int exit_code, t_exec *exec)
 
 void	wait_loop_bis(t_exec *exec)
 {
+	close(exec->pipefd[0]);
+	close(exec->pipefd[1]);
 	while (errno != ECHILD)
 	{
 		wait(&exec->pid);
@@ -209,7 +211,7 @@ void exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem)
 	int access_out;
 	
 	access_out = -1;
-	while (start != elem && start->type != COMMAND)
+	while (((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL)) && start->type != COMMAND)
 	{
 		start = start->next;
 	}
@@ -218,80 +220,108 @@ void exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem)
 	// 	access_out = access(start->cmd, F_OK);
 	// if (access_out == 0)
 	// 	execve("/bin/", elem->args, NULL /*g_data.env*/);
-	exec_path(start, exec);
+	if (start->type == COMMAND)
+		exec_path(start, exec);
 	// exit (127);
 }
 
-void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
+static int	open_inout(t_elem_pars *elem)
 {
-	printf("start = %d | elem = %d\n", start->type, elem->type);
-	// while ()
-	if (!elem->next)
+	int file;
+
+	file = -1;
+	// dprintf(2, "type = %d\n", elem->type);
+	if (elem->args != NULL && elem->type == INFILE)
 	{
-		exec->exit_code = dup2(exec->pipefd[1], STDOUT_FILENO);
-		close(exec->pipefd[0]);
+		file = open(elem->args[0], O_RDONLY);
+		if (file == -1)
+		{
+			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			write(2, "\n", 1);
+		}
 	}
-	// dprintf(2, "AUTRE pipefd[1] = %d\n", exec->pipefd[1]);
-	// dprintf(2, "pipefd[1]->exit_code = %d\n", exec->exit_code);
-	if (exec->exit_code == -1)
-		perror("dup2: ");
-	if (exec->infile != 0)
-		dup2(exec->infile, 0);
-	if (exec->outfile != 1)
-		dup2(exec->outfile, 1);
-	// if (start->type == INFILE)
-	// {
-	// 	// printf("INFILE = %d\n", exec->infile);
-	// 	exec->exit_code = dup2(exec->infile, STDIN_FILENO);
-	// 	if (exec->exit_code == -1)
-	// 		perror("dup2: ");
-	// 	dprintf(2,"infile->exit_code = %d\n", exec->exit_code);
-	// 	close(exec->infile);
-	// }
-	// if (start->type == OUTFILE)
-	// {
-	// 	dprintf(2, "OUTFILE = %d\n", exec->outfile);
-	// 	exec->exit_code = dup2(exec->outfile, STDOUT_FILENO);
-	// 	if (exec->exit_code == -1)
-	// 		perror("dup2: ");
-	// 	dprintf(2,"outfile->exit_code = %d\n", exec->exit_code);
-	// 	close(exec->outfile);
-	// }
+	if (elem->args != NULL && elem->type == OUTFILE)
+	{
+		file = open(elem->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		if (file == -1)
+		{
+			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			write(2, "\n", 1);
+		}
+	}
+	return (file);
+}
+
+void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
+{
+	int infile;
+	int outfile;
+	char *cmd;
+
+	infile = -2;
+	outfile = -2;
+	
+	while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL)){
+		if (start->type == INFILE)
+			infile = open_inout(start);
+		else if (start->type == COMMAND)
+			cmd = start->cmd;
+		else if (start->type == OUTFILE)
+			outfile = open_inout(start);
+		start = start->next;
+	}
+	close(exec->pipefd[0]);
+	if (infile >= 0){
+		dup2(infile, 0);
+		close(infile);
+	}
+
+	if (outfile >= 0){
+		dup2(outfile, 1);
+		close(outfile);
+	}
+	else if (elem->type == PIPE && outfile == -2)
+		dup2(exec->pipefd[1],1);
+	close(exec->pipefd[1]);
+	
+	
 }
 
 void	main_loop_2(t_exec *exec)
 {
 	t_elem_pars	*start;
+	int i = 1;
 	t_elem_pars *elem_lst;
 	
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	while (elem_lst != NULL)
 	{
-		open_inout_fds(exec, elem_lst);
+		// open_inout_fds(exec, elem_lst);
 		if (elem_lst->type == PIPE || !elem_lst->next)
 		{
-			if (elem_lst->next)
-				pipe(exec->pipefd);
+			pipe(exec->pipefd);
 			exec->pid = fork();
 			if (exec->pid == 0)
 			{
-				child(start, elem_lst, exec);
-				exec_cmd(exec, start, elem_lst);	
+				child(start, elem_lst, exec, i);
+				exec_cmd(exec, start, elem_lst);
+				exit(127);
 			}
 			else
 			{
-				if (!elem_lst->next)
-					{dup2(exec->pipefd[0], 0);
-					close(exec->pipefd[1]);}
+				close(exec->pipefd[1]);
+				dup2(exec->pipefd[0], 0);
+				close(exec->pipefd[0]);
 				if (elem_lst->next)
 					start = elem_lst->next;
 			}
+			i++;
 		}
 		elem_lst = elem_lst->next;
 	}
-	
 	wait_loop_bis(exec);
+	
 }
 /*
 int	main_loop(t_exec *exec)
