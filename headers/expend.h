@@ -1,6 +1,7 @@
 #ifndef EXPEND_H
 # define EXPEND_H
 # include "main.h"
+# include "lexer.h"
 
 typedef struct	s_varenv
 {
@@ -11,5 +12,7 @@ typedef struct	s_varenv
 }	t_varenv;
 
 void	expend(void);
+
+t_ntoken	*lex_expend(char *input, t_ntoken *token_start);
 
 #endif

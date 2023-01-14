@@ -4,7 +4,7 @@ extern t_data g_data;
 
 t_bool	is_type_word(t_ntype type)
 {
-	if (type == WORD || type == SINGLE_QUOTE || type == DOUBLE_QUOTE)
+	if (type == WORD || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || type == VARIABLE)
 		return (true);
 	return (false);
 }
@@ -172,12 +172,27 @@ void	set_var_content(t_ntoken *token)
 void	expend(void)
 {
 	t_ntoken *token_lst;
+//	t_ntoken *tmp;
 
 	token_lst = g_data.nlexer_lst;
 	while (token_lst != NULL)
 	{
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
+//		if (token_lst->type == VARIABLE)
+//		{
+//			tmp = token_lst->next;
+//			printf("tmp = %p\n", tmp);
+//			token_lst = lex_expend(token_lst->content, token_lst);
+//			while (token_lst != tmp && token_lst != NULL) {
+//				token_lst = token_lst->next;
+//				printf("token_lst = %p\n", token_lst);
+////				sleep(1);
+//			}
+//		}
 		token_lst = token_lst->next;
 	}
+//	printf("--------------------------------------------\n\n");
+//	print_lst(g_data.nlexer_lst);
+//	printf("--------------------------------------------\n\n");
 }

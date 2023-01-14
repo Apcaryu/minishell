@@ -55,6 +55,7 @@
 //void p_lex_lst(t_token *lst);
 
 // ---------- NEW LEXER ----------- //
+void	print_lst(t_ntoken *ntoken_lst);
 
 t_ntoken	*new_ntoken(t_list **garb_lst);
 t_ntoken	*ntoken_last(t_ntoken *token_lst);

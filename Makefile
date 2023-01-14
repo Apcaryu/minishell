@@ -26,7 +26,8 @@ SRC_LEXER = lexer.c \
 			lst_lexer.c
 SRC_PARSER = parser.c \
 				lst_parser.c
-SRC_EXPEND = expend.c
+SRC_EXPEND = expend.c \
+				lex_expend.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
