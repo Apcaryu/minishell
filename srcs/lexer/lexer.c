@@ -254,10 +254,23 @@ char	*set_content(t_ntoken *token, unsigned int *idx)
 	sub_idx = *idx;
 	size = 0;
 	content = NULL;
-	if (is_word(g_data.input[*idx]))
+	if (g_data.input[*idx] == '$')
 	{
+		size++;
+		sub_idx++;
+		while (ft_isalnum(g_data.input[sub_idx]) || g_data.input[sub_idx] == '_')
+		{
+			size++;
+			sub_idx++;
+		}
+		printf("size = %u\n", size);
+	}
+	else if (is_word(g_data.input[*idx]))
+	{
+		size++;
+		sub_idx++;
 		while (is_word(g_data.input[sub_idx]) && g_data.input[sub_idx] != '\0'  \
- 				&& *idx + size < ft_strlen(g_data.input)) {
+ 				&& *idx + size < ft_strlen(g_data.input) && g_data.input[sub_idx] != '$') {
 			size++;
 			sub_idx++;
 		}
@@ -315,8 +328,15 @@ void	word(t_ntoken *token, unsigned int *idx)
 	token->content = set_content(token, idx);
 }
 
+void	variable_token(t_ntoken *token, unsigned int *idx)
+{
+	token->type = VARIABLE;
+	token->content = set_content(token, idx);
+}
+
 void	set_ntoken(t_ntoken *token, unsigned int *idx)
 {
+	printf("input[%u] = %c\n", *idx, g_data.input[*idx]);
 	if (g_data.input[*idx] == '<')
 	{
 		infile_or_heredoc(token, idx);
@@ -329,6 +349,8 @@ void	set_ntoken(t_ntoken *token, unsigned int *idx)
 		return ;
 	else if (g_data.input[*idx] == ' ')
 		space(token, idx);
+	else if (g_data.input[*idx] == '$')
+		variable_token(token, idx);
 	else if (is_word(g_data.input[*idx]))
 		word(token, idx);
 }

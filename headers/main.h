@@ -57,6 +57,7 @@ typedef enum	s_ntype
 	DOUBLE_QUOTE,
 	WORD,
 	C_SPACE,
+	VARIABLE
 }	t_ntype;
 
 typedef struct s_ntoken
