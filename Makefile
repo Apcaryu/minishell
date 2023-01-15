@@ -1,4 +1,3 @@
-
 NAME = minishell
 
 SRC_PATH	= srcs/
@@ -17,6 +16,9 @@ SRC 			= main.c \
 
 SRC_EXEC 		= read_input.c \
 					init_exec.c \
+					print_exec.c \
+					exec_cmd.c \
+					close_and_exit.c \
 					# lst_exec.c
 
 SRC_BUILTINS 	= echo.c \

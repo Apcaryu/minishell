@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/01/14 22:40:52 by meshahrv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXEC_H
 # define EXEC_H
 # include <stdio.h>
@@ -6,15 +18,27 @@
 //# include "lexer.h"
 # include "builtins.h"
 
-// Exec functions
-void	check_command(char *input);
-void	read_input(t_data *data);
-void	pipe_process(t_exec *exec);
-int		main_loop(t_exec *exec);
-void	executer(void);
+// Builtins
+void		check_builtin(char *input);
 
+// Exec functions
+void		read_input(t_data *data);
+void		executer(void);
+void		main_loop(t_exec *exec);
+
+// Open Infile & Outfile
+static int	open_inout(t_elem_pars *elem);
+
+// Pipes And Commands
+void		child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);
+void		wait_loop(t_exec *exec);
 // Close fds
-void	close_fd(t_exec *exec);
+void		close_fd(t_exec *exec);
+
+// Execution and Env PATH
+char		**get_env(t_exec *exec);
+void		exec_path(t_elem_pars *start, t_exec *exec);
+void		exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem);
 
 // Init exec
 void		init_test_exec();
@@ -22,12 +46,12 @@ void		open_inout_fds(t_exec *exec, t_elem_pars *elem);
 t_exec		*init_exec_structure(t_exec *exec);
 
 // Print elements
-void	print_elem_lst(t_elem_pars *lst); // TODO remove;
-void	print_exec_struct(t_exec *exec); // TODO remove;
+void		print_elem_lst(t_elem_pars *lst); // TODO remove;
+void		print_exec_struct(t_exec *exec); // TODO remove;
 
 // Exec chain-lists
-t_exec *new_exec(t_list **garb_list);
-t_exec *exec_last(t_exec *exec_lst);
-void	exec_add_back(t_exec **exec_lst, t_exec *elem);
+t_exec		*new_exec(t_list **garb_list);
+t_exec		*exec_last(t_exec *exec_lst);
+void		exec_add_back(t_exec **exec_lst, t_exec *elem);
 
 #endif
