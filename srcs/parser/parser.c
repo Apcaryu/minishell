@@ -190,6 +190,7 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	unsigned int	nb_move;
 	unsigned int	args;
 	unsigned int	idx;
+	char			*tmp_cmd;
 
 	nb_move = 0;
 	elem->type = token->type;
@@ -201,6 +202,20 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	else
 		return (nb_move);
 	p_token(token);
+	while (token->type == WORD)
+	{
+		nb_move++;
+		tmp_cmd = garbage_alloc(&g_data.garb_lst, ft_strlen(elem->cmd) +
+				ft_strlen(token->content));
+		ft_strlcpy(tmp_cmd, elem->cmd, ft_strlen(elem->cmd) + 1);
+		ft_strlcat(tmp_cmd, token->content, ft_strlen(token->content) +
+				ft_strlen(tmp_cmd) + 1);
+		elem->cmd = tmp_cmd;
+		if (token->next != NULL)
+			token = token->next;
+		else
+			return (nb_move);
+	}
 	if (token->type == C_SPACE)
 	{
 		nb_move++;
