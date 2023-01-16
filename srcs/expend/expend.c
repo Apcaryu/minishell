@@ -165,10 +165,8 @@ void	set_var_content(t_ntoken *token)
 			idx++;
 	}
 	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
-	{
 		remove_quote(token->content);
-		token->type = WORD;
-	}
+	token->type = WORD;
 	printf("content = %s\n", token->content);
 }
 
