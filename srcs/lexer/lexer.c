@@ -285,10 +285,11 @@ char	*set_content(t_ntoken *token, unsigned int *idx)
 			{
 				size++;
 				sub_idx++;
+				break ;
 			}
 		}
 	}
-//	printf("size = %u | sub_idx = %u\n", size, sub_idx);
+	printf("size = %u | sub_idx = %u\n", size, sub_idx);
 	if (size == 0)
 		return (NULL);
 	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
@@ -309,7 +310,7 @@ t_bool is_quote(t_ntoken *token, unsigned int *idx)
 		else if (g_data.input[*idx] == '\"')
 			token->type = DOUBLE_QUOTE;
 		token->content = set_content(token, idx);
-		*idx += 1;
+//		*idx += 1;
 		return (true);
 	}
 	return (false);
