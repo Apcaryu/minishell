@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/16 13:59:57 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:26:19 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,5 +161,7 @@ void	read_input(t_data *data)
 		echo_exec();
 	if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
 		env_exec();
+	if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
+		pwd_exec();
 	// executer();
 }
