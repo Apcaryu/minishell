@@ -20,7 +20,7 @@ int	main(int argc, char *argv[], char  **envp)
 //	while (1)
 //	{
 //		g_data.input = readline("minishell-0.1$ ");
-//		read_input(&g_data);
+//		read_input(&g_data);    
 //		// free(g_data.lexer_lst);
 //		ft_lstclear(&g_data.garb_lst, &free);
 //		// printf("case_lex = %p | type = %d\n", g_data.lexer_lst, g_data.lexer_lst->type);

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/15 15:48:25 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:07:05 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	init_test_exec()
 
 	element = new_elem_pars(&g_data.garb_lst);
 	element->type = COMMAND;
-	element->cmd = "echo";
+	element->cmd = "env";
 	element->args = garbage_alloc(&g_data.garb_lst, 4 * sizeof(char *));
-	element->args[0] = "echo";
-	element->args[1] = "hello";
+	element->args[0] = "env";
+	// element->args[1] = "i";
 	// element->args[2] = "yello";
 	elem_pars_add_back(&g_data.parser_lst, element);
 	
