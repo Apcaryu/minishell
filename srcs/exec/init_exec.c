@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 16:05:39 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:15:18 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	init_test_exec()
 	element->cmd = "exit";
 	element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
 	element->args[0] = "exit";
-	element->args[1] = "100";
-	element->args[2] = "jhgfd";
+	element->args[1] = "-2";
+	element->args[2] = NULL;
 	elem_pars_add_back(&g_data.parser_lst, element);
 	
 	// element = new_elem_pars(&g_data.garb_lst);

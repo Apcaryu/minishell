@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:51 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 16:09:44 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:17:09 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	exit_exec(void)
 	if (g_data.parser_lst->args[1])
 	{
 		printf("exit\n");
+		if (g_data.parser_lst->args[1][idx] == '-')
+			idx++ ;
 		while (idx < ft_strlen(g_data.parser_lst->args[1]))
 		{
 			if (!ft_isdigit(g_data.parser_lst->args[1][idx]))
