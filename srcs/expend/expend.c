@@ -165,35 +165,44 @@ void	set_var_content(t_ntoken *token)
 			idx++;
 	}
 	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
+	{
 		remove_quote(token->content);
-	token->type = WORD;
+		token->type = WORD;
+	}
 	printf("content = %s\n", token->content);
 }
 
 void	expend(void)
 {
 	t_ntoken *token_lst;
-//	t_ntoken *tmp;
+	t_ntoken *tmp;
+	t_ntoken *ttmp;
 
 	token_lst = g_data.nlexer_lst;
 	while (token_lst != NULL)
 	{
+		if (token_lst->next != NULL) {
+			if (token_lst->next->type == VARIABLE)
+				ttmp = token_lst;
+		}
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
-//		if (token_lst->type == VARIABLE)
-//		{
-//			tmp = token_lst->next;
-//			printf("tmp = %p\n", tmp);
-//			token_lst = lex_expend(token_lst->content, token_lst);
-//			while (token_lst != tmp && token_lst != NULL) {
-//				token_lst = token_lst->next;
-//				printf("token_lst = %p\n", token_lst);
-////				sleep(1);
-//			}
-//		}
+		if (token_lst->type == VARIABLE)
+		{
+			tmp = token_lst->next;
+			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
+			token_lst = lex_expend(token_lst->content, ttmp);
+			token_lst->next = tmp;
+			print_lst(g_data.nlexer_lst);
+			while (token_lst != tmp && token_lst != NULL && tmp != NULL) {
+				token_lst = token_lst->next;
+				printf("token_lst = %p\n", token_lst);
+				sleep(1);
+			}
+		}
 		token_lst = token_lst->next;
 	}
-//	printf("--------------------------------------------\n\n");
-//	print_lst(g_data.nlexer_lst);
-//	printf("--------------------------------------------\n\n");
+	printf("--------------------------------------------\n\n");
+	print_lst(g_data.nlexer_lst);
+	printf("--------------------------------------------\n\n");
 }
