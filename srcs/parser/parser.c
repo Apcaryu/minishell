@@ -206,7 +206,7 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	{
 		nb_move++;
 		tmp_cmd = garbage_alloc(&g_data.garb_lst, ft_strlen(elem->cmd) +
-				ft_strlen(token->content));
+				ft_strlen(token->content) + 1);
 		ft_strlcpy(tmp_cmd, elem->cmd, ft_strlen(elem->cmd) + 1);
 		ft_strlcat(tmp_cmd, token->content, ft_strlen(token->content) +
 				ft_strlen(tmp_cmd) + 1);
