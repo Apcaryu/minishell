@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:26:25 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/16 18:44:58 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 14:33:59 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@ extern t_data	g_data;
 
 void	pwd_exec(void)
 {
-	// printf("exec pwd\n");
 	char	cwd[PATH_MAX];
 
-	if (getcwd(cwd, ))
-	printf("%s\n", )
+	if (getcwd(cwd, PATH_MAX))
+		printf("%s\n", cwd);
 }
