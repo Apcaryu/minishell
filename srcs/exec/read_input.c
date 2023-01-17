@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 17:29:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:15:43 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	read_input(t_data *data)
 	// lexer(data);
 	// parser();
 	init_test_exec();
-	// executer();
+	executer();
 	dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
 	// check_builtin();
 	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))

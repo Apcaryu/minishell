@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/15 14:29:40 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 17:16:07 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 18:32:05 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 extern t_data	g_data;
 
+
+
 void	echo_exec(void)
 {
 	t_bool	n;
 	int		i;
+	int		si;
 	int		count_args;
 
 	i = 1;
+	si = i;
 	count_args = 0;
 	n = true;
 	if (!g_data.parser_lst->args[1])
@@ -30,16 +34,32 @@ void	echo_exec(void)
 	// while (g_data.parser_lst->args[i])
 	while (i < count_args)
 	{
-		if (i == 1 && g_data.parser_lst->args[i] && ft_strncmp(g_data.parser_lst->args[i], "-n", ft_strlen(g_data.parser_lst->args[i])) == 0)
+		if (i == 1 && g_data.parser_lst->args[i][0] == '-')
 		{
-			i++;
-			n = false;
+			si++;
+			while (g_data.parser_lst->args[i][si] == 'n')
+			{
+				si++;
+			}
+			if (g_data.parser_lst->args[i][si] == ' ' || g_data.parser_lst->args[i][si] == '\0')
+			{
+				i++;
+				n = false;
+			}
 		}
-		if (g_data.parser_lst->args[i] != NULL){
-		write(1, g_data.parser_lst->args[i], ft_strlen(g_data.parser_lst->args[i]));
-		// if (g_data.parser_lst->args[i + 1])
-		if (i != count_args - 1)
-			write(1, " ", 1);
+		// if (i == 1 && g_data.parser_lst->args[i]
+		// 	&& ft_strncmp(g_data.parser_lst->args[i],
+		// 	"-n", ft_strlen(g_data.parser_lst->args[i])) == 0)
+		// {
+		// 	i++;
+		// 	n = false;
+		// }
+		if (g_data.parser_lst->args[i] != NULL)
+		{
+			write(1, g_data.parser_lst->args[i], ft_strlen(g_data.parser_lst->args[i]));
+			// if (g_data.parser_lst->args[i + 1])
+			if (i != count_args - 1)
+				write(1, " ", 1);
 		}
 		i++;
 		// dprintf(2, "counter = %d\n", i);
