@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/16 18:26:19 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:18:20 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	main_loop(t_exec *exec)
 		}
 		elem_lst = elem_lst->next;
 	}
+	
 	wait_loop(exec);
 }
 
@@ -148,6 +149,7 @@ void	executer(void)
 	printf("input = < in cat | ls > out\n");
 	exec = init_exec_structure(exec);
 	main_loop(exec);
+	g_data.exec_struct = exec;
 }
 
 void	read_input(t_data *data)
@@ -155,13 +157,15 @@ void	read_input(t_data *data)
 	// lexer(data);
 	// parser();
 	init_test_exec();
+	executer();
 	dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
 	// check_builtin();
 	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
 		echo_exec();
-	if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
+	else if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
 		env_exec();
-	if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
+	else if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
 		pwd_exec();
-	// executer();
+	else if (!ft_strncmp("exit", g_data.parser_lst->args[0], ft_strlen("exit")))
+		exit_exec();
 }
