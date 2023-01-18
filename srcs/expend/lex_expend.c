@@ -2,7 +2,7 @@
 
 extern t_data g_data;
 
-char	*le_set_content(t_ntoken *token, char *input, unsigned int *idx)
+char	*le_set_content(t_token *token, char *input, unsigned int *idx)
 {
 	unsigned int	sub_idx;
 	int				size;
@@ -35,11 +35,11 @@ char	*le_set_content(t_ntoken *token, char *input, unsigned int *idx)
 	return (content);
 }
 
-t_ntoken	*lex_expend(char *input, t_ntoken *token_start)
+t_token	*lex_expend(char *input, t_token *token_start)
 {
-	t_ntoken *new;
-	t_ntoken *tmp;
-	t_ntoken *token_end;
+	t_token *new;
+	t_token *tmp;
+	t_token *token_end;
 	unsigned int idx;
 
 	idx = 0;
@@ -50,14 +50,8 @@ t_ntoken	*lex_expend(char *input, t_ntoken *token_start)
 	while (idx < ft_strlen(input))
 	{
 		printf("idx = %u\n", idx);
-//		while (input[idx] == ' ')
-//		{
-//			if (input[idx] == '\0')
-//				break ;
-//			idx++;
-//		}
 		new = new_ntoken(&g_data.garb_lst);
-		new->type = WORD;
+		new->type = COMMAND;
 		new->content = le_set_content(new, input, &idx);
 		if (new != NULL) {
 			if (token_start->next == token_end) {
@@ -70,7 +64,5 @@ t_ntoken	*lex_expend(char *input, t_ntoken *token_start)
 		}
 //		sleep(1);
 	}
-//	if (token_end == NULL)
-//	ntoken_last(token_start)->next = true_end;
 	return (token_start);
 }

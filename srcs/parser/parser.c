@@ -2,88 +2,16 @@
 
 extern t_data	g_data;
 
-/*
-char	*set_cmd(t_elem_pars *elem_pars, t_token token, unsigned int *idx)
-{
-//	unsigned int	idx;
-	char			*cmd;
-
-//	idx = 0;
-//	printf("content = %s\n", token.content);
-	while (token.content[*idx] != ' ' && token.content[*idx] !='\0')
-		*idx += 1;
-	cmd = garbage_alloc(&g_data.garb_lst, sizeof(char) * (*idx + 1));
-//	printf("idx = %u\n", idx);
-	ft_strlcpy(cmd, token.content, *idx + 1);
-//	printf("cmd = %s\n", cmd);
-	return (cmd);
-}
-
-void	set_elem_pars(t_elem_pars *elem_pars, t_token token)
-{
-	unsigned int	idx;
-	char			*content;
-
-	idx = 0;
-	if (token.content == NULL)
-		content = NULL;
-	else
-		content = token.content;
-	elem_pars->type = token.type;
-	if (token.type == PIPE)
-		return ;
-	if (token.type == COMMAND || token.type == HEREDOC)
-		elem_pars->cmd = set_cmd(elem_pars, token, &idx);
-//	printf("idx = %u | content = %s\n", idx, content + idx);
-	if (token.content[idx] != '\0' && token.content != NULL)
-		elem_pars->args = garb_split(content + idx, ' ', g_data.garb_lst);
-}
-
-void	p_args(char **args)
-{
-	unsigned int	idx = 0;
-
-	if (args == NULL)
-		return ;
-	idx = 0;
-	printf("args:\n");
-	while (args[idx])
-	{
-		printf("%s\n", args[idx]);
-		idx++;
-	}
-}
-
-void	parser(void)
-{
-	t_token *lex_lst;
-	t_elem_pars *elem_pars;
-
-	lex_lst = g_data.lexer_lst;
-	while (lex_lst != NULL)
-	{
-//		printf("type = %d\n", lex_lst->type); // TODO remove
-		elem_pars = new_elem_pars(&g_data.garb_lst);
-		set_elem_pars(elem_pars, *lex_lst);
-		printf("elem = %p | type = %d | cmd = %s\n", elem_pars, elem_pars->type, elem_pars->cmd);
-//		p_args(elem_pars->args);
-		elem_pars_add_back(&g_data.parser_lst, elem_pars);
-//		printf("last = %p\n", elem_pars_last(g_data.parser_lst)); // TODO remove
-		lex_lst = lex_lst->next;
-	}
-}
-*/
-
 // ---------- ONLY FOR TEST ---------- //
 // TODO remove
-void	p_token(t_ntoken *token)
+void	p_token(t_token *token)
 {
 	if (token == NULL)
 		return ;
 	printf("token = %p | type = %d | content = %s | next = %p\n", token, token->type, token->content, token->next);
 }
 
-void	p_elem(t_nelem *elem)
+void	p_elem(t_elem_pars *elem)
 {
 	unsigned int	idx;
 
@@ -104,7 +32,7 @@ void	p_elem(t_nelem *elem)
 	printf("next = %p\n", elem->next);
 }
 
-void p_lst_elem(t_nelem *lst)
+void p_lst_elem(t_elem_pars *lst)
 {
 	if (lst == NULL) {
 		return;
@@ -118,7 +46,7 @@ void p_lst_elem(t_nelem *lst)
 }
 // ---------- END ---------- //
 
-unsigned int	in_her_out_app(t_nelem *elem, t_ntoken *token)
+unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 {
 	unsigned int	nb_move;
 
@@ -137,7 +65,7 @@ unsigned int	in_her_out_app(t_nelem *elem, t_ntoken *token)
 		else
 			token = token->next;
 	}
-	if (token->type == WORD)
+	if (token->type == COMMAND)
 	{
 		nb_move++;
 		elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * 2);
@@ -147,13 +75,13 @@ unsigned int	in_her_out_app(t_nelem *elem, t_ntoken *token)
 	return(nb_move);
 }
 
-unsigned int	pipe_operator(t_nelem *elem, t_ntoken *token)
+unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 {
 	elem->type = token->type;
 	return (1);
 }
 
-unsigned int	nb_arg(t_ntoken *token)
+unsigned int	nb_arg(t_token *token)
 {
 	unsigned int	nb_arg;
 
@@ -170,7 +98,7 @@ unsigned int	nb_arg(t_ntoken *token)
 		if (token->type == INFILE || token->type == HEREDOC || \
 		token->type == OUTFILE || token->type == APPEND || token->type == PIPE)
 			return (nb_arg);
-		if (token->type == WORD)
+		if (token->type == COMMAND)
 			nb_arg++;
 		if (token->next == NULL)
 			return (nb_arg);
@@ -185,7 +113,7 @@ unsigned int	nb_arg(t_ntoken *token)
 	return (nb_arg);
 }
 
-unsigned int	command(t_nelem *elem, t_ntoken *token)
+unsigned int	command(t_elem_pars *elem, t_token *token)
 {
 	unsigned int	nb_move;
 	unsigned int	args;
@@ -202,7 +130,7 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	else
 		return (nb_move);
 	p_token(token);
-	while (token->type == WORD)
+	while (token->type == COMMAND)
 	{
 		nb_move++;
 		tmp_cmd = garbage_alloc(&g_data.garb_lst, ft_strlen(elem->cmd) +
@@ -272,7 +200,7 @@ unsigned int	command(t_nelem *elem, t_ntoken *token)
 	return (nb_move);
 }
 
-unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
+unsigned int	set_elem_pars(t_elem_pars *elem_pars, t_token *token)
 {
 	unsigned int	nb_move;
 
@@ -282,7 +210,7 @@ unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 		nb_move = in_her_out_app(elem_pars, token);
 	else if (token->type == PIPE)
 		nb_move = pipe_operator(elem_pars, token);
-	else if (token->type == WORD)
+	else if (token->type == COMMAND)
 		nb_move = command(elem_pars, token);
 	// ----- ONLY FOR TEST -----//
 	if (nb_move == 0)
@@ -293,8 +221,8 @@ unsigned int	set_elem_pars(t_nelem *elem_pars, t_ntoken *token)
 
 void	parser(void)
 {
-	t_ntoken	*lex_lst;
-	t_nelem		*elem;
+	t_token	*lex_lst;
+	t_elem_pars		*elem;
 	unsigned int	nb_move;
 	t_bool			is_last;
 

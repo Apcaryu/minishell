@@ -2,9 +2,9 @@
 
 extern t_data g_data;
 
-t_bool	is_type_word(t_ntype type)
+t_bool	is_type_word(t_type type)
 {
-	if (type == WORD || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || type == VARIABLE)
+	if (type == COMMAND || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || type == VARIABLE)
 		return (true);
 	return (false);
 }
@@ -137,7 +137,7 @@ void	remove_quote(char *str)
 	printf("str = %s\n", str); // TODO remove
 }
 
-void	set_var_content(t_ntoken *token)
+void	set_var_content(t_token *token)
 {
 	unsigned int	idx;
 	t_varenv		var;
@@ -167,16 +167,16 @@ void	set_var_content(t_ntoken *token)
 	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
 	{
 		remove_quote(token->content);
-		token->type = WORD;
+		token->type = COMMAND;
 	}
 	printf("content = %s\n", token->content);
 }
 
 void	expend(void)
 {
-	t_ntoken *token_lst;
-	t_ntoken *tmp;
-	t_ntoken *ttmp;
+	t_token *token_lst;
+	t_token *tmp;
+	t_token *ttmp;
 
 	token_lst = g_data.nlexer_lst;
 	while (token_lst != NULL)

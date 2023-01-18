@@ -13,6 +13,6 @@ typedef struct	s_varenv
 
 void	expend(void);
 
-t_ntoken	*lex_expend(char *input, t_ntoken *token_start);
+t_token	*lex_expend(char *input, t_token *token_start);
 
 #endif
