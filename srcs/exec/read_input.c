@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/18 15:30:06 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:41:11 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	wait_loop(t_exec *exec)
 		if (WIFEXITED(exec->status))
 			exec->exit_code = WEXITSTATUS(exec->status);
 	}
+	// ft_close(exec);
+	// exit(exec->exit_code);
 }
 
 static int	open_inout(t_elem_pars *elem)
@@ -55,8 +57,9 @@ static int	open_inout(t_elem_pars *elem)
 		file = open(elem->args[0], O_RDONLY);
 		if (file == -1)
 		{
-			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			error_msgs(g_data.parser_lst->args[0], strerror(errno));
 			write(2, "\n", 1);
+			exit(0);
 		}
 	}
 	if (elem->args != NULL && elem->type == OUTFILE)
@@ -64,8 +67,9 @@ static int	open_inout(t_elem_pars *elem)
 		file = open(elem->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
 		if (file == -1)
 		{
-			// error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			error_msgs(g_data.parser_lst->args[0], strerror(errno));
 			write(2, "\n", 1);
+			exit(1);
 		}
 	}
 	return (file);
@@ -79,7 +83,8 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 
 	infile = -2;
 	outfile = -2;
-	while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL)){
+	while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL))
+	{
 		if (start->type == INFILE)
 			infile = open_inout(start);
 		else if (start->type == COMMAND)
@@ -115,18 +120,25 @@ void	main_loop(t_exec *exec)
 	{
 		if (elem_lst->type == PIPE || !elem_lst->next)
 		{
-			pipe(exec->pipefd);
+			// pipe(exec->pipefd);
+			if (pipe(exec->pipefd) == -1)
+				perror("minishell: ");
 			exec->pid = fork();
-			if (exec->pid == 0)
+			if (exec->pid == -1)
+			{
+				perror("minishell: ");
+				exit(1);
+			}
+			else if (exec->pid == 0)
 			{
 				child(start, elem_lst, exec, i);
 				exec_cmd(exec, start, elem_lst);
-				exit(127);
+				// exit(127);
 			}
 			else
 			{
 				close(exec->pipefd[1]);
-				dup2(exec->pipefd[0], 0);
+				// dup2(exec->pipefd[0], 0);
 				close(exec->pipefd[0]);
 				if (elem_lst->next)
 					start = elem_lst->next;

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:14:45 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/14 14:16:28 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:49:53 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,12 @@ void	print_exec_struct(t_exec *exec) // TODO remove
 	if (exec == NULL)
 		return;
 	printf("exec structure = %p | pid = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid, exec->pipefd[0], exec->pipefd[1]);
+}
+
+void	error_msgs(char *cmd, char *err)
+{
+	ft_putstr_fd("minishell: ", 2);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(err, 2);
 }

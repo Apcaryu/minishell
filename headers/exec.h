@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/14 22:40:52 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:09:00 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);
 void		wait_loop(t_exec *exec);
 // Close fds
 void		close_fd(t_exec *exec);
+char		**clean_cmds(char **str);
 
 // Execution and Env PATH
 char		**get_env(t_exec *exec);
@@ -48,6 +49,7 @@ t_exec		*init_exec_structure(t_exec *exec);
 // Print elements
 void		print_elem_lst(t_elem_pars *lst); // TODO remove;
 void		print_exec_struct(t_exec *exec); // TODO remove;
+void		error_msgs(char *cmd, char *err);
 
 // Exec chain-lists
 t_exec		*new_exec(t_list **garb_list);

@@ -19,6 +19,11 @@ int	main(int argc, char *argv[], char  **envp)
 	while (1)
 	{
 		g_data.input = readline("minishell-0.1$ ");
+		if (g_data.input == NULL)
+		{
+			ft_lstclear(&g_data.garb_lst, &free);
+			exit(127);
+		}
 		read_input(&g_data);
 		// free(g_data.lexer_lst);
 		ft_lstclear(&g_data.garb_lst, &free);
@@ -27,8 +32,10 @@ int	main(int argc, char *argv[], char  **envp)
 //		g_data.lexer_lst = NULL;
 		g_data.lexer_lst = NULL;
 		g_data.parser_lst = NULL;
+		g_data.exec_struct = NULL;
 		g_data.input = NULL;
 		ft_lstclear(&g_data.garb_lst, &free);
+	
 	}
 	return(0);
 }

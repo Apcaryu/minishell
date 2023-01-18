@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/14 14:37:41 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:08:01 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,18 @@ int exiteur(int exit_code, t_exec *exec)
 	// ft_lstclear(&g_data.garb_lst, &free);
 	// exit(exit_code);
 	return (exit_code);
+}
+
+char	**clean_cmds(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != NULL)
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+	return (NULL);
 }
