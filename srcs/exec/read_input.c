@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/18 17:41:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:22:22 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ extern t_data	g_data;
 // 		exit_exec();
 // }
 
+// t_bool	is_builtin(char *cmd)
+// {
+// 	if (!cmd)
+// 		return (NULL);
+// 	if (ft_strncmp)
+// }
+
 void	wait_loop(t_exec *exec)
 {
 	close(exec->pipefd[0]);
@@ -42,8 +49,6 @@ void	wait_loop(t_exec *exec)
 		if (WIFEXITED(exec->status))
 			exec->exit_code = WEXITSTATUS(exec->status);
 	}
-	// ft_close(exec);
-	// exit(exec->exit_code);
 }
 
 static int	open_inout(t_elem_pars *elem)
@@ -147,7 +152,6 @@ void	main_loop(t_exec *exec)
 		}
 		elem_lst = elem_lst->next;
 	}
-	
 	wait_loop(exec);
 }
 

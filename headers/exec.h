@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/18 16:09:00 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:21:48 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static int	open_inout(t_elem_pars *elem);
 // Pipes And Commands
 void		child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);
 void		wait_loop(t_exec *exec);
+
 // Close fds
 void		close_fd(t_exec *exec);
 char		**clean_cmds(char **str);

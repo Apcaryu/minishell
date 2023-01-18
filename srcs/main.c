@@ -24,6 +24,7 @@ int	main(int argc, char *argv[], char  **envp)
 			ft_lstclear(&g_data.garb_lst, &free);
 			exit(127);
 		}
+		add_history(g_data.input);
 		read_input(&g_data);
 		// free(g_data.lexer_lst);
 		ft_lstclear(&g_data.garb_lst, &free);
