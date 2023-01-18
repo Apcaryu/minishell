@@ -157,9 +157,12 @@ unsigned int	command(t_elem_pars *elem, t_token *token)
 		token->type == OUTFILE || token->type == APPEND || token->type == PIPE)
 		return (nb_move);
 	args = nb_arg(token);
+	if (elem->cmd != NULL)
+		args++;
 //	printf("nb_args = %u\n", args); // TODO remove
 	elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * args + 1);
-	idx = 0;
+	elem->args[0] = elem->cmd;
+	idx = 1;
 	while (0 < args)
 	{
 		if (token->type == C_SPACE)
