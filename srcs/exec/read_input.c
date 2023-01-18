@@ -146,7 +146,7 @@ void	executer(void)
 
 	i = 0;
 	exec = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
-	printf("input = < in cat | ls > out\n");
+//	printf("input = < in cat | ls > out\n");
 	exec = init_exec_structure(exec);
 	main_loop(exec);
 	g_data.exec_struct = exec;
@@ -157,24 +157,25 @@ void	read_input(t_data *data)
 	printf("input = %s\n", data->input);
 	//n_lexer();
 	//expend();
-//	lexer(data);
+	lexer();
+	expend();
 	parser();
 //	check_command(input);
 
 	// lexer(data);
 	// parser();
-	//init_test_exec();
-	//executer();
+//	init_test_exec();
+	executer();
 	//dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
-	// check_builtin();
-	/*if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
-		echo_exec();
-	else if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
-		env_exec();
-	else if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
-		pwd_exec();
-	else if (!ft_strncmp("exit", g_data.parser_lst->args[0], ft_strlen("exit")))
-		exit_exec();
-	else if (!ft_strncmp("cd", g_data.parser_lst->args[0], ft_strlen("cd")))
-		cd_exec();*/
+//	 check_builtin();
+//	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
+//		echo_exec();
+//	else if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
+//		env_exec();
+//	else if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
+//		pwd_exec();
+//	else if (!ft_strncmp("exit", g_data.parser_lst->args[0], ft_strlen("exit")))
+//		exit_exec();
+//	else if (!ft_strncmp("cd", g_data.parser_lst->args[0], ft_strlen("cd")))
+//		cd_exec();
 }

@@ -25,10 +25,10 @@ int	main(int argc, char *argv[], char  **envp)
 		// printf("case_lex = %p | type = %d\n", g_data.lexer_lst, g_data.lexer_lst->type);
 		free(g_data.input);
 //		g_data.lexer_lst = NULL;
-		g_data.nlexer_lst = NULL;
+		g_data.lexer_lst = NULL;
 		g_data.parser_lst = NULL;
 		g_data.input = NULL;
+		ft_lstclear(&g_data.garb_lst, &free);
 	}
-	ft_lstclear(&g_data.garb_lst, &free);
 	return(0);
 }

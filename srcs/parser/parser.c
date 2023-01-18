@@ -226,7 +226,7 @@ void	parser(void)
 	unsigned int	nb_move;
 	t_bool			is_last;
 
-	lex_lst = g_data.nlexer_lst;
+	lex_lst = g_data.lexer_lst;
 	while (lex_lst != NULL)
 	{
 		is_last = false;

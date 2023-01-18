@@ -171,7 +171,7 @@ void	set_ntoken(t_token *token, unsigned int *idx)
 		word(token, idx);
 }
 
-void n_lexer(void)
+void lexer(void)
 {
 	t_token *token;
 	unsigned int idx;
@@ -182,8 +182,8 @@ void n_lexer(void)
 		token = new_ntoken(&g_data.garb_lst);
 		set_ntoken(token, &idx);
 		printf("case = %p | type = %i | content = %s | idx = %d\n", token, token->type, token->content, idx);
-		ntoken_add_back(&g_data.nlexer_lst, token);
+		ntoken_add_back(&g_data.lexer_lst, token);
 //		sleep(1);
 	}
-	print_lst(g_data.nlexer_lst);
+	print_lst(g_data.lexer_lst);
 }

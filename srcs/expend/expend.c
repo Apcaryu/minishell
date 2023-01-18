@@ -178,7 +178,7 @@ void	expend(void)
 	t_token *tmp;
 	t_token *ttmp;
 
-	token_lst = g_data.nlexer_lst;
+	token_lst = g_data.lexer_lst;
 	while (token_lst != NULL)
 	{
 		if (token_lst->next != NULL) {
@@ -193,7 +193,7 @@ void	expend(void)
 			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
 			token_lst = lex_expend(token_lst->content, ttmp);
 			token_lst->next = tmp;
-			print_lst(g_data.nlexer_lst);
+			print_lst(g_data.lexer_lst);
 			while (token_lst != tmp && token_lst != NULL && tmp != NULL) {
 				token_lst = token_lst->next;
 				printf("token_lst = %p\n", token_lst);
@@ -203,6 +203,6 @@ void	expend(void)
 		token_lst = token_lst->next;
 	}
 	printf("--------------------------------------------\n\n");
-	print_lst(g_data.nlexer_lst);
+	print_lst(g_data.lexer_lst);
 	printf("--------------------------------------------\n\n");
 }
