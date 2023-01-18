@@ -1,6 +1,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 # include <stdio.h>
+# include "main.h"
 
 typedef enum e_builtins
 {
