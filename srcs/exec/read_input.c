@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 18:15:43 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:30:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,8 @@ void	executer(void)
 	exec = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
 //	printf("input = < in cat | ls > out\n");
 	exec = init_exec_structure(exec);
+	if (exec == NULL)
+		return ;
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }

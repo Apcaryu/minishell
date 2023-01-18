@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 18:33:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:29:24 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ t_exec	*init_exec_structure(t_exec *exec)
 	
 	
 	elem_lst = g_data.parser_lst;
+	if (elem_lst == NULL)
+		return (NULL);
 	while (elem_lst->next != NULL)
 	{
 		if (elem_lst->type == PIPE)
