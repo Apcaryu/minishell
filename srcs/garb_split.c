@@ -1,7 +1,8 @@
-#include "../libft_42/includes_libft/libft.h"
-#include "../libft_42/includes_libft/garbage.h"
+#include "../headers/main.h"
+// #include "../libft_42/includes_libft/libft.h"
+// #include "../libft_42/includes_libft/garbage.h"
 
-static int	tot_len(const char *s, char c)
+static int	g_tot_len(const char *s, char c)
 {
 	int	len;
 	char quote;
@@ -29,7 +30,7 @@ static int	tot_len(const char *s, char c)
 //	return (len);
 }
 
-int	ft_word_count(const char *s, char c)
+int	g_ft_word_count(const char *s, char c)
 {
 	int	i;
 	int	count;
@@ -64,7 +65,7 @@ int	ft_word_count(const char *s, char c)
 	return (count);
 }
 
-char	*ft_strddup(const char *s, char c, t_list *garb_lst)
+char	*g_ft_strddup(const char *s, char c, t_list *garb_lst)
 {
 	int		i;
 	int		sub_i;
@@ -72,7 +73,7 @@ char	*ft_strddup(const char *s, char c, t_list *garb_lst)
 	char	quote;
 
 	i = 0;
-	str = garbage_alloc(&garb_lst, sizeof(char) * tot_len(s, c) + 1);
+	str = garbage_alloc(&garb_lst, sizeof(char) * g_tot_len(s, c) + 1);
 //	str = ft_calloc(tot_len(s, c) + 1, sizeof(char));
 	if (str == NULL)
 		return (NULL);
@@ -105,7 +106,7 @@ char	*ft_strddup(const char *s, char c, t_list *garb_lst)
 	return (str);
 }
 
-static char	**ft_free(char **tab, int i)
+static char	**g_ft_free(char **tab, int i)
 {
 	while (i >= 0)
 	{
@@ -124,12 +125,12 @@ char	**garb_split(char const *s, char c, t_list *garb_lst)
 	i = 0;
 	if (s == NULL)
 		return (NULL);
-	tab = garbage_alloc(&garb_lst, sizeof(char *) * ft_word_count(s, c) + 1);
+	tab = garbage_alloc(&garb_lst, sizeof(char *) * g_ft_word_count(s, c) + 1);
 //	tab = ft_calloc(ft_word_count(s, c) + 1, sizeof(char *));
 	if (tab == NULL)
 		return (NULL);
 //	printf("coucou\n"); // TODO remove
-	while (*s && ft_word_count(s, c))
+	while (*s && g_ft_word_count(s, c))
 	{
 //		printf("1.s = %s\n", s); // TODO remove
 		while (*s != '\0' && *s == c)
@@ -137,10 +138,10 @@ char	**garb_split(char const *s, char c, t_list *garb_lst)
 //		printf("2.s = %s\n", s); // TODO remove
 		if (*s != '\0' && *s != c)
 		{
-			tab[i] = ft_strddup(s, c, garb_lst);
+			tab[i] = g_ft_strddup(s, c, garb_lst);
 //			printf("tab[%d] = %s\n", i, tab[i]); // TODO remove
 			if (tab[i] == NULL)
-				return (ft_free(tab, i));
+				return (g_ft_free(tab, i));
 			i++;
 		}
 //		printf("3.s = %s\n", s); // TODO remove

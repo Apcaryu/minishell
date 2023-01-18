@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   close_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/16 13:39:56 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/16 15:53:10 by meshahrv         ###   ########.fr       */
+/*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/01/14 14:37:41 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../headers/builtins.h"
+#include "../../headers/minishell.h"
 
 extern t_data	g_data;
 
-void	env_exec(void)
+void	close_fd(t_exec *exec)
 {
-	int i;
-
-	i = 0;
-	// printf("exec env\n");
-	if (g_data.parser_lst->args[1] != NULL)
-		write(2, "Env Error\n", 13);
-	while (g_data.env[i])
-	{
-		printf("%s\n", g_data.env[i]);
-		i++;
-	}
+	close(exec->pipefd[0]);
+	close(exec->pipefd[1]);
+	close(exec->infile);
 }
 
-// ! TODO : env -i
+int exiteur(int exit_code, t_exec *exec)
+{
+	close(exec->pid);
+	// ft_lstclear(&g_data.garb_lst, &free);
+	// exit(exit_code);
+	return (exit_code);
+}

@@ -5,7 +5,9 @@ t_data g_data;
 void	init_data(t_data *data, char **env)
 {
 	data->garb_lst = NULL;
-	data->nlexer_lst = NULL;
+	data->lexer_lst = NULL;//new_token(&data->garb_lst);
+	data->parser_lst = NULL;
+	data->exec_struct = NULL;
 	data->env = env;
 }
 
@@ -27,6 +29,6 @@ int	main(int argc, char *argv[], char  **envp)
 		g_data.parser_lst = NULL;
 		g_data.input = NULL;
 	}
-	
+	ft_lstclear(&g_data.garb_lst, &free);
 	return(0);
 }

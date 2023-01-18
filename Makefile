@@ -1,4 +1,3 @@
-
 NAME = minishell
 
 SRC_PATH	= srcs/
@@ -9,23 +8,33 @@ SRC_LEXER_PATH = srcs/lexer/
 SRC_PARSER_PATH = srcs/parser/
 SRC_EXPEND_PATH = srcs/expend/
 
-CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -MMD -MP -g3
+CC				= cc
+CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
+CFLAGS			= -MMD -MP -g3 # TODO remove
 
-SRC = main.c \
-		garb_split.c
-SRC_EXEC = read_input.c
-SRC_BUILTINS = echo.c \
-				cd.c \
-				pwd.c \
-				export.c \
-				unset.c \
-				env.c \
-				exit.c
-SRC_LEXER = lexer.c \
-			lst_lexer.c
-SRC_PARSER = parser.c \
-				lst_parser.c
+SRC 			= main.c \
+					garb_split.c
+
+SRC_EXEC 		= read_input.c \
+					init_exec.c \
+					print_exec.c \
+					exec_cmd.c \
+					close_and_exit.c \
+					# lst_exec.c
+
+SRC_BUILTINS 	= echo.c \
+					cd.c \
+					pwd.c \
+					export.c \
+					unset.c \
+					env.c \
+					exit.c
+
+SRC_LEXER 		= lexer.c \
+					lst_lexer.c
+
+SRC_PARSER 		= parser.c \
+					lst_parser.c
 SRC_EXPEND = expend.c \
 				lex_expend.c
 
@@ -59,23 +68,23 @@ $(NAME) : $(OBJS)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_EXEC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_BUILTINS_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_LEXER_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_PARSER_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(HEADERS) -o $@ -c $<
+	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_EXPEND_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
