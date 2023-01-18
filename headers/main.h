@@ -1,5 +1,6 @@
 #ifndef MAIN_H
 # define MAIN_H
+# include <limits.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>
@@ -20,7 +21,7 @@ typedef enum	e_bool
 	true
 }	t_bool;
 
-typedef enum	e_type
+typedef enum	e_ntype
 {
 	NONE,
 	INFILE,
@@ -28,9 +29,11 @@ typedef enum	e_type
 	OUTFILE,
 	APPEND,
 	PIPE,
-	COMMAND,
 	SINGLE_QUOTE,
-	DOUBLE_QUOTE
+	DOUBLE_QUOTE,
+	COMMAND,
+	C_SPACE,
+	VARIABLE
 }	t_type;
 
 typedef struct s_token
@@ -43,9 +46,10 @@ typedef struct s_token
 
 typedef struct s_elem_pars
 {
-	t_type				type;
-	char				*cmd;
-	char				**args;
+	t_type			type;
+	char			*cmd;
+	char			**args;
+	t_bool			is_closed;
 	struct s_elem_pars	*next;
 }	t_elem_pars;
 

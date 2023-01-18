@@ -10,6 +10,7 @@
 # include "exec.h"
 # include "lexer.h"
 # include "parser.h"
+# include "expend.h"
 
 //t_data g_data;
 

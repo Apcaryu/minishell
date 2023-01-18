@@ -154,13 +154,20 @@ void	executer(void)
 
 void	read_input(t_data *data)
 {
+	printf("input = %s\n", data->input);
+	//n_lexer();
+	//expend();
+//	lexer(data);
+	parser();
+//	check_command(input);
+
 	// lexer(data);
 	// parser();
-	init_test_exec();
-	executer();
-	dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
+	//init_test_exec();
+	//executer();
+	//dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
 	// check_builtin();
-	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
+	/*if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
 		echo_exec();
 	else if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
 		env_exec();
@@ -169,5 +176,5 @@ void	read_input(t_data *data)
 	else if (!ft_strncmp("exit", g_data.parser_lst->args[0], ft_strlen("exit")))
 		exit_exec();
 	else if (!ft_strncmp("cd", g_data.parser_lst->args[0], ft_strlen("cd")))
-		cd_exec();
+		cd_exec();*/
 }
