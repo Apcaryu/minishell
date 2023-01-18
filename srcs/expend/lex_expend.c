@@ -50,7 +50,7 @@ t_token	*lex_expend(char *input, t_token *token_start)
 	while (idx < ft_strlen(input))
 	{
 		printf("idx = %u\n", idx);
-		new = new_ntoken(&g_data.garb_lst);
+		new = new_token(&g_data.garb_lst);
 		new->type = COMMAND;
 		new->content = le_set_content(new, input, &idx);
 		if (new != NULL) {
@@ -60,7 +60,7 @@ t_token	*lex_expend(char *input, t_token *token_start)
 				token_start = new;
 				token_start->next = token_end;
 			}
-//			ntoken_add_back(&token_start, new);
+//			token_add_back(&token_start, new);
 		}
 //		sleep(1);
 	}

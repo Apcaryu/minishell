@@ -2,7 +2,7 @@
 
 extern t_data g_data;
 
-t_token	*new_ntoken(t_list **garb_lst)
+t_token	*new_token(t_list **garb_lst)
 {
 	t_token *new;
 
@@ -15,7 +15,7 @@ t_token	*new_ntoken(t_list **garb_lst)
 	return (new);
 }
 
-t_token *ntoken_last(t_token *token_lst)
+t_token *token_last(t_token *token_lst)
 {
 	if (token_lst != NULL)
 	{
@@ -25,13 +25,13 @@ t_token *ntoken_last(t_token *token_lst)
 	return (token_lst);
 }
 
-void	ntoken_add_back(t_token **token_lst, t_token *token)
+void	token_add_back(t_token **token_lst, t_token *token)
 {
 	t_token *last_token;
 
 	if (!token_lst || !token)
 		return ;
-	last_token = ntoken_last(*token_lst);
+	last_token = token_last(*token_lst);
 	if (!last_token)
 		*token_lst = token;
 	else

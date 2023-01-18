@@ -2,16 +2,16 @@
 
 extern t_data g_data;
 
-void	print_lst(t_token *ntoken_lst)
+void	print_lst(t_token *token_lst)
 {
-	if (ntoken_lst == NULL)
+	if (token_lst == NULL)
 		return ;
-	while (ntoken_lst->next != NULL)
+	while (token_lst->next != NULL)
 	{
-		printf("case = %p | type = %d | content = %s | next = %p\n", ntoken_lst, ntoken_lst->type, ntoken_lst->content, ntoken_lst->next);
-		ntoken_lst = ntoken_lst->next;
+		printf("case = %p | type = %d | content = %s | next = %p\n", token_lst, token_lst->type, token_lst->content, token_lst->next);
+		token_lst = token_lst->next;
 	}
-	printf("case = %p | type = %d | content = %s | next = %p\n", ntoken_lst, ntoken_lst->type, ntoken_lst->content, ntoken_lst->next);
+	printf("case = %p | type = %d | content = %s | next = %p\n", token_lst, token_lst->type, token_lst->content, token_lst->next);
 }
 
 t_bool	is_word(char chr)
@@ -179,10 +179,10 @@ void lexer(void)
 	idx = 0;
 	while (idx < ft_strlen(g_data.input))
 	{
-		token = new_ntoken(&g_data.garb_lst);
+		token = new_token(&g_data.garb_lst);
 		set_ntoken(token, &idx);
 		printf("case = %p | type = %i | content = %s | idx = %d\n", token, token->type, token->content, idx);
-		ntoken_add_back(&g_data.lexer_lst, token);
+		token_add_back(&g_data.lexer_lst, token);
 //		sleep(1);
 	}
 	print_lst(g_data.lexer_lst);
