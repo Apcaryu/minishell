@@ -32,7 +32,7 @@ extern t_data	g_data;
 // 		exit_exec();
 // }
 
-t_bool    is_built_in(char *cmd)
+t_bool    is_builtin(char *cmd)
 {
     if (!cmd)
         return (false);
@@ -117,12 +117,19 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 	close(exec->pipefd[1]);
 }
 
-void	builtin_prrocess(void)
+void	builtin_process(t_exec *exec)
 {
 	if (!ft_strncmp("echo", g_data.parser_lst->cmd, ft_strlen("echo")))
 		echo_exec();
 	else if (!ft_strncmp("env", g_data.parser_lst->cmd, ft_strlen("env")))
 		env_exec();
+	else if (!ft_strncmp("pwd", g_data.parser_lst->cmd, ft_strlen("pwd")))
+		pwd_exec();
+	else if (!ft_strncmp("cd", g_data.parser_lst->cmd, ft_strlen("cd")))
+		cd_exec();
+
+	else if (!ft_strncmp("exit", g_data.parser_lst->cmd, ft_strlen("exit")))
+		exit_exec(exec);
 }
 
 void	main_loop(t_exec *exec)
@@ -135,10 +142,10 @@ void	main_loop(t_exec *exec)
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
-	if (is_built_in(g_data.parser_lst->cmd))
+	if (is_builtin(g_data.parser_lst->cmd))
     {
         // dprintf(2, "hello\n");
-        builtin_prrocess();
+        builtin_process(exec);
     }
 	else
 	{

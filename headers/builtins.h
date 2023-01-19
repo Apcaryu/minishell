@@ -20,6 +20,6 @@ void	pwd_exec(void);
 void	export_exec(void);
 void	unset_exec(void);
 void	env_exec(void);
-void	exit_exec(void);
+void	exit_exec(t_exec *exec);
 
 #endif

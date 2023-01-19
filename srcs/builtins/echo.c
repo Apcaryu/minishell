@@ -14,8 +14,6 @@
 
 extern t_data	g_data;
 
-
-
 void	echo_exec(void)
 {
 	t_bool	n;
