@@ -19,14 +19,12 @@ void	env_exec(void)
 	int i;
 
 	i = 0;
-	// printf("exec env\n");
-	if (g_data.parser_lst->args[1] != NULL)
-		write(2, "Env Error\n", 13);
+	dprintf(2, "exec env\n");
+	// if (g_data.parser_lst->args[1] != NULL)
+	// 	write(2, "Env Error\n", 11);
 	while (g_data.env[i])
 	{
 		printf("%s\n", g_data.env[i]);
 		i++;
 	}
 }
-
-// ! TODO : env -i

@@ -32,12 +32,17 @@ extern t_data	g_data;
 // 		exit_exec();
 // }
 
-// t_bool	is_builtin(char *cmd)
-// {
-// 	if (!cmd)
-// 		return (NULL);
-// 	if (ft_strncmp)
-// }
+t_bool    is_built_in(char *cmd)
+{
+    if (!cmd)
+        return (false);
+    if (ft_strncmp("echo", cmd, ft_strlen("echo")) == 0 || ft_strncmp("env", cmd, ft_strlen("env")) == 0 \
+    || ft_strncmp("export", cmd, ft_strlen("export")) == 0 || ft_strncmp("pwd", cmd, ft_strlen("pwd")) == 0 \
+    || ft_strncmp("exit", cmd, ft_strlen("exit")) == 0 || ft_strncmp("cd", cmd, ft_strlen("cd")) == 0 \
+    || ft_strncmp("unset", cmd, ft_strlen("unset")) == 0)
+        return (true);
+    return (false);
+}
 
 void	wait_loop(t_exec *exec)
 {
@@ -112,6 +117,14 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 	close(exec->pipefd[1]);
 }
 
+void	builtin_prrocess(void)
+{
+	if (!ft_strncmp("echo", g_data.parser_lst->cmd, ft_strlen("echo")))
+		echo_exec();
+	else if (!ft_strncmp("env", g_data.parser_lst->cmd, ft_strlen("env")))
+		env_exec();
+}
+
 void	main_loop(t_exec *exec)
 {
 	int			i;
@@ -121,36 +134,45 @@ void	main_loop(t_exec *exec)
 	i = 1;
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
-	while (elem_lst != NULL)
+	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
+	if (is_built_in(g_data.parser_lst->cmd))
+    {
+        // dprintf(2, "hello\n");
+        builtin_prrocess();
+    }
+	else
 	{
-		if (elem_lst->type == PIPE || !elem_lst->next)
+		while (elem_lst != NULL)
 		{
-			// pipe(exec->pipefd);
-			if (pipe(exec->pipefd) == -1)
-				perror("minishell: ");
-			exec->pid = fork();
-			if (exec->pid == -1)
+			if (elem_lst->type == PIPE || !elem_lst->next)
 			{
-				perror("minishell: ");
-				exit(1);
+				// pipe(exec->pipefd);
+				if (pipe(exec->pipefd) == -1)
+					perror("minishell: ");
+				exec->pid = fork();
+				if (exec->pid == -1)
+				{
+					perror("minishell: ");
+					exit(1);
+				}
+				else if (exec->pid == 0)
+				{
+					child(start, elem_lst, exec, i);
+					exec_cmd(exec, start, elem_lst);
+					// exit(127);
+				}
+				else
+				{
+					close(exec->pipefd[1]);
+					// dup2(exec->pipefd[0], 0);
+					close(exec->pipefd[0]);
+					if (elem_lst->next)
+						start = elem_lst->next;
+				}
+				i++;
 			}
-			else if (exec->pid == 0)
-			{
-				child(start, elem_lst, exec, i);
-				exec_cmd(exec, start, elem_lst);
-				// exit(127);
-			}
-			else
-			{
-				close(exec->pipefd[1]);
-				// dup2(exec->pipefd[0], 0);
-				close(exec->pipefd[0]);
-				if (elem_lst->next)
-					start = elem_lst->next;
-			}
-			i++;
+			elem_lst = elem_lst->next;
 		}
-		elem_lst = elem_lst->next;
 	}
 	wait_loop(exec);
 }

@@ -28,7 +28,7 @@ void	echo_exec(void)
 	count_args = 0;
 	n = true;
 	if (!g_data.parser_lst->args[1])
-		write(1, "\n", 5);
+		write(1, "\n", 1);
 	while (g_data.parser_lst->args[count_args])
 		count_args++;
 	// while (g_data.parser_lst->args[i])
