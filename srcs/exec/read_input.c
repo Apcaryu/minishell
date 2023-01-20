@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/18 19:22:22 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/01/20 18:01:32 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 		dup2(infile, 0);
 		close(infile);
 	}
+	else if (exec->infile >= 0){
+		dup2(exec->infile, 0);
+		close(exec->infile);
+	}
+	
 	if (outfile >= 0){
 		dup2(outfile, 1);
 		close(outfile);
@@ -142,13 +147,13 @@ void	main_loop(t_exec *exec)
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
-	if (is_builtin(g_data.parser_lst->cmd))
-    {
-        // dprintf(2, "hello\n");
-        builtin_process(exec);
-    }
-	else
-	{
+	// if (is_builtin(g_data.parser_lst->cmd))
+    // {
+    //     // dprintf(2, "hello\n");
+    //     builtin_process(exec);
+    // }
+	// else
+	// {
 		while (elem_lst != NULL)
 		{
 			if (elem_lst->type == PIPE || !elem_lst->next)
@@ -165,14 +170,23 @@ void	main_loop(t_exec *exec)
 				else if (exec->pid == 0)
 				{
 					child(start, elem_lst, exec, i);
-					exec_cmd(exec, start, elem_lst);
+					if (is_builtin(elem_lst->cmd))
+    				{
+        				// dprintf(2, "hello\n");
+        				builtin_process(exec);
+						exit(0);
+    				}
+					else
+						exec_cmd(exec, start, elem_lst);
 					// exit(127);
 				}
 				else
 				{
 					close(exec->pipefd[1]);
 					// dup2(exec->pipefd[0], 0);
-					close(exec->pipefd[0]);
+					if (exec->infile >= 0)
+						close(exec->infile);
+					exec->infile = exec->pipefd[0];
 					if (elem_lst->next)
 						start = elem_lst->next;
 				}
@@ -180,7 +194,9 @@ void	main_loop(t_exec *exec)
 			}
 			elem_lst = elem_lst->next;
 		}
-	}
+	// }
+	if (exec->infile >= 0)
+		close(exec->infile);
 	wait_loop(exec);
 }
 
