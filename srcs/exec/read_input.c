@@ -143,8 +143,6 @@ void	builtin_process(t_exec *exec)
 		while (g_data.parser_lst->args[++i])
 		{
 			export_exec(g_data.parser_lst->args[i]);
-			// dprintf(2, "EXPORT = %s\n", g_data.parser_lst->args[i]);
-			// i++;
 		}
 		// export_exec();
 	}

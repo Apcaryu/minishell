@@ -83,6 +83,7 @@ typedef struct s_exec
 typedef struct	s_env
 {
 	char			*line;
+	struct s_env	*prev;
 	struct s_env	*next;
 }	t_env;
 
@@ -95,6 +96,7 @@ typedef struct s_data
 	t_exec		*exec_struct;
 	char		**env;
 	t_env		*env_bis;
+	char		**tab;
 }	t_data;
 
 

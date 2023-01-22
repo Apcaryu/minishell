@@ -64,4 +64,6 @@ void	    add_env_line(t_env *env, t_env *new);
 t_env       *create_env(char **env);
 t_env       *new_env_line(char *env_line);
 
+char	    **convert_lst_to_tab(t_data data);
+
 #endif

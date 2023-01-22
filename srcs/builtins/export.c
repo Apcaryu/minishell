@@ -68,26 +68,66 @@ char	*get_syntax(char *str)
 	return (dest);
 }
 
+int	env_line_already_exist(t_env *new)
+{
+	t_env	*head;
+	int		len;
+
+	len = 0;
+	head = g_data.env_bis;
+	while (new->line[len] && new->line[len] != '=')
+		len++;
+	while (head && ft_strncmp(head->line, new->line, len) != 0)
+		head = head->next;
+	if (head == NULL)
+		return (0);
+	if (head->prev)
+		head->prev->next = new;
+	else
+		g_data.env_bis = new;
+	if (head->next)
+		head->next->prev = new;
+	new->prev = head->prev;
+	new->next = head->next;
+	free(head->line);
+	free(head);
+	return (1);
+}
+
 void	export_exec(char *str)
 {
-	dprintf(2, "exec export\n");
+
+	// dprintf(2, "exec export\n");
 	t_env	*new;
 	char	*new_env;
+	t_data	data;
 
-	// dprintf(2, "export = %s\n", g_data.parser_lst->args[1]);
+	data = g_data;
+	// dprintf(2, "export = %s\n", data.parser_lst->args[1]);
 	new_env = get_syntax(str);
-	dprintf(2, "new_env = %s\n", new_env);
+	// dprintf(2, "new_env = %s\n", new_env);
 	if (!new_env)
 		return ;
 	new = new_env_line(new_env);
-	dprintf(2, "new = %s\n", new->line);
+	// dprintf(2, "new = %s\n", new->line);
 	if (!new)
 	{
 		free(new_env);
 		return ;
 	}
 	free(new_env);
-	dprintf(2, "env_bis = %s\n", g_data.env_bis->line);
-	if (!g_data.env_bis)
-		g_data.env_bis = new;
+	// dprintf(2, "env_bis = %s\n", data.env_bis->line);
+	if (!data.env_bis)
+		data.env_bis = new;
+	else
+	{
+		// dprintf(2, "env_bis = %s\n", data.env_bis->line);
+		if (env_line_already_exist(new) == 0)
+			add_env_line(data.env_bis, new);
+		// free_tab_str(&data->test, -1);
+	}
+	data.tab = convert_lst_to_tab(data);
+	// dprintf(2, "tab = %s\n", *data.tab);
+	if (!data.tab)
+		return ;
 }

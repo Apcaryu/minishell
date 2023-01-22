@@ -10,6 +10,7 @@ void	init_data(t_data *data, char **env)
 	data->exec_struct = NULL;
 	data->env = env;
 	data->env_bis = create_env(data->env);
+	data->tab = convert_lst_to_tab(*data);
 }
 
 int	main(int argc, char *argv[], char  **envp)
