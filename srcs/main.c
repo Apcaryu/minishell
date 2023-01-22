@@ -9,6 +9,7 @@ void	init_data(t_data *data, char **env)
 	data->parser_lst = NULL;
 	data->exec_struct = NULL;
 	data->env = env;
+	data->env_bis = create_env(data->env);
 }
 
 int	main(int argc, char *argv[], char  **envp)

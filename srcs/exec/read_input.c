@@ -124,6 +124,8 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 
 void	builtin_process(t_exec *exec)
 {
+	int i;
+
 	if (!ft_strncmp("echo", g_data.parser_lst->cmd, ft_strlen("echo")))
 		echo_exec();
 	else if (!ft_strncmp("env", g_data.parser_lst->cmd, ft_strlen("env")))
@@ -135,6 +137,17 @@ void	builtin_process(t_exec *exec)
 
 	else if (!ft_strncmp("exit", g_data.parser_lst->cmd, ft_strlen("exit")))
 		exit_exec(exec);
+	else if (!ft_strncmp("export", g_data.parser_lst->cmd, ft_strlen("export")))
+	{
+		i = 0;
+		while (g_data.parser_lst->args[++i])
+		{
+			export_exec(g_data.parser_lst->args[i]);
+			// dprintf(2, "EXPORT = %s\n", g_data.parser_lst->args[i]);
+			// i++;
+		}
+		// export_exec();
+	}
 }
 
 void	main_loop(t_exec *exec)

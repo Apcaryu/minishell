@@ -17,7 +17,7 @@ typedef enum e_builtins
 void	echo_exec(void);
 void	cd_exec(void);
 void	pwd_exec(void);
-void	export_exec(void);
+void	export_exec(char *str);
 void	unset_exec(void);
 void	env_exec(void);
 void	exit_exec(t_exec *exec);

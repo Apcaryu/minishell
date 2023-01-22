@@ -20,6 +20,7 @@ SRC_EXEC 		= read_input.c \
 					print_exec.c \
 					exec_cmd.c \
 					close_and_exit.c \
+					exec_utils.c \
 					# lst_exec.c
 
 SRC_BUILTINS 	= echo.c \

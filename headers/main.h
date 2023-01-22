@@ -80,6 +80,11 @@ typedef struct s_exec
 
 // };
 
+typedef struct	s_env
+{
+	char			*line;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_data
 {
@@ -89,7 +94,10 @@ typedef struct s_data
 	t_elem_pars	*parser_lst;
 	t_exec		*exec_struct;
 	char		**env;
+	t_env		*env_bis;
 }	t_data;
+
+
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);
 

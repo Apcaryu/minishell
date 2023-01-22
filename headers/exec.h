@@ -57,4 +57,11 @@ t_exec		*new_exec(t_list **garb_list);
 t_exec		*exec_last(t_exec *exec_lst);
 void		exec_add_back(t_exec **exec_lst, t_exec *elem);
 
+
+// Env utils
+void	    free_env(t_env *env);
+void	    add_env_line(t_env *env, t_env *new);
+t_env       *create_env(char **env);
+t_env       *new_env_line(char *env_line);
+
 #endif
