@@ -228,7 +228,7 @@ void	read_input(t_data *data)
 	// lexer(data);
 	// parser();
 //	init_test_exec();
-	executer();
+//	executer();
 	//dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
 //	 check_builtin();
 //	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))

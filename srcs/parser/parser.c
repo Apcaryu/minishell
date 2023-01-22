@@ -128,7 +128,14 @@ unsigned int	command(t_elem_pars *elem, t_token *token)
 	if (token->next != NULL)
 		token = token->next;
 	else
+	{
+		if (token->content != NULL)
+		{
+			elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * (1 + 1));
+			elem->args[0] = elem->cmd;
+		}
 		return (nb_move);
+	}
 	p_token(token);
 	while (token->type == COMMAND)
 	{
@@ -142,13 +149,27 @@ unsigned int	command(t_elem_pars *elem, t_token *token)
 		if (token->next != NULL)
 			token = token->next;
 		else
+		{
+			if (token->content != NULL)
+			{
+				elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * (1 + 1));
+				elem->args[0] = elem->cmd;
+			}
 			return (nb_move);
+		}
 	}
 	if (token->type == C_SPACE)
 	{
 		nb_move++;
 		if (token->next == NULL)
+		{
+			if (elem->cmd != NULL)
+			{
+				elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * (1 + 1));
+				elem->args[0] = elem->cmd;
+			}
 			return (nb_move);
+		}
 		else
 			token = token->next;
 	}
