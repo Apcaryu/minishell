@@ -130,4 +130,11 @@ void	export_exec(char *str)
 	// dprintf(2, "tab = %s\n", *data.tab);
 	if (!data.tab)
 		return ;
+	int i = 0;
+	while (data.tab[i+1] != NULL)
+		i++;
+	dprintf(2, "tab[ledernier] = %s | new.line = %s\n", data.tab[i], new->line);
+	// g_data.env_bis = new;
+	g_data.tab = data.tab;
+	dprintf(2, "tab[ledernier] = %s\n", g_data.tab[i]);
 }

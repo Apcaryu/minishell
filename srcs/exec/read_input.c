@@ -122,27 +122,27 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 	close(exec->pipefd[1]);
 }
 
-void	builtin_process(t_exec *exec)
+void	builtin_process(t_exec *exec, t_elem_pars *elem)
 {
 	int i;
 
-	if (!ft_strncmp("echo", g_data.parser_lst->cmd, ft_strlen("echo")))
-		echo_exec();
-	else if (!ft_strncmp("env", g_data.parser_lst->cmd, ft_strlen("env")))
+	if (!ft_strncmp("echo", elem->cmd, ft_strlen("echo")))
+		echo_exec(elem);
+	else if (!ft_strncmp("env", elem->cmd, ft_strlen("env")))
 		env_exec();
-	else if (!ft_strncmp("pwd", g_data.parser_lst->cmd, ft_strlen("pwd")))
+	else if (!ft_strncmp("pwd", elem->cmd, ft_strlen("pwd")))
 		pwd_exec();
-	else if (!ft_strncmp("cd", g_data.parser_lst->cmd, ft_strlen("cd")))
+	else if (!ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
 		cd_exec();
 
-	else if (!ft_strncmp("exit", g_data.parser_lst->cmd, ft_strlen("exit")))
+	else if (!ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
 		exit_exec(exec);
-	else if (!ft_strncmp("export", g_data.parser_lst->cmd, ft_strlen("export")))
+	else if (!ft_strncmp("export", elem->cmd, ft_strlen("export")))
 	{
 		i = 0;
-		while (g_data.parser_lst->args[++i])
+		while (elem->args[++i])
 		{
-			export_exec(g_data.parser_lst->args[i]);
+			export_exec(elem->args[i]);
 		}
 		// export_exec();
 	}
@@ -158,18 +158,20 @@ void	main_loop(t_exec *exec)
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
-	// if (is_builtin(g_data.parser_lst->cmd))
-    // {
-    //     // dprintf(2, "hello\n");
-    //     builtin_process(exec);
-    // }
-	// else
-	// {
+	dprintf(2, "elem.cmd = %s\n", elem_lst->cmd);
+	if (is_builtin(g_data.parser_lst->cmd) && exec->nbr_pipes == 0)
+    {
+        // dprintf(2, "hello\n");
+        builtin_process(exec, elem_lst);
+    }
+	else
+	{
 		while (elem_lst != NULL)
 		{
 			if (elem_lst->type == PIPE || !elem_lst->next)
 			{
 				// pipe(exec->pipefd);
+				dprintf(2, "\033[35melem.cmd = %s\033[0m\n", elem_lst->cmd);
 				if (pipe(exec->pipefd) == -1)
 					perror("minishell: ");
 				exec->pid = fork();
@@ -181,10 +183,12 @@ void	main_loop(t_exec *exec)
 				else if (exec->pid == 0)
 				{
 					child(start, elem_lst, exec, i);
+					dprintf(2, "\033[32melem.cmd = %s\033[0m\n", elem_lst->cmd);
 					if (is_builtin(elem_lst->cmd))
     				{
         				// dprintf(2, "hello\n");
-        				builtin_process(exec);
+						dprintf(2, "\033[31melem.cmd = %s | arg[1] = %s\033[0m\n", elem_lst->cmd, elem_lst->args[1]);
+        				builtin_process(exec, elem_lst);
 						exit(0);
     				}
 					else
@@ -205,7 +209,7 @@ void	main_loop(t_exec *exec)
 			}
 			elem_lst = elem_lst->next;
 		}
-	// }
+	}
 	if (exec->infile >= 0)
 		close(exec->infile);
 	wait_loop(exec);
@@ -222,6 +226,7 @@ void	executer(void)
 	exec = init_exec_structure(exec);
 	if (exec == NULL)
 		return ;
+	// builtin_process(exec, g_data.parser_lst);
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }
@@ -240,6 +245,10 @@ void	read_input(t_data *data)
 	// parser();
 //	init_test_exec();
 	executer();
+	// int i = 0;
+	// while (g_data.tab[i+1] != NULL)
+	// 	i++;
+	// dprintf(2, "tab[ledernier] = %s\n", g_data.tab[i]);
 	//dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
 //	 check_builtin();
 //	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))

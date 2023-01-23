@@ -31,13 +31,13 @@ void	free_env(t_env *env)
 void	add_env_line(t_env *env, t_env *new)
 {
 	// dprintf(2, "ICI\n");
-	dprintf(2, "new = %s\n", new->line);
+	// dprintf(2, "new = %s\n", new->line);
 	while (env && env->next)
 	{
 		// dprintf(2, "env = %p\n", env);
 		env = env->next;
 	}
-	dprintf(2, "env = %s\n", env->line);
+	// dprintf(2, "env = %s\n", env->line);
 	new->prev = env;
 	dprintf(2, "prev = %s\n", new->prev->line);
 	new->next = NULL;

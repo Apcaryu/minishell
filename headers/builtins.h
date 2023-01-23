@@ -14,7 +14,7 @@ typedef enum e_builtins
 	// exit = 6
 }	t_builtins;
 
-void	echo_exec(void);
+void	echo_exec(t_elem_pars *elem);
 void	cd_exec(void);
 void	pwd_exec(void);
 void	export_exec(char *str);

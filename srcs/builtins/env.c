@@ -22,9 +22,9 @@ void	env_exec(void)
 	dprintf(2, "exec env\n");
 	// if (g_data.parser_lst->args[1] != NULL)
 	// 	write(2, "Env Error\n", 11);
-	while (g_data.env[i])
+	while (g_data.tab[i])
 	{
-		printf("%s\n", g_data.env[i]);
+		printf("%s\n", g_data.tab[i]);
 		i++;
 	}
 }
