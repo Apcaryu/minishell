@@ -140,11 +140,20 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 	else if (!ft_strncmp("export", elem->cmd, ft_strlen("export")))
 	{
 		i = 0;
-		while (elem->args[++i])
+		while (elem->args[i])
 		{
 			export_exec(elem->args[i]);
+			i++;
 		}
-		// export_exec();
+	}
+	else if (!ft_strncmp("unset", elem->cmd, ft_strlen("unset")))
+	{
+		i = 0;
+		while (elem->args[i])
+		{
+			unset_exec(elem->args[i]);
+			i++;
+		}
 	}
 }
 

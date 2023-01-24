@@ -39,10 +39,10 @@ void	add_env_line(t_env *env, t_env *new)
 	}
 	// dprintf(2, "env = %s\n", env->line);
 	new->prev = env;
-	dprintf(2, "prev = %s\n", new->prev->line);
+	// dprintf(2, "prev = %s\n", new->prev->line);
 	new->next = NULL;
 	env->next = new;
-	dprintf(2, "env->next = %s\n", env->next->line);
+	// dprintf(2, "env->next = %s\n", env->next->line);
 }
 
 t_env   *create_env(char **env)

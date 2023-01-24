@@ -22,6 +22,8 @@ void	add_char(char **actual, char c)
 		i++;
 	}
 	dest[i] = c;
+	// dprintf(2, "dest = %s\n", dest);
+	// dprintf(2, "dest[i] = %c\n", dest[i]);
 	dest[i + 1] = '\0';
 	if (*actual)
 		free(*actual);

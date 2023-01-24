@@ -18,7 +18,7 @@ void	echo_exec(t_elem_pars *elem);
 void	cd_exec(void);
 void	pwd_exec(void);
 void	export_exec(char *str);
-void	unset_exec(void);
+void	unset_exec(char *str);
 void	env_exec(void);
 void	exit_exec(t_exec *exec);
 
