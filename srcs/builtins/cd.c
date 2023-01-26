@@ -14,12 +14,19 @@
 
 extern t_data	g_data;
 
-int	count_args(void)
+int	count_args(t_data data)
 {
 	int	i;
 
 	i = 0;
-	while (g_data.parser_lst->args[i])
+	// dprintf(2, "cd->cmd = %s\n", data.parser_lst->cmd);
+	// dprintf(2, "cd->args = %s\n", data.parser_lst->args[1]);
+	if (data.parser_lst->args == NULL)
+	{
+		i = 1;
+		return (i);
+	}
+	while (data.parser_lst->args[i])
 		i++;
 	return (i);
 }
@@ -30,6 +37,7 @@ void	update_pwd(void)
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
+	dprintf(2, "cwd = %s\n", getcwd(cwd, PATH_MAX));
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
 		perror("pwd : ");
@@ -38,18 +46,20 @@ void	update_pwd(void)
 	oldpwd = ft_strjoin("OLDPWD=", cwd);
 	if (!oldpwd)
 		return ;
-	dprintf(2, "oldpwd = %s\n", oldpwd);
+	export_exec(oldpwd);
+	// dprintf(2, "oldpwd = %s\n", oldpwd);
 	free(oldpwd);
 }
 
 void	cd_exec(void)
 {
-	// if (count_args() <= 2)
-	// {
-	// 	if ()
-	// 		return ;
-	// }
-	update_pwd();
+	t_data	data;
+
+	data = g_data;
+	if (count_args(data) <= 2)
+	{
+		update_pwd();
+	}
 }
 
 // ^ $OLDPWD

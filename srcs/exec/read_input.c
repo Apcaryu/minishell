@@ -139,7 +139,7 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 		exit_exec(exec);
 	else if (!ft_strncmp("export", elem->cmd, ft_strlen("export")))
 	{
-		i = 0;
+		i = 1;
 		while (elem->args[i])
 		{
 			export_exec(elem->args[i]);
