@@ -51,14 +51,33 @@ void	update_pwd(void)
 	free(oldpwd);
 }
 
-void	cd_exec(void)
+void	void_cd(void)
+{
+	char *home = getenv("HOME"); // TODO recuperer le home de l'env de minishell
+
+	dprintf(2, "home = %s\n", home);
+	update_pwd();
+	printf("chdir = %d\n", chdir(home));
+}
+
+void	cd_exec(t_elem_pars *elem)
 {
 	t_data	data;
+	int		res;
 
 	data = g_data;
+	// --------- ONLY TEST ---------- //
+	// void_cd();
+	// return;
+	// --------- END ---------- //
+	if (elem->args[1] == NULL){
+		void_cd();
+		return;
+	}
 	if (count_args(data) <= 2)
 	{
 		update_pwd();
+		printf("chdir = %d\n",chdir(elem->args[1]));
 	}
 }
 

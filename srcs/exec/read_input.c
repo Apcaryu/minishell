@@ -133,7 +133,7 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 	else if (!ft_strncmp("pwd", elem->cmd, ft_strlen("pwd")))
 		pwd_exec();
 	else if (!ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
-		cd_exec();
+		cd_exec(elem);
 
 	else if (!ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
 		exit_exec(exec);
