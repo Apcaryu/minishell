@@ -36,7 +36,7 @@ unsigned int	variable_size(const char *str, unsigned int idx)
 
 	len_out = 0;
 	idx++;
-	while (isalnum(str[idx]) || str[idx] == '_')
+	while (ft_isalnum(str[idx]) || str[idx] == '_')
 	{
 		idx++;
 		len_out++;
@@ -149,7 +149,7 @@ void	set_var_content(t_token *token)
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
-		if (isalnum(token->content[idx + 1]) || token->content[idx + 1] == '_')
+		if (ft_isalnum(token->content[idx + 1]) || token->content[idx + 1] == '_')
 		{
 			var.var_size = variable_size(token->content, idx);
 			var.var_name = variable_name(token->content, idx, var.var_size);
