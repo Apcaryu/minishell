@@ -36,7 +36,7 @@ unsigned int	variable_size(const char *str, unsigned int idx)
 
 	len_out = 0;
 	idx++;
-	while (isalnum(str[idx]) || str[idx] == '_')
+	while (ft_isalnum(str[idx]) || str[idx] == '_')
 	{
 		idx++;
 		len_out++;
@@ -149,7 +149,7 @@ void	set_var_content(t_token *token)
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
-		if (isalnum(token->content[idx + 1]) || token->content[idx + 1] == '_')
+		if (ft_isalnum(token->content[idx + 1]) || token->content[idx + 1] == '_')
 		{
 			var.var_size = variable_size(token->content, idx);
 			var.var_name = variable_name(token->content, idx, var.var_size);
@@ -167,39 +167,48 @@ void	set_var_content(t_token *token)
 	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
 	{
 		remove_quote(token->content);
-		token->type = COMMAND;
+//		token->type = COMMAND;
 	}
+	token->type = COMMAND;
 	printf("content = %s\n", token->content);
+}
+
+t_token	*token_update(t_token *start, t_token *update, t_token *before)
+{
+	t_token	*output;
+
+	output = start;
+	return (output);
 }
 
 void	expend(void)
 {
 	t_token *token_lst;
-	t_token *tmp;
-	t_token *ttmp;
+//	t_token *tmp;
+//	t_token *ttmp;
 
 	token_lst = g_data.lexer_lst;
 	while (token_lst != NULL)
 	{
-		if (token_lst->next != NULL) {
-			if (token_lst->next->type == VARIABLE)
-				ttmp = token_lst;
-		}
+//		if (token_lst->next != NULL) {
+//			if (token_lst->next->type == VARIABLE)
+//				ttmp = token_lst;
+//		}
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
-		if (token_lst->type == VARIABLE)
-		{
-			tmp = token_lst->next;
-			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
-			token_lst = lex_expend(token_lst->content, ttmp);
-			token_lst->next = tmp;
-			print_lst(g_data.lexer_lst);
-			while (token_lst != tmp && token_lst != NULL && tmp != NULL) {
-				token_lst = token_lst->next;
-				printf("token_lst = %p\n", token_lst);
-				sleep(1);
-			}
-		}
+//		if (token_lst->type == VARIABLE)
+//		{
+//			tmp = token_lst->next;
+//			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
+//			token_lst = lex_expend(token_lst->content, ttmp);
+//			token_lst->next = tmp;
+//			print_lst(g_data.lexer_lst);
+//			while (token_lst != tmp && token_lst != NULL && tmp != NULL) {
+//				token_lst = token_lst->next;
+//				printf("token_lst = %p\n", token_lst);
+//				sleep(1);
+//			}
+//		}
 		token_lst = token_lst->next;
 	}
 	printf("--------------------------------------------\n\n");
