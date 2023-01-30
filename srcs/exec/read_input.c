@@ -64,7 +64,7 @@ static int	open_inout(t_elem_pars *elem)
 	// dprintf(2, "type = %d\n", elem->type);
 	if (elem->args != NULL && elem->type == INFILE)
 	{
-		file = open(elem->args[0], O_RDONLY);
+		file = open(elem->args[0], O_RDONLY, 0644);
 		if (file == -1)
 		{
 			error_msgs(g_data.parser_lst->args[0], strerror(errno));
@@ -72,9 +72,19 @@ static int	open_inout(t_elem_pars *elem)
 			exit(0);
 		}
 	}
-	if (elem->args != NULL && elem->type == OUTFILE)
+	else if (elem->args != NULL && elem->type == OUTFILE)
 	{
-		file = open(elem->args[0], O_CREAT | O_RDWR | O_TRUNC, 0644);
+		file = open(elem->args[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		if (file == -1)
+		{
+			error_msgs(g_data.parser_lst->args[0], strerror(errno));
+			write(2, "\n", 1);
+			exit(1);
+		}
+	}
+	else if (elem->args != NULL && elem->type == APPEND)
+	{
+		file = open(elem->args[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (file == -1)
 		{
 			error_msgs(g_data.parser_lst->args[0], strerror(errno));
@@ -100,6 +110,8 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 		else if (start->type == COMMAND)
 			cmd = start->cmd;
 		else if (start->type == OUTFILE)
+			outfile = open_inout(start);
+		else if (start->type == APPEND)
 			outfile = open_inout(start);
 		start = start->next;
 	}
