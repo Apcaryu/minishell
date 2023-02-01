@@ -169,48 +169,41 @@ void	set_var_content(t_token *token)
 		remove_quote(token->content);
 		token->type = COMMAND;
 	}
-//	token->type = COMMAND;
 	printf("content = %s\n", token->content);
-}
-
-t_token	*token_update(t_token *start, t_token *update, t_token *before)
-{
-	t_token	*output;
-
-	output = start;
-	return (output);
 }
 
 void	expend(void)
 {
 	t_token *token_lst;
-//	t_token *tmp;
-//	t_token *ttmp;
+	t_token	*start;
+	t_token *end;
 
 	token_lst = g_data.lexer_lst;
+	if (token_lst->type != VARIABLE)
+		start = token_lst;
+	else
+		start = NULL;
 	while (token_lst != NULL)
 	{
-//		if (token_lst->next != NULL) {
-//			if (token_lst->next->type == VARIABLE)
-//				ttmp = token_lst;
-//		}
+		if (token_lst->type != VARIABLE)
+			start = token_lst;
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
 		if (token_lst->type == VARIABLE)
 		{
-			lex_expend(token_lst->content, token_lst);
-//			tmp = token_lst->next;
-//			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
-//			token_lst = lex_expend(token_lst->content, ttmp);
-//			token_lst->next = tmp;
-//			print_lst(g_data.lexer_lst);
-//			while (token_lst != tmp && token_lst != NULL && tmp != NULL) {
-//				token_lst = token_lst->next;
-//				printf("token_lst = %p\n", token_lst);
-//				sleep(1);
-//			}
-			token_lst->type = COMMAND;
-		}
+			if (start == NULL)
+				g_data.lexer_lst = lex_expend(token_lst->content);
+			else
+			{
+				end = token_lst->next;
+				start->next = lex_expend(token_lst->content);
+				token_lst = start;
+				while (token_lst->next != NULL)
+				{
+					token_lst = token_lst->next;
+				}
+				token_lst->next = end;
+			}
 		token_lst = token_lst->next;
 	}
 	printf("--------------------------------------------\n\n");
