@@ -167,9 +167,9 @@ void	set_var_content(t_token *token)
 	if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
 	{
 		remove_quote(token->content);
-//		token->type = COMMAND;
+		token->type = COMMAND;
 	}
-	token->type = COMMAND;
+//	token->type = COMMAND;
 	printf("content = %s\n", token->content);
 }
 
@@ -196,8 +196,9 @@ void	expend(void)
 //		}
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
-//		if (token_lst->type == VARIABLE)
-//		{
+		if (token_lst->type == VARIABLE)
+		{
+			lex_expend(token_lst->content, token_lst);
 //			tmp = token_lst->next;
 //			printf("tmp = %p | token_content = %s\n", tmp, token_lst->content);
 //			token_lst = lex_expend(token_lst->content, ttmp);
@@ -208,7 +209,8 @@ void	expend(void)
 //				printf("token_lst = %p\n", token_lst);
 //				sleep(1);
 //			}
-//		}
+			token_lst->type = COMMAND;
+		}
 		token_lst = token_lst->next;
 	}
 	printf("--------------------------------------------\n\n");
