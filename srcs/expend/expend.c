@@ -189,21 +189,19 @@ void	expend(void)
 			start = token_lst;
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
-		if (token_lst->type == VARIABLE)
-		{
+		if (token_lst->type == VARIABLE) {
 			if (start == NULL)
 				g_data.lexer_lst = lex_expend(token_lst->content);
-			else
-			{
+			else {
 				end = token_lst->next;
 				start->next = lex_expend(token_lst->content);
 				token_lst = start;
-				while (token_lst->next != NULL)
-				{
+				while (token_lst->next != NULL) {
 					token_lst = token_lst->next;
 				}
 				token_lst->next = end;
 			}
+		}
 		token_lst = token_lst->next;
 	}
 	printf("--------------------------------------------\n\n");
