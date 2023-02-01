@@ -56,6 +56,49 @@ void	wait_loop(t_exec *exec)
 	}
 }
 
+void read_line_heredoc(int fd, t_elem_pars *elem)
+{
+	char	*line;
+	char	*limiter;
+	int		len_limit;
+
+	limiter = elem->args[0];
+	dprintf(2, "limiter = %s\n", limiter);
+	while (1)
+	{
+		line = readline("> ");
+		len_limit = ft_strlen(limiter);
+		// dprintf(2, "len_limit = %d\n", len_limit);
+		if (ft_strnstr(line, limiter, len_limit) && line[len_limit] == '\0')
+		{
+			free(line);
+			close(fd);
+			exit (0);
+		}
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		// if (!ft_strncmp())
+		// dprintf(2, "args[0] = %s\n", elem->args[0]);
+		// exit(1);
+		// close(fd);
+		free(line);
+	}
+	free(line);
+	close(fd);
+}
+
+int	ft_heredoc(t_elem_pars *elem)
+{
+	int fd;
+
+	dprintf(2, "args[0] = %s\n", elem->args[0]);
+	fd = open("heredoc_tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (fd < 0)
+		return (-1);
+	read_line_heredoc(fd, elem);
+	return (fd);
+}
+
 static int	open_inout(t_elem_pars *elem)
 {
 	int file;
@@ -92,6 +135,10 @@ static int	open_inout(t_elem_pars *elem)
 			exit(1);
 		}
 	}
+	else if (elem->args != NULL && elem->type == HEREDOC)
+	{
+		file = ft_heredoc(elem);
+	}
 	return (file);
 }
 
@@ -113,6 +160,8 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 			outfile = open_inout(start);
 		else if (start->type == APPEND)
 			outfile = open_inout(start);
+		else if (start->type == HEREDOC)
+			infile = open_inout(start);
 		start = start->next;
 	}
 	close(exec->pipefd[0]);
