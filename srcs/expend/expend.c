@@ -185,6 +185,27 @@ void	expend(void)
 		start = NULL;
 	while (token_lst != NULL)
 	{
+		if (token_lst->type == HEREDOC)
+		{
+			token_lst = token_lst->next;
+			if (token_lst == NULL)
+				return ;
+			else
+			{
+				dprintf(2, "coucou\n");
+				if (token_lst->type == C_SPACE)
+					token_lst = token_lst->next;
+				if (token_lst == NULL)
+					return ;
+				else
+				{
+					token_lst = token_lst->next;
+					dprintf(2, "\033[33mblop\033[0m\n");
+				}
+				if (token_lst == NULL)
+					return ;
+			}
+		}
 		if (token_lst->type != VARIABLE)
 			start = token_lst;
 		if (is_type_word(token_lst->type))
