@@ -253,7 +253,7 @@ void	read_input(t_data *data)
 	// lexer(data);
 	// parser();
 //	init_test_exec();
-	executer();
+//	executer();
 	// int i = 0;
 	// while (g_data.tab[i+1] != NULL)
 	// 	i++;
