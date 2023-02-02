@@ -54,7 +54,7 @@ void	update_pwd(void)
 void	void_cd(void)
 {
 	char *home = getenv("HOME"); // TODO recuperer le home de l'env de minishell
-
+	
 	dprintf(2, "home = %s\n", home);
 	update_pwd();
 	printf("chdir = %d\n", chdir(home));

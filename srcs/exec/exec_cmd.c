@@ -20,9 +20,9 @@ char	**get_env(t_exec *exec)
 	char	**tab;
 
 	i = 0;
-	while (ft_strnstr(g_data.env[i], "PATH", 4) == 0)
+	while (ft_strnstr(g_data.tab[i], "PATH", 4) == 0)
 		i++;
-	tab = ft_split(g_data.env[i] + 5, ':');
+	tab = ft_split(g_data.tab[i] + 5, ':');
 	if (tab == NULL)
 		return (NULL);
 	return (tab);
@@ -57,7 +57,7 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 		free(tmp);
 		if (access(path, X_OK) == 0)
 		{
-			exec->exit_code = execve(path, start->args, g_data.env);
+			exec->exit_code = execve(path, start->args, g_data.tab);
 			if (exec->exit_code == -1)
 				perror("execve: ");
 		}
