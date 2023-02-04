@@ -33,7 +33,8 @@ typedef enum	e_ntype
 	DOUBLE_QUOTE,
 	COMMAND,
 	C_SPACE,
-	VARIABLE
+	VARIABLE,
+	ARGS
 }	t_type;
 
 typedef struct s_token
