@@ -181,7 +181,7 @@ unsigned int	command(t_elem_pars *elem, t_token *token)
 	if (elem->cmd != NULL)
 		args++;
 //	printf("nb_args = %u\n", args); // TODO remove
-	elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * args + 1);
+	elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * (args + 1));
 	elem->args[0] = elem->cmd;
 	idx = 1;
 	while (0 < args)

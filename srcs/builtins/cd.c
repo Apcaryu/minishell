@@ -37,7 +37,7 @@ void	update_pwd(void)
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
-	dprintf(2, "cwd = %s\n", getcwd(cwd, PATH_MAX));
+	// dprintf(2, "cwd = %s\n", getcwd(cwd, PATH_MAX));
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
 		perror("pwd : ");
@@ -53,11 +53,22 @@ void	update_pwd(void)
 
 void	void_cd(void)
 {
-	char *home = getenv("HOME"); // TODO recuperer le home de l'env de minishell
-	
-	dprintf(2, "home = %s\n", home);
-	update_pwd();
-	printf("chdir = %d\n", chdir(home));
+	int i;
+
+	i = 0;
+	while (g_data.tab[i])
+	{
+		if (ft_strnstr(g_data.tab[i], "HOME", 4))
+		{
+			dprintf(2, "\033[32mtab[%d] = %s\n\033[0m", i, g_data.tab[i]);
+			update_pwd();
+			chdir(g_data.tab[i] + 5);
+			break ;
+		}
+		i++;
+		if (g_data.tab[i] == NULL)
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+	}
 }
 
 void	cd_exec(t_elem_pars *elem)
@@ -66,10 +77,6 @@ void	cd_exec(t_elem_pars *elem)
 	int		res;
 
 	data = g_data;
-	// --------- ONLY TEST ---------- //
-	// void_cd();
-	// return;
-	// --------- END ---------- //
 	if (elem->args[1] == NULL){
 		void_cd();
 		return;
