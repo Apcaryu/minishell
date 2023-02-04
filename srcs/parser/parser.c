@@ -321,6 +321,7 @@ void	parser(void)
 	lex_lst = g_data.lexer_lst;
 	command_elem = garbage_alloc(&g_data.garb_lst, sizeof(t_elem_pars) * 1);
 	command_elem->type = NONE;
+	elem = new_elem_pars(&g_data.garb_lst);
 	while (lex_lst != NULL)
 	{
 		is_last = false;
