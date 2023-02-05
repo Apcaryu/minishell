@@ -1,4 +1,5 @@
 #include "../headers/minishell.h"
+#include "../headers/use_signal.h"
 
 t_data g_data;
 
