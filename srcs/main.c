@@ -14,14 +14,23 @@ void	init_data(t_data *data, char **env)
 	data->tab = convert_lst_to_tab(*data);
 }
 
+void	init_signal(void)
+{
+	signal(SIGINT, &ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+}
+
 int	main(int argc, char *argv[], char  **envp)
 {
 //	t_data data;
 
 	init_data(&g_data, envp);
+	init_signal();
 	while (1)
 	{
+		g_data.is_interactive = true;
 		g_data.input = readline("minishell-0.1$ ");
+		g_data.is_interactive = false;
 		if (g_data.input == NULL)
 		{
 			ft_lstclear(&g_data.garb_lst, &free);

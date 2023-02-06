@@ -98,6 +98,7 @@ typedef struct s_data
 	char		**env;
 	t_env		*env_bis;
 	char		**tab;
+	t_bool		is_interactive;
 }	t_data;
 
 
