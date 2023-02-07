@@ -134,7 +134,7 @@ char	*set_content(t_token *token, unsigned int *idx)
 	return (content);
 }
 
-t_bool is_quote(t_token *token, unsigned int *idx)
+t_bool	is_quote(t_token *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
 	{
@@ -143,7 +143,6 @@ t_bool is_quote(t_token *token, unsigned int *idx)
 		else if (g_data.input[*idx] == '\"')
 			token->type = DOUBLE_QUOTE;
 		token->content = set_content(token, idx);
-//		*idx += 1;
 		return (true);
 	}
 	return (false);
