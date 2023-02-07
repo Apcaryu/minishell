@@ -28,7 +28,7 @@ void	infile_or_heredoc(t_token *token, unsigned int *idx)
 	else
 	{
 		token->type = INFILE;
-		*idx  += 1;
+		*idx += 1;
 	}
 }
 
