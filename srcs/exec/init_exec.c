@@ -111,6 +111,59 @@ void	open_inout_fds(t_exec *exec, t_elem_pars *elem)
 	}
 }
 
+void count_process(int nbr_pipe, t_elem_pars *elem)
+{
+	int nbr_process;
+	t_elem_pars *tmp;
+	t_bool *tab;
+	int idx;
+
+	tmp = elem;
+	idx = 0;
+	nbr_process = nbr_pipe + 1;
+	dprintf(2, "nbr_process = %d\n", nbr_process);
+	tab = malloc(sizeof(t_bool) * nbr_process);
+	if (tab == NULL)
+		return ;
+	while (idx < nbr_process)
+	{
+		tab[idx] = false;
+		idx++;
+	}
+	idx = 0;
+	if (tmp->next == NULL)
+	{
+		if (tmp->type == COMMAND)
+		{
+			tab[idx] = true;
+			dprintf(2, "tab[0] = %d\n", tab[0]);
+			return ;	
+		}
+	}
+	while (tmp->next != NULL)
+	{
+		if (tmp->type == COMMAND)
+			tab[idx] = true;
+		if (tmp->type == PIPE)
+			idx++;
+		tmp = tmp->next;
+		if (tmp->next == NULL)
+		{
+			if (tmp->type == COMMAND)
+			{
+				tab[idx] = true;
+				break ;
+			}
+		}
+	}
+	idx = 0;
+	while (idx < nbr_process)
+	{
+		dprintf(2, "tab[%d] = %d\n", idx, tab[idx]);
+		idx++;
+	}
+}
+
 t_exec	*init_exec_structure(t_exec *exec)
 {
 	t_elem_pars *elem_lst;
@@ -130,12 +183,12 @@ t_exec	*init_exec_structure(t_exec *exec)
 	elem_lst = g_data.parser_lst;
 	if (elem_lst == NULL)
 		return (NULL);
-	while (elem_lst->next != NULL)
+	while (elem_lst != NULL)
 	{
 		if (elem_lst->type == PIPE)
 		{
 			exec->nbr_pipes++;
-			printf("pipes = %d\n", exec->nbr_pipes);
+			dprintf(2, "pipes = %d\n", exec->nbr_pipes);
 		}
 		if (elem_lst->type == COMMAND)
 		{
@@ -147,5 +200,6 @@ t_exec	*init_exec_structure(t_exec *exec)
 		elem_lst = elem_lst->next;
 	}
 	// printf("exec structure = %p | pid = %d | pid[1] = %d | pipefd[0] = %d | pipefd[1] = %d\n", exec, exec->pid, exec->pid[1], exec->pipefd[0], exec->pipefd[1]);
+	// count_process(exec->nbr_pipes, g_data.parser_lst);
 	return (exec);
 }

@@ -27,7 +27,7 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // Open Infile & Outfile
-static int	open_inout(t_elem_pars *elem);
+int	open_inout(t_elem_pars *elem, t_exec *exec);
 
 // Pipes And Commands
 void		child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);

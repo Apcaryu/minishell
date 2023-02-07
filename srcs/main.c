@@ -20,7 +20,7 @@ int	main(int argc, char *argv[], char  **envp)
 	init_data(&g_data, envp);
 	while (1)
 	{
-		g_data.input = readline("minishell-0.1$ ");
+		g_data.input = readline("\033[38;5;140mminishell-0.1$ \033[0m");
 		if (g_data.input == NULL)
 		{
 			ft_lstclear(&g_data.garb_lst, &free);

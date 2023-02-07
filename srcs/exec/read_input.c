@@ -65,16 +65,21 @@ void	wait_loop(t_exec *exec)
 	}
 }
 
-void read_line_heredoc(int fd, t_elem_pars *elem)
+void read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
 {
 	char	*line;
 	char	*limiter;
 	int		len_limit;
+	// t_elem_pars *tmp;
+	// int count_cmds;
 
 	limiter = elem->args[0];
+	// tmp = elem;
+	// count_cmds = 0;
 	dprintf(2, "limiter = %s\n", limiter);
 	while (1)
 	{
+		write(1, "> ", 2);
 		line = get_next_line(0);
 		// line = readline("> ");
 		len_limit = ft_strlen(limiter);
@@ -96,11 +101,12 @@ void read_line_heredoc(int fd, t_elem_pars *elem)
 		free(line);
 	}
 	free(line);
-	// close(0);
 	close(fd);
+	// if (exec->nbr_cmd == 0)
+	// 	exit (0);
 }
 
-int	ft_heredoc(t_elem_pars *elem)
+int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
 {
 	int fd;
 
@@ -108,18 +114,20 @@ int	ft_heredoc(t_elem_pars *elem)
 	fd = open("heredoc_tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
-	read_line_heredoc(fd, elem);
+	read_line_heredoc(fd, elem, exec);
 	fd = open("heredoc_tmp.txt", O_RDONLY, 0644);
 	if (fd < 0)
 		unlink("heredoc_tmp.txt");
 	return (fd);
 }
 
-static int	open_inout(t_elem_pars *elem)
+int	open_inout(t_elem_pars *elem, t_exec *exec)
 {
 	int file;
+	
 
 	file = -1;
+	
 	// dprintf(2, "type = %d\n", elem->type);
 	if (elem->args != NULL && elem->type == INFILE)
 	{
@@ -153,7 +161,7 @@ static int	open_inout(t_elem_pars *elem)
 	}
 	else if (elem->args != NULL && elem->type == HEREDOC)
 	{
-		file = ft_heredoc(elem);
+		file = ft_heredoc(elem, exec);
 	}
 	return (file);
 }
@@ -163,21 +171,38 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 	char	*cmd;
 	int		infile;
 	int		outfile;
+	// t_elem_pars *tmp;
+	// int count_cmds;
 
 	infile = -2;
 	outfile = -2;
+	// tmp = elem;
+	// count_cmds = 0;
+	// while (tmp != NULL)
+	// {
+	// 	if (elem->type == COMMAND)
+	// 	{
+
+	// 		dprintf(2, "ICIICIICI\n");
+	// 		count_cmds++;
+	// 	}
+	// 	tmp = tmp->next;
+	// }
+	// dprintf(2, "count_cmds = %d\n", count_cmds);
 	while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL))
 	{
 		if (start->type == INFILE)
-			infile = open_inout(start);
+			infile = open_inout(start, exec);
 		else if (start->type == COMMAND)
 			cmd = start->cmd;
 		else if (start->type == OUTFILE)
-			outfile = open_inout(start);
+			outfile = open_inout(start, exec);
 		else if (start->type == APPEND)
-			outfile = open_inout(start);
+			outfile = open_inout(start, exec);
 		else if (start->type == HEREDOC)
-			infile = open_inout(start);
+		{
+			infile = open_inout(start, exec);
+		}
 		start = start->next;
 	}
 	close(exec->pipefd[0]);
@@ -195,10 +220,14 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 		dup2(outfile, 1);
 		close(outfile);
 	}
+		
 	else if (elem->type == PIPE && outfile == -2)
 		dup2(exec->pipefd[1],1);
+	if (exec->nbr_cmd == 0)
+		exit (0);
 	close(exec->pipefd[1]);
 }
+ 
 
 void	builtin_process(t_exec *exec, t_elem_pars *elem)
 {
@@ -238,21 +267,63 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 	}
 }
 
+void parent(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
+{
+    char    *cmd;
+    int        infile;
+    int        outfile;
+
+    infile = -2;
+    outfile = -2;
+    while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL))
+    {
+        if (start->type == INFILE)
+            infile = open_inout(start, exec);
+        else if (start->type == COMMAND)
+            cmd = start->cmd;
+        else if (start->type == OUTFILE)
+            outfile = open_inout(start, exec);
+        else if (start->type == APPEND)
+            outfile = open_inout(start, exec);
+        else if (start->type == HEREDOC)
+            infile = open_inout(start, exec);
+        start = start->next;
+    }
+    if (infile >= 0){
+        dup2(infile, 0);
+        close(infile);
+    }
+    
+    if (outfile >= 0){
+        dup2(outfile, 1);
+        close(outfile);
+    }
+}
+
 void	main_loop(t_exec *exec)
 {
 	int			i;
 	t_elem_pars	*start;
 	t_elem_pars	*elem_lst;
+	int	stdin_cpy;
+	int stdout_cpy;
 	
 	i = 1;
+	stdin_cpy = -1;
+	stdout_cpy = -1;
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
 	dprintf(2, "elem.cmd = %s\n", elem_lst->cmd);
 	if (exec->nbr_pipes == 0 && check_all_builtin(elem_lst))
     {
-        dprintf(2, "hello\n");
+        dprintf(2, "\033[35mhello\033[0m\n");
+		stdin_cpy = dup(0);
+		stdout_cpy = dup(1);
+		parent(start, elem_lst, exec);
         builtin_process(exec, elem_lst);
+		dup2(0, stdin_cpy);
+		dup2(1, stdout_cpy);
     }
 	else
 	{
@@ -302,6 +373,8 @@ void	main_loop(t_exec *exec)
 	}
 	if (exec->infile >= 0)
 		close(exec->infile);
+	// if (exec->nbr_cmd == 0)
+	// 	close(0);
 	wait_loop(exec);
 }
 

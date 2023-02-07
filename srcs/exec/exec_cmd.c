@@ -64,7 +64,8 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 		free(path);
 		i++;
 	}
-	error_msgs(start->cmd, "command not found\n");
+	if (ft_isalnum(start->cmd[0]))
+		error_msgs(start->cmd, "command not found\n");
 	clean_cmds(tab);
 	clean_cmds(start->args);
 	exit(127);
