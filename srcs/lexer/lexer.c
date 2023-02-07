@@ -42,7 +42,7 @@ void	outfile_or_append(t_token *token, unsigned int *idx)
 	else
 	{
 		token->type = OUTFILE;
-		*idx  += 1;
+		*idx += 1;
 	}
 }
 
