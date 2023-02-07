@@ -72,6 +72,22 @@ int	size_of_var(char *input, unsigned int idx)
 	return (size_out);
 }
 
+int	size_of_word(char *input, unsigned int idx)
+{
+	unsigned int	sub_idx;
+	int				size_out;
+
+	sub_idx = idx + 1;
+	size_out = 1;
+	while (is_word(input[sub_idx]) && input[sub_idx] != '\0' && \
+	idx + size_out < ft_strlen(input) && input[sub_idx] != '$')
+	{
+		size_out++;
+		sub_idx++;
+	}
+	return (size_out);
+}
+
 char	*set_content(t_token *token, unsigned int *idx)
 {
 	unsigned int	sub_idx;
@@ -84,17 +100,7 @@ char	*set_content(t_token *token, unsigned int *idx)
 	if (g_data.input[*idx] == '$')
 		size = size_of_var(g_data.input, *idx);
 	else if (is_word(g_data.input[*idx]))
-	{
-		size++;
-		sub_idx++;
-		while (is_word(g_data.input[sub_idx]) && \
-		g_data.input[sub_idx] != '\0' && \
-		*idx + size < ft_strlen(g_data.input) && g_data.input[sub_idx] != '$')
-		{
-			size++;
-			sub_idx++;
-		}
-	}
+		size = size_of_word(g_data.input, *idx);
 	else if (g_data.input[*idx] == '\"' || g_data.input[*idx] == '\'')
 	{
 		while (g_data.input[sub_idx] != '\0' && \
