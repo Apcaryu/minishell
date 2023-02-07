@@ -88,6 +88,27 @@ int	size_of_word(char *input, unsigned int idx)
 	return (size_out);
 }
 
+int	size_of_quote(char *input, unsigned int idx)
+{
+	unsigned int	sub_idx;
+	int				size_out;
+
+	sub_idx = idx;
+	size_out = 0;
+	while (input[sub_idx] != '\0' && idx + size_out < ft_strlen(input))
+	{
+		size_out++;
+		sub_idx++;
+		if (input[sub_idx] == '\'' || input[sub_idx] == '\"')
+		{
+			size_out++;
+			sub_idx++;
+			break ;
+		}
+	}
+	return (size_out);
+}
+
 char	*set_content(t_token *token, unsigned int *idx)
 {
 	unsigned int	sub_idx;
@@ -102,20 +123,7 @@ char	*set_content(t_token *token, unsigned int *idx)
 	else if (is_word(g_data.input[*idx]))
 		size = size_of_word(g_data.input, *idx);
 	else if (g_data.input[*idx] == '\"' || g_data.input[*idx] == '\'')
-	{
-		while (g_data.input[sub_idx] != '\0' && \
-		*idx + size < ft_strlen(g_data.input))
-		{
-			size++;
-			sub_idx++;
-			if (g_data.input[sub_idx] == '\'' || g_data.input[sub_idx] == '\"')
-			{
-				size++;
-				sub_idx++;
-				break ;
-			}
-		}
-	}
+		size = size_of_quote(g_data.input, *idx);
 	if (size == 0)
 		return (NULL);
 	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
