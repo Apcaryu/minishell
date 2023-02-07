@@ -1,22 +1,19 @@
 #include "../../headers/lexer.h"
 
-extern t_data g_data;
+extern t_data	g_data;
 
 void	print_lst(t_token *token_lst)
 {
 	if (token_lst == NULL)
 		return ;
 	while (token_lst->next != NULL)
-	{
-		printf("case = %p | type = %d | content = %s | next = %p\n", token_lst, token_lst->type, token_lst->content, token_lst->next);
 		token_lst = token_lst->next;
-	}
-	printf("case = %p | type = %d | content = %s | next = %p\n", token_lst, token_lst->type, token_lst->content, token_lst->next);
 }
 
 t_bool	is_word(char chr)
 {
-	if (chr != '<' && chr != '>' && chr != '|' && chr != ' ' && chr != '\'' && chr != '\"')
+	if (chr != '<' && chr != '>' && chr != '|' && chr != ' ' && chr != '\'' \
+	&& chr != '\"')
 		return (true);
 	return (false);
 }
