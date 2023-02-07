@@ -57,6 +57,21 @@ t_bool	is_pipe(t_token *token, unsigned int *idx)
 	return (false);
 }
 
+int	size_of_var(char *input, unsigned int idx)
+{
+	unsigned int	sub_idx;
+	int				size_out;
+
+	sub_idx = idx + 1;
+	size_out = 1;
+	while (ft_isalnum(input[sub_idx]) || input[sub_idx] == '_')
+	{
+		size_out++;
+		sub_idx++;
+	}
+	return (size_out);
+}
+
 char	*set_content(t_token *token, unsigned int *idx)
 {
 	unsigned int	sub_idx;
@@ -67,30 +82,24 @@ char	*set_content(t_token *token, unsigned int *idx)
 	size = 0;
 	content = NULL;
 	if (g_data.input[*idx] == '$')
-	{
-		size++;
-		sub_idx++;
-		while (ft_isalnum(g_data.input[sub_idx]) || g_data.input[sub_idx] == '_')
-		{
-			size++;
-			sub_idx++;
-		}
-		printf("size = %u\n", size);
-	}
+		size = size_of_var(g_data.input, *idx);
 	else if (is_word(g_data.input[*idx]))
 	{
 		size++;
 		sub_idx++;
-		while (is_word(g_data.input[sub_idx]) && g_data.input[sub_idx] != '\0'  \
- 				&& *idx + size < ft_strlen(g_data.input) && g_data.input[sub_idx] != '$') {
+		while (is_word(g_data.input[sub_idx]) && \
+		g_data.input[sub_idx] != '\0' && \
+		*idx + size < ft_strlen(g_data.input) && g_data.input[sub_idx] != '$')
+		{
 			size++;
 			sub_idx++;
 		}
 	}
 	else if (g_data.input[*idx] == '\"' || g_data.input[*idx] == '\'')
 	{
-		while (g_data.input[sub_idx] != '\0'  \
-				&& *idx + size < ft_strlen(g_data.input)) {
+		while (g_data.input[sub_idx] != '\0' && \
+		*idx + size < ft_strlen(g_data.input))
+		{
 			size++;
 			sub_idx++;
 			if (g_data.input[sub_idx] == '\'' || g_data.input[sub_idx] == '\"')
@@ -101,11 +110,9 @@ char	*set_content(t_token *token, unsigned int *idx)
 			}
 		}
 	}
-	printf("size = %u | sub_idx = %u\n", size, sub_idx);
 	if (size == 0)
 		return (NULL);
 	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
-//	printf("content = %p\n", content);
 	if (!content)
 		return (NULL);
 	ft_strlcpy(content, g_data.input + *idx, size + 1);
