@@ -130,28 +130,35 @@ void	remove_quote(char *str)
 		str[idx - 1] = '\0';
 }
 
+t_varenv	set_var(t_token *token, unsigned int idx)
+{
+	t_varenv	var_out;
+
+	init_varenv(&var_out);
+	var_out.var_size = variable_size(token->content, idx);
+	var_out.var_name = variable_name(token->content, idx, var_out.var_size);
+	var_out.var_content_size = var_content_size(var_out.var_name);
+	var_out.var_content = getenv(var_out.var_name + 1);
+	return (var_out);
+}
+
 void	set_var_content(t_token *token)
 {
 	unsigned int	idx;
 	t_varenv		var;
 
 	idx = 0;
-	while (token->content[idx] != '\0' && idx != UINT_MAX && token->type != SINGLE_QUOTE)
+	while (token->content[idx] != '\0' && idx != UINT_MAX && \
+	token->type != SINGLE_QUOTE)
 	{
-		init_varenv(&var);
 		idx = detect_dollar(token->content, idx);
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
-		if (ft_isalnum(token->content[idx + 1]) || token->content[idx + 1] == '_')
+		if (ft_isalnum(token->content[idx + 1]) || \
+		token->content[idx + 1] == '_')
 		{
-			var.var_size = variable_size(token->content, idx);
-			var.var_name = variable_name(token->content, idx, var.var_size);
-			printf("size of %s = %u\n", var.var_name, var.var_size); // TODO remove
-			var.var_content_size = var_content_size(var.var_name);
-			var.var_content = getenv(var.var_name + 1);
-			printf("content of %s = %s\n", var.var_name, var.var_content); // TODO remove
+			var = set_var(token, idx);
 			token->content = include_var_content(token->content, idx, var);
-			printf("content[%u] = %c\n", idx, token->content[idx]); // TODO remove
 			idx += var.var_content_size;
 		}
 		else
@@ -162,7 +169,6 @@ void	set_var_content(t_token *token)
 		remove_quote(token->content);
 		token->type = COMMAND;
 	}
-	printf("content = %s\n", token->content);
 }
 
 void	expend(void)
