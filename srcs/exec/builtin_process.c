@@ -6,11 +6,12 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:17:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 16:20:08 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:10:36 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
+#include "../../headers/main.h"
 
 extern t_data	g_data;
 
