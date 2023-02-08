@@ -73,7 +73,6 @@ unsigned int	var_content_size(char *var_name)
 	if (tmp == NULL)
 		return (0);
 	size = ft_strlen(tmp);
-	printf("size = %u\n", size); // TODO remove
 	return (size);
 }
 
