@@ -81,22 +81,13 @@ unsigned int	final_strlen(const char *str, const t_varenv varenv)
 	unsigned int	str_len;
 	unsigned int	len_out;
 
-	printf("---------- calcul total size ----------\n"); // TODO remove
 	str_len = ft_strlen(str);
-	printf("str_len = %u\n", str_len); // TODO remove
-	if (varenv.var_name != NULL) {
+	if (varenv.var_name != NULL)
 		str_len -= varenv.var_size + 1;
-		printf("str_len = %u | var_size = %u | result of %u-%u = %u\n", str_len, varenv.var_size, str_len, varenv.var_size, str_len-varenv.var_size); // TODO remove
-	}
 	len_out = str_len;
-	printf("len_out = %u\n", len_out); // TODO remove
-	if (varenv.var_content != NULL) {
+	if (varenv.var_content != NULL)
 		len_out += varenv.var_content_size +1;
-		printf("len_out = %u | var_content_size = %u | result of %u+%u = %u\n", len_out, varenv.var_content_size, len_out, varenv.var_content_size, len_out+varenv.var_content_size); // TODO remove
-	}
 	len_out++;
-	printf("len_out = %u\n", len_out); // TODO remove
-	printf("---------- end of calcul ----------\n"); // TODO remove
 	return (len_out);
 }
 
