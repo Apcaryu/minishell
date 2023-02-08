@@ -6,46 +6,34 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/06 16:34:40 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:14:01 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 #include "../../libft_42/includes_libft/get_next_line_bonus.h"
+
 extern t_data	g_data;
 
-// void	check_builtin()
-// {
-// 	if (!ft_strncmp("echo", input, ft_strlen("echo")))
-// 		echo_exec();
-// 	else if (!ft_strncmp("cd", input, ft_strlen("cd")))
-// 		cd_exec();
-// 	else if (!ft_strncmp("pwd", input, ft_strlen("pwd")))
-// 		pwd_exec();
-// 	else if (!ft_strncmp("export", input, ft_strlen("export")))
-// 		export_exec();
-// 	else if (!ft_strncmp("unset", input, ft_strlen("unset")))
-// 		unset_exec();
-// 	else if (!ft_strncmp("env", input, ft_strlen("env")))
-// 		env_exec();
-// 	else if (!ft_strncmp("exit", input, ft_strlen("exit")))
-// 		exit_exec();
-// }
-
-t_bool    is_builtin(char *cmd)
+t_bool	is_builtin(char *cmd)
 {
-    if (!cmd)
-        return (false);
-    if (ft_strncmp("echo", cmd, ft_strlen("echo")) == 0 || ft_strncmp("env", cmd, ft_strlen("env")) == 0 \
-    || ft_strncmp("export", cmd, ft_strlen("export")) == 0 || ft_strncmp("pwd", cmd, ft_strlen("pwd")) == 0 \
-    || ft_strncmp("exit", cmd, ft_strlen("exit")) == 0 || ft_strncmp("cd", cmd, ft_strlen("cd")) == 0 \
-    || ft_strncmp("unset", cmd, ft_strlen("unset")) == 0)
-        return (true);
-    return (false);
+	if (!cmd)
+		return (false);
+	if (ft_strncmp("echo", cmd, ft_strlen("echo")) == 0
+		|| ft_strncmp("env", cmd, ft_strlen("env")) == 0 \
+		|| ft_strncmp("export", cmd, ft_strlen("export")) == 0 \
+		|| ft_strncmp("pwd", cmd, ft_strlen("pwd")) == 0 \
+		|| ft_strncmp("exit", cmd, ft_strlen("exit")) == 0 \
+		|| ft_strncmp("cd", cmd, ft_strlen("cd")) == 0 \
+		|| ft_strncmp("unset", cmd, ft_strlen("unset")) == 0)
+		return (true);
+	return (false);
 }
 
-t_bool	check_all_builtin(t_elem_pars *elem){
-	while (elem != NULL){
+t_bool	check_all_builtin(t_elem_pars *elem)
+{
+	while (elem != NULL)
+	{
 		if (is_builtin(elem->cmd))
 			return (true);
 		elem = elem->next;
@@ -65,13 +53,11 @@ void	wait_loop(t_exec *exec)
 	}
 }
 
-void read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
+void	read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
 {
 	char	*line;
 	char	*limiter;
 	int		len_limit;
-	// t_elem_pars *tmp;
-	// int count_cmds;
 
 	limiter = elem->args[0];
 	// tmp = elem;
@@ -108,7 +94,7 @@ void read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
 
 int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
 {
-	int fd;
+	int	fd;
 
 	dprintf(2, "args[0] = %s\n", elem->args[0]);
 	fd = open("heredoc_tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -123,11 +109,9 @@ int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
 
 int	open_inout(t_elem_pars *elem, t_exec *exec)
 {
-	int file;
-	
+	int	file;
 
 	file = -1;
-	
 	// dprintf(2, "type = %d\n", elem->type);
 	if (elem->args != NULL && elem->type == INFILE)
 	{
@@ -166,7 +150,7 @@ int	open_inout(t_elem_pars *elem, t_exec *exec)
 	return (file);
 }
 
-void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
+void	child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 {
 	char	*cmd;
 	int		infile;
@@ -206,34 +190,35 @@ void child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 		start = start->next;
 	}
 	close(exec->pipefd[0]);
-	if (infile >= 0){
+	if (infile >= 0)
+	{
 		dprintf(2, "fd:%d\n", infile);
 		dup2(infile, 0);
 		close(infile);
 	}
-	else if (exec->infile >= 0){
+	else if (exec->infile >= 0)
+	{
 		dup2(exec->infile, 0);
 		close(exec->infile);
 	}
-	
-	if (outfile >= 0){
+	if (outfile >= 0)
+	{
 		dup2(outfile, 1);
 		close(outfile);
-	}
-		
-	else if (elem->type == PIPE && outfile == -2)
+	}	
+	else if	(elem->type == PIPE && outfile == -2)
 		dup2(exec->pipefd[1],1);
 	if (exec->nbr_cmd == 0)
 		exit (0);
 	close(exec->pipefd[1]);
 }
- 
 
 void	builtin_process(t_exec *exec, t_elem_pars *elem)
 {
-	int i;
+	int	i;
 
-	while (elem != NULL){
+	while (elem != NULL)
+	{
 		if (elem->type == COMMAND && !ft_strncmp("echo", elem->cmd, ft_strlen("echo")))
 			echo_exec(elem);
 		else if (elem->type == COMMAND && !ft_strncmp("env", elem->cmd, ft_strlen("env")))
@@ -242,7 +227,6 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 			pwd_exec();
 		else if (elem->type == COMMAND && !ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
 			cd_exec(elem);
-
 		else if (elem->type == COMMAND && !ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
 			exit_exec(exec);
 		else if (elem->type == COMMAND && !ft_strncmp("export", elem->cmd, ft_strlen("export")))
@@ -267,37 +251,38 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 	}
 }
 
-void parent(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
+void	parent(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 {
-    char    *cmd;
-    int        infile;
-    int        outfile;
+	char	*cmd;
+	int		infile;
+	int		outfile;
 
-    infile = -2;
-    outfile = -2;
-    while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL))
-    {
-        if (start->type == INFILE)
-            infile = open_inout(start, exec);
-        else if (start->type == COMMAND)
-            cmd = start->cmd;
-        else if (start->type == OUTFILE)
-            outfile = open_inout(start, exec);
-        else if (start->type == APPEND)
-            outfile = open_inout(start, exec);
-        else if (start->type == HEREDOC)
-            infile = open_inout(start, exec);
-        start = start->next;
-    }
-    if (infile >= 0){
-        dup2(infile, 0);
-        close(infile);
-    }
-    
-    if (outfile >= 0){
-        dup2(outfile, 1);
-        close(outfile);
-    }
+	infile = -2;
+	outfile = -2;
+	while ((elem->next != NULL && start != elem) || (elem->next == NULL && start != NULL))
+	{
+		if (start->type == INFILE)
+			infile = open_inout(start, exec);
+		else if (start->type == COMMAND)
+			cmd = start->cmd;
+		else if (start->type == OUTFILE)
+			outfile = open_inout(start, exec);
+		else if (start->type == APPEND)
+			outfile = open_inout(start, exec);
+		else if (start->type == HEREDOC)
+			infile = open_inout(start, exec);
+		start = start->next;
+	}
+	if (infile >= 0)
+	{
+		dup2(infile, 0);
+		close(infile);
+	}
+	if (outfile >= 0)
+	{
+		dup2(outfile, 1);
+		close(outfile);
+	}
 }
 
 void	main_loop(t_exec *exec)
@@ -305,9 +290,9 @@ void	main_loop(t_exec *exec)
 	int			i;
 	t_elem_pars	*start;
 	t_elem_pars	*elem_lst;
-	int	stdin_cpy;
-	int stdout_cpy;
-	
+	int			stdin_cpy;
+	int			stdout_cpy;
+
 	i = 1;
 	stdin_cpy = -1;
 	stdout_cpy = -1;
@@ -316,15 +301,15 @@ void	main_loop(t_exec *exec)
 	dprintf(2, "ARGS == %s\n", g_data.parser_lst->cmd);
 	dprintf(2, "elem.cmd = %s\n", elem_lst->cmd);
 	if (exec->nbr_pipes == 0 && check_all_builtin(elem_lst))
-    {
-        dprintf(2, "\033[35mhello\033[0m\n");
+	{
+		dprintf(2, "\033[35mhello\033[0m\n");
 		stdin_cpy = dup(0);
 		stdout_cpy = dup(1);
 		parent(start, elem_lst, exec);
-        builtin_process(exec, elem_lst);
+		builtin_process(exec, elem_lst);
 		dup2(0, stdin_cpy);
 		dup2(1, stdout_cpy);
-    }
+	}
 	else
 	{
 		while (elem_lst != NULL)
@@ -346,20 +331,18 @@ void	main_loop(t_exec *exec)
 					child(start, elem_lst, exec, i);
 					dprintf(2, "\033[32melem.cmd = %s\033[0m\n", elem_lst->cmd);
 					if (is_builtin(elem_lst->cmd))
-    				{
-        				// dprintf(2, "hello\n");
+					{
+						// dprintf(2, "hello\n");
 						dprintf(2, "\033[31melem.cmd = %s | arg[1] = %s\033[0m\n", elem_lst->cmd, elem_lst->args[1]);
-        				builtin_process(exec, elem_lst);
+						builtin_process(exec, elem_lst);
 						exit(0);
-    				}
+					}
 					else
 						exec_cmd(exec, start, elem_lst);
-					// exit(127);
 				}
 				else
 				{
 					close(exec->pipefd[1]);
-					// dup2(exec->pipefd[0], 0);
 					if (exec->infile >= 0)
 						close(exec->infile);
 					exec->infile = exec->pipefd[0];
@@ -397,31 +380,8 @@ void	executer(void)
 void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
-	//n_lexer();
-	//expend();
 	lexer();
 	expend();
 	parser();
-//	check_command(input);
-
-	// lexer(data);
-	// parser();
-//	init_test_exec();
 	executer();
-	// int i = 0;
-	// while (g_data.tab[i+1] != NULL)
-	// 	i++;
-	// dprintf(2, "tab[ledernier] = %s\n", g_data.tab[i]);
-	//dprintf(2, "cmd = %s\n", g_data.parser_lst->args[0]);
-//	 check_builtin();
-//	if (!ft_strncmp("echo", g_data.parser_lst->args[0], ft_strlen("echo")))
-//		echo_exec();
-//	else if (!ft_strncmp("env", g_data.parser_lst->args[0], ft_strlen("env")))
-//		env_exec();
-//	else if (!ft_strncmp("pwd", g_data.parser_lst->args[0], ft_strlen("pwd")))
-//		pwd_exec();
-//	else if (!ft_strncmp("exit", g_data.parser_lst->args[0], ft_strlen("exit")))
-//		exit_exec();
-//	else if (!ft_strncmp("cd", g_data.parser_lst->args[0], ft_strlen("cd")))
-//		cd_exec();
 }
