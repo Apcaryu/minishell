@@ -32,8 +32,6 @@ void	init_varenv(t_varenv *varenv)
 
 unsigned int	detect_dollar(char *word, unsigned int idx)
 {
-//	unsigned int	idx;
-
 	while (word[idx] != '\0')
 	{
 		if (word[idx] == '$')
