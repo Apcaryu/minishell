@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expend.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/08 18:31:56 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/08 18:31:58 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/expend.h"
 
-extern t_data g_data;
+extern t_data	g_data;
 
 t_bool	is_type_word(t_type type)
 {
-	if (type == COMMAND || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || type == VARIABLE)
+	if (type == COMMAND || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || \
+	type == VARIABLE)
 		return (true);
 	return (false);
 }
