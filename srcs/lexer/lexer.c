@@ -23,7 +23,7 @@ void	set_token(t_data *data, t_token *token, unsigned int *idx)
 	else if (is_quote(data->input[*idx]))
 		quote(data, token, idx);
 	else if (data->input[*idx] == ' ')
-		space(token, idx);
+		space(data->input, token, idx);
 	else if (data->input[*idx] == '$')
 		variable_token(data, token, idx);
 	else if (is_word(data->input[*idx]))

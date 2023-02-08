@@ -11,7 +11,7 @@ t_bool	is_pipe(t_token *token, unsigned int *idx);
 void	quote(t_data *data, t_token *token, unsigned int *idx);
 void	variable_token(t_data *data, t_token *token, unsigned int *idx);
 
-void	space(t_token *token, unsigned int *idx);
+void	space(char *input, t_token *token, unsigned int *idx);
 void	word(t_data *data, t_token *token, unsigned int *idx);
 
 t_bool	is_word(char chr);

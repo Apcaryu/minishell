@@ -12,12 +12,10 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
-void	space(t_token *token, unsigned int *idx)
+void	space(char *input, t_token *token, unsigned int *idx)
 {
 	token->type = C_SPACE;
-	while (g_data.input[*idx] == ' ')
+	while (input[*idx] == ' ')
 		*idx += 1;
 }
 
