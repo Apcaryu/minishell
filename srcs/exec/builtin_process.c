@@ -6,12 +6,11 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:17:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 17:10:36 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:22:34 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
-#include "../../headers/main.h"
 
 extern t_data	g_data;
 
@@ -41,32 +40,40 @@ t_bool	check_all_builtin(t_elem_pars *elem)
 	return (false);
 }
 
+void	builtin_process_utils(t_exec *exec, t_elem_pars *elem)
+{
+	if (elem->type == COMMAND \
+		&& !ft_strncmp("echo", elem->cmd, ft_strlen("echo")))
+		echo_exec(elem);
+	else if (elem->type == COMMAND \
+		&& !ft_strncmp("env", elem->cmd, ft_strlen("env")))
+		env_exec();
+	else if (elem->type == COMMAND \
+		&& !ft_strncmp("pwd", elem->cmd, ft_strlen("pwd")))
+		pwd_exec();
+	else if (elem->type == COMMAND \
+		&& !ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
+		cd_exec(elem);
+	else if (elem->type == COMMAND \
+		&& !ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
+		exit_exec(exec);
+}
+
 void	builtin_process(t_exec *exec, t_elem_pars *elem)
 {
 	int	i;
 
 	while (elem != NULL)
 	{
-		if (elem->type == COMMAND && !ft_strncmp("echo", elem->cmd, ft_strlen("echo")))
-			echo_exec(elem);
-		else if (elem->type == COMMAND && !ft_strncmp("env", elem->cmd, ft_strlen("env")))
-			env_exec();
-		else if (elem->type == COMMAND && !ft_strncmp("pwd", elem->cmd, ft_strlen("pwd")))
-			pwd_exec();
-		else if (elem->type == COMMAND && !ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
-			cd_exec(elem);
-		else if (elem->type == COMMAND && !ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
-			exit_exec(exec);
-		else if (elem->type == COMMAND && !ft_strncmp("export", elem->cmd, ft_strlen("export")))
+		if (elem->type == COMMAND \
+			&& !ft_strncmp("export", elem->cmd, ft_strlen("export")))
 		{
 			i = 1;
 			while (elem->args[i])
-			{
-				export_exec(elem->args[i]);
-				i++;
-			}
+				export_exec(elem->args[i++]);
 		}
-		else if (elem->type == COMMAND && !ft_strncmp("unset", elem->cmd, ft_strlen("unset")))
+		else if (elem->type == COMMAND \
+			&& !ft_strncmp("unset", elem->cmd, ft_strlen("unset")))
 		{
 			i = 0;
 			while (elem->args[i])
@@ -75,6 +82,8 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 				i++;
 			}
 		}
+		else
+			builtin_process_utils(exec, elem);
 		elem = elem->next;
 	}
 }
