@@ -12,8 +12,6 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
 int	size_of_var(char *input, unsigned int idx)
 {
 	unsigned int	sub_idx;
@@ -59,34 +57,31 @@ int	size_of_quote(char *input, unsigned int idx, char type_quote)
 		if (input[sub_idx] == type_quote)
 		{
 			size_out++;
-			sub_idx++;
 			break ;
 		}
 	}
 	return (size_out);
 }
 
-char	*set_content(t_token *token, unsigned int *idx)
+char	*set_content(t_data *data, unsigned int *idx)
 {
-	unsigned int	sub_idx;
 	int				size;
 	char			*content;
 
-	sub_idx = *idx;
 	size = 0;
 	content = NULL;
-	if (g_data.input[*idx] == '$')
-		size = size_of_var(g_data.input, *idx);
-	else if (is_word(g_data.input[*idx]))
-		size = size_of_word(g_data.input, *idx);
-	else if (g_data.input[*idx] == '\"' || g_data.input[*idx] == '\'')
-		size = size_of_quote(g_data.input, *idx, g_data.input[*idx]);
+	if (data->input[*idx] == '$')
+		size = size_of_var(data->input, *idx);
+	else if (is_word(data->input[*idx]))
+		size = size_of_word(data->input, *idx);
+	else if (data->input[*idx] == '\"' || data->input[*idx] == '\'')
+		size = size_of_quote(data->input, *idx, data->input[*idx]);
 	if (size == 0)
 		return (NULL);
-	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
+	content = garbage_alloc(&data->garb_lst, sizeof(char) * size + 1);
 	if (!content)
 		return (NULL);
-	ft_strlcpy(content, g_data.input + *idx, size + 1);
+	ft_strlcpy(content, data->input + *idx, size + 1);
 	*idx = *idx + size;
 	return (content);
 }

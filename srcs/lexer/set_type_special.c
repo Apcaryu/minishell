@@ -12,11 +12,9 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
-void	infile_or_heredoc(t_token *token, unsigned int *idx)
+void	infile_or_heredoc(char *input, t_token *token, unsigned int *idx)
 {
-	if (g_data.input[*idx + 1] == '<')
+	if (input[*idx + 1] == '<')
 	{
 		token->type = HEREDOC;
 		*idx += 2;
@@ -28,9 +26,9 @@ void	infile_or_heredoc(t_token *token, unsigned int *idx)
 	}
 }
 
-void	outfile_or_append(t_token *token, unsigned int *idx)
+void	outfile_or_append(char *input, t_token *token, unsigned int *idx)
 {
-	if (g_data.input[*idx + 1] == '>')
+	if (input[*idx + 1] == '>')
 	{
 		token->type = APPEND;
 		*idx += 2;
@@ -42,9 +40,9 @@ void	outfile_or_append(t_token *token, unsigned int *idx)
 	}
 }
 
-t_bool	is_pipe(t_token *token, unsigned int *idx)
+t_bool	is_pipe(char *input, t_token *token, unsigned int *idx)
 {
-	if (g_data.input[*idx] == '|')
+	if (input[*idx] == '|')
 	{
 		token->type = PIPE;
 		*idx += 1;
@@ -53,17 +51,17 @@ t_bool	is_pipe(t_token *token, unsigned int *idx)
 	return (false);
 }
 
-void	quote(t_token *token, unsigned int *idx)
+void	quote(t_data *data, t_token *token, unsigned int *idx)
 {
-	if (g_data.input[*idx] == '\'')
+	if (data->input[*idx] == '\'')
 		token->type = SINGLE_QUOTE;
-	else if (g_data.input[*idx] == '\"')
+	else if (data->input[*idx] == '\"')
 		token->type = DOUBLE_QUOTE;
-	token->content = set_content(token, idx);
+	token->content = set_content(data, idx);
 }
 
-void	variable_token(t_token *token, unsigned int *idx)
+void	variable_token(t_data *data, t_token *token, unsigned int *idx)
 {
 	token->type = VARIABLE;
-	token->content = set_content(token, idx);
+	token->content = set_content(data, idx);
 }

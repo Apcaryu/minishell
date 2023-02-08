@@ -12,17 +12,15 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
-void	space(t_token *token, unsigned int *idx)
+void	space(char *input, t_token *token, unsigned int *idx)
 {
 	token->type = C_SPACE;
-	while (g_data.input[*idx] == ' ')
+	while (input[*idx] == ' ')
 		*idx += 1;
 }
 
-void	word(t_token *token, unsigned int *idx)
+void	word(t_data *data, t_token *token, unsigned int *idx)
 {
 	token->type = COMMAND;
-	token->content = set_content(token, idx);
+	token->content = set_content(data, idx);
 }

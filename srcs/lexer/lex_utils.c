@@ -12,8 +12,6 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
 t_bool	is_word(char chr)
 {
 	if (chr != '<' && chr != '>' && chr != '|' && chr != ' ' && chr != '\'' \
@@ -22,9 +20,9 @@ t_bool	is_word(char chr)
 	return (false);
 }
 
-t_bool	is_quote(t_token *token, unsigned int *idx)
+t_bool	is_quote(char chr)
 {
-	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
+	if (chr == '\'' || chr == '\"')
 		return (true);
 	return (false);
 }

@@ -306,7 +306,8 @@ void	read_input(t_data *data)
 	printf("input = %s\n", data->input);
 	//n_lexer();
 	//expend();
-	lexer();
+	lexer(data);
+	print_lst(g_data.lexer_lst);
 	expend();
 	parser();
 //	check_command(input);

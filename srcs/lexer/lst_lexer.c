@@ -12,8 +12,6 @@
 
 #include "../../headers/lexer.h"
 
-extern t_data	g_data;
-
 t_token	*new_token(t_list **garb_lst)
 {
 	t_token	*new;
