@@ -20,7 +20,7 @@ void	set_token(t_data *data, t_token *token, unsigned int *idx)
 		outfile_or_append(token, idx);
 	else if (is_pipe(token, idx))
 		return ;
-	else if (is_quote(idx))
+	else if (is_quote(data->input[*idx]))
 		quote(data, token, idx);
 	else if (data->input[*idx] == ' ')
 		space(token, idx);

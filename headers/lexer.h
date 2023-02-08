@@ -15,7 +15,7 @@ void	space(t_token *token, unsigned int *idx);
 void	word(t_data *data, t_token *token, unsigned int *idx);
 
 t_bool	is_word(char chr);
-t_bool	is_quote(unsigned int *idx);
+t_bool	is_quote(char chr);
 
 char	*set_content(t_data *data, unsigned int *idx);
 
