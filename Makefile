@@ -36,7 +36,8 @@ SRC_LEXER 		= lexer.c \
 					lst_lexer.c \
 					print_lst.c \
 					set_type_special.c \
-					get_content.c
+					get_content.c \
+					set_type_char.c
 
 SRC_PARSER 		= parser.c \
 					lst_parser.c

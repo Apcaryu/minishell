@@ -17,19 +17,6 @@ t_bool	is_quote(t_token *token, unsigned int *idx)
 	return (false);
 }
 
-void	space(t_token *token, unsigned int *idx)
-{
-	token->type = C_SPACE;
-	while (g_data.input[*idx] == ' ')
-		*idx += 1;
-}
-
-void	word(t_token *token, unsigned int *idx)
-{
-	token->type = COMMAND;
-	token->content = set_content(token, idx);
-}
-
 void	set_ntoken(t_token *token, unsigned int *idx)
 {
 	printf("input[%u] = %c\n", *idx, g_data.input[*idx]);
