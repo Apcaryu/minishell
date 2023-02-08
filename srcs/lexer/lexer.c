@@ -129,15 +129,17 @@ char	*set_content(t_token *token, unsigned int *idx)
 t_bool	is_quote(t_token *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
-	{
-		if (g_data.input[*idx] == '\'')
-			token->type = SINGLE_QUOTE;
-		else if (g_data.input[*idx] == '\"')
-			token->type = DOUBLE_QUOTE;
-		token->content = set_content(token, idx);
 		return (true);
-	}
 	return (false);
+}
+
+void	quote(t_token *token, unsigned int *idx)
+{
+	if (g_data.input[*idx] == '\'')
+		token->type = SINGLE_QUOTE;
+	else if (g_data.input[*idx] == '\"')
+		token->type = DOUBLE_QUOTE;
+	token->content = set_content(token, idx);
 }
 
 void	space(t_token *token, unsigned int *idx)
@@ -169,7 +171,7 @@ void	set_ntoken(t_token *token, unsigned int *idx)
 	else if (g_data.input[*idx] == '>')
 		outfile_or_append(token, idx);
 	else if (is_pipe(token, idx))
-		return ;
+		quote(token, idx);
 	else if (is_quote(token, idx))
 		return ;
 	else if (g_data.input[*idx] == ' ')
