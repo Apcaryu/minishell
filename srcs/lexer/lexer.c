@@ -10,45 +10,6 @@ t_bool	is_word(char chr)
 	return (false);
 }
 
-void	infile_or_heredoc(t_token *token, unsigned int *idx)
-{
-	if (g_data.input[*idx + 1] == '<')
-	{
-		token->type = HEREDOC;
-		*idx += 2;
-	}
-	else
-	{
-		token->type = INFILE;
-		*idx += 1;
-	}
-}
-
-void	outfile_or_append(t_token *token, unsigned int *idx)
-{
-	if (g_data.input[*idx + 1] == '>')
-	{
-		token->type = APPEND;
-		*idx += 2;
-	}
-	else
-	{
-		token->type = OUTFILE;
-		*idx += 1;
-	}
-}
-
-t_bool	is_pipe(t_token *token, unsigned int *idx)
-{
-	if (g_data.input[*idx] == '|')
-	{
-		token->type = PIPE;
-		*idx += 1;
-		return (true);
-	}
-	return (false);
-}
-
 int	size_of_var(char *input, unsigned int idx)
 {
 	unsigned int	sub_idx;
@@ -133,15 +94,6 @@ t_bool	is_quote(t_token *token, unsigned int *idx)
 	return (false);
 }
 
-void	quote(t_token *token, unsigned int *idx)
-{
-	if (g_data.input[*idx] == '\'')
-		token->type = SINGLE_QUOTE;
-	else if (g_data.input[*idx] == '\"')
-		token->type = DOUBLE_QUOTE;
-	token->content = set_content(token, idx);
-}
-
 void	space(t_token *token, unsigned int *idx)
 {
 	token->type = C_SPACE;
@@ -152,12 +104,6 @@ void	space(t_token *token, unsigned int *idx)
 void	word(t_token *token, unsigned int *idx)
 {
 	token->type = COMMAND;
-	token->content = set_content(token, idx);
-}
-
-void	variable_token(t_token *token, unsigned int *idx)
-{
-	token->type = VARIABLE;
 	token->content = set_content(token, idx);
 }
 
