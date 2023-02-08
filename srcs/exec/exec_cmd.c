@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 19:19:04 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:36:40 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**get_env(t_exec *exec)
 {
 	int		i;
 	char	**tab;
-	// extern char	*environ;
+
 	i = 0;
 	while (g_data.tab[i] && ft_strnstr(g_data.tab[i], "PATH", 4) == 0)
 		i++;
@@ -28,47 +28,33 @@ char	**get_env(t_exec *exec)
 	return (tab);
 }
 
-// void	env_is_null(t_elem_pars *start)
-// {
-// 	if (*start->args != NULL)
-// 		access(*start->args, X_OK);
-// 	else
-// 	{
-// 		error_msgs(*start->args, "command not found\n");
-// 		clean_cmds(start->args);
-// 		exit(127);
-// 	}
-// }
+void	path_is_null(t_elem_pars *start)
+{
+	int		access_out;
 
-void	exec_path(t_elem_pars *start, t_exec *exec)
+	access_out = -1;
+	if (*start->args != NULL)
+		access_out = access(*start->args, X_OK);
+	if (access_out != 0)
+	{
+		error_msgs(start->cmd, "No such file or directory\n");
+		exit(127);
+	}
+	else
+	{
+		error_msgs(*start->args, "command not found\n");
+		clean_cmds(start->args);
+		exit(127);
+	}
+}
+
+void	path_exist(char **tab, t_elem_pars *start, t_exec *exec)
 {
 	int		i;
 	char	*tmp;
-	char	**tab;
 	char	*path;
-	int		access_out;
 
 	i = 0;
-	access_out = -1;
-	tab = get_env(exec);
-	if (tab == NULL)
-	{
-		dprintf(2, "ENV EST NULLLLLLL\n");
-		// env_is_null(start);
-		if (*start->args != NULL)
-			access_out = access(*start->args, X_OK);
-		if (access_out != 0)
-		{
-			error_msgs(start->cmd, "command not found\n");
-			exit(127);
-		}
-		else
-		{
-			error_msgs(*start->args, "command not found\n");
-			clean_cmds(start->args);
-			exit(127);
-		}
-	}
 	while (tab[i])
 	{
 		tmp = ft_strjoin(tab[i], "/");
@@ -86,6 +72,19 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 		free(path);
 		i++;
 	}
+}
+
+void	exec_path(t_elem_pars *start, t_exec *exec)
+{
+	int		i;
+	char	**tab;
+	char	*path;
+
+	i = 0;
+	tab = get_env(exec);
+	if (tab == NULL)
+		path_is_null(start);
+	path_exist(tab, start, exec);
 	if (ft_isalnum(start->cmd[0]))
 		error_msgs(start->cmd, "command not found\n");
 	clean_cmds(tab);
@@ -104,10 +103,7 @@ void	exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem)
 	{
 		start = start->next;
 		if (start == NULL)
-		{
-			// dprintf(2, "BLABLABLABLA\n");
 			exit (127);
-		}
 	}
 	if (start->cmd != NULL)
 		access_out = access(start->cmd, F_OK);
