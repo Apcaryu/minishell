@@ -99,20 +99,16 @@ char	*include_var_content(char *str, unsigned int idx, t_varenv varenv)
 	if (varenv.var_name == NULL)
 		return (str);
 	so_idx = 0;
-	strout = garbage_alloc(&g_data.garb_lst, sizeof(char) * final_strlen(str, varenv)/*(ft_strlen(str) + 1 + varenv.var_content_size + 1)*/);
-	printf("total size = %u\n", final_strlen(str, varenv)); // TODO remove
+	strout = garbage_alloc(&g_data.garb_lst, \
+	sizeof(char) * final_strlen(str, varenv));
 	ft_strlcpy(strout, str, idx + 1);
-	printf("1.strout = %s\n", strout); // TODO remove
 	so_idx = ft_strlen(strout);
-	if (varenv.var_content != NULL) {
-		ft_strlcat(strout + so_idx, varenv.var_content, (/*ft_strlen(str) + 1 + */varenv.var_content_size + 1));
-	}
+	if (varenv.var_content != NULL)
+		ft_strlcat(strout + so_idx, varenv.var_content, \
+		(varenv.var_content_size + 1));
 	so_idx = ft_strlen(strout);
-	printf("2.strout = %s | so_idx = %u\n", strout, so_idx); // TODO remove
 	idx += varenv.var_size + 1;
-	printf("str + %u = %s | size = %zu\n", idx, str + idx, ft_strlen(str + idx)); // TODO remove
-	ft_strlcat(strout + so_idx, str + idx, (ft_strlen(str + idx))+1);
-	printf("3.strout = %s\n", strout); // TODO remove
+	ft_strlcat(strout + so_idx, str + idx, (ft_strlen(str + idx)) + 1);
 	return (strout);
 }
 
