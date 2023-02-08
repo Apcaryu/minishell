@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 14:38:39 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:47:36 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,6 @@
 #include "../../libft_42/includes_libft/get_next_line_bonus.h"
 
 extern t_data	g_data;
-
-t_bool	is_builtin(char *cmd)
-{
-	if (!cmd)
-		return (false);
-	if (ft_strncmp("echo", cmd, ft_strlen("echo")) == 0
-		|| ft_strncmp("env", cmd, ft_strlen("env")) == 0 \
-		|| ft_strncmp("export", cmd, ft_strlen("export")) == 0 \
-		|| ft_strncmp("pwd", cmd, ft_strlen("pwd")) == 0 \
-		|| ft_strncmp("exit", cmd, ft_strlen("exit")) == 0 \
-		|| ft_strncmp("cd", cmd, ft_strlen("cd")) == 0 \
-		|| ft_strncmp("unset", cmd, ft_strlen("unset")) == 0)
-		return (true);
-	return (false);
-}
-
-t_bool	check_all_builtin(t_elem_pars *elem)
-{
-	while (elem != NULL)
-	{
-		if (is_builtin(elem->cmd))
-			return (true);
-		elem = elem->next;
-	}
-	return (false);
-}
 
 void	wait_loop(t_exec *exec)
 {
@@ -53,59 +27,59 @@ void	wait_loop(t_exec *exec)
 	}
 }
 
-void	read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
-{
-	char	*line;
-	char	*limiter;
-	int		len_limit;
+// void	read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec)
+// {
+// 	char	*line;
+// 	char	*limiter;
+// 	int		len_limit;
 
-	limiter = elem->args[0];
-	// tmp = elem;
-	// count_cmds = 0;
-	dprintf(2, "limiter = %s\n", limiter);
-	while (1)
-	{
-		write(1, "> ", 2);
-		line = get_next_line(0);
-		// line = readline("> ");
-		len_limit = ft_strlen(limiter);
+// 	limiter = elem->args[0];
+// 	// tmp = elem;
+// 	// count_cmds = 0;
+// 	dprintf(2, "limiter = %s\n", limiter);
+// 	while (1)
+// 	{
+// 		write(1, "> ", 2);
+// 		line = get_next_line(0);
+// 		// line = readline("> ");
+// 		len_limit = ft_strlen(limiter);
 		
-		// dprintf(2, "len_limit = [%s]\n", line);
-		if (ft_strnstr(line, limiter, len_limit) && line[len_limit] == '\n')
-		{
-			// free(line);
-			// close(fd);
-			break;
-			// exit(0);
-		}
-		write(fd, line, ft_strlen(line));
-		// write(fd, "\n", 1);
-		// if (!ft_strncmp())
-		// dprintf(2, "args[0] = %s\n", elem->args[0]);
-		// exit(1);
-		// close(fd);
-		free(line);
-	}
-	free(line);
-	close(fd);
-	// if (exec->nbr_cmd == 0)
-	// 	exit (0);
-}
+// 		// dprintf(2, "len_limit = [%s]\n", line);
+// 		if (ft_strnstr(line, limiter, len_limit) && line[len_limit] == '\n')
+// 		{
+// 			// free(line);
+// 			// close(fd);
+// 			break;
+// 			// exit(0);
+// 		}
+// 		write(fd, line, ft_strlen(line));
+// 		// write(fd, "\n", 1);
+// 		// if (!ft_strncmp())
+// 		// dprintf(2, "args[0] = %s\n", elem->args[0]);
+// 		// exit(1);
+// 		// close(fd);
+// 		free(line);
+// 	}
+// 	free(line);
+// 	close(fd);
+// 	// if (exec->nbr_cmd == 0)
+// 	// 	exit (0);
+// }
 
-int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
-{
-	int	fd;
+// int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
+// {
+// 	int	fd;
 
-	dprintf(2, "args[0] = %s\n", elem->args[0]);
-	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	if (fd < 0)
-		return (-1);
-	read_line_heredoc(fd, elem, exec);
-	fd = open(".here_doc", O_RDONLY, 0644);
-	if (fd < 0)
-		unlink(".here_doc");
-	return (fd);
-}
+// 	dprintf(2, "args[0] = %s\n", elem->args[0]);
+// 	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+// 	if (fd < 0)
+// 		return (-1);
+// 	read_line_heredoc(fd, elem, exec);
+// 	fd = open(".here_doc", O_RDONLY, 0644);
+// 	if (fd < 0)
+// 		unlink(".here_doc");
+// 	return (fd);
+// }
 
 int	open_inout(t_elem_pars *elem, t_exec *exec)
 {
@@ -213,44 +187,6 @@ void	child(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 	close(exec->pipefd[1]);
 }
 
-void	builtin_process(t_exec *exec, t_elem_pars *elem)
-{
-	int	i;
-
-	while (elem != NULL)
-	{
-		if (elem->type == COMMAND && !ft_strncmp("echo", elem->cmd, ft_strlen("echo")))
-			echo_exec(elem);
-		else if (elem->type == COMMAND && !ft_strncmp("env", elem->cmd, ft_strlen("env")))
-			env_exec();
-		else if (elem->type == COMMAND && !ft_strncmp("pwd", elem->cmd, ft_strlen("pwd")))
-			pwd_exec();
-		else if (elem->type == COMMAND && !ft_strncmp("cd", elem->cmd, ft_strlen("cd")))
-			cd_exec(elem);
-		else if (elem->type == COMMAND && !ft_strncmp("exit", elem->cmd, ft_strlen("exit")))
-			exit_exec(exec);
-		else if (elem->type == COMMAND && !ft_strncmp("export", elem->cmd, ft_strlen("export")))
-		{
-			i = 1;
-			while (elem->args[i])
-			{
-				export_exec(elem->args[i]);
-				i++;
-			}
-		}
-		else if (elem->type == COMMAND && !ft_strncmp("unset", elem->cmd, ft_strlen("unset")))
-		{
-			i = 0;
-			while (elem->args[i])
-			{
-				unset_exec(elem->args[i]);
-				i++;
-			}
-		}
-		elem = elem->next;
-	}
-}
-
 void	parent(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 {
 	char	*cmd;
@@ -316,7 +252,6 @@ void	main_loop(t_exec *exec)
 		{
 			if (elem_lst->type == PIPE || !elem_lst->next)
 			{
-				// pipe(exec->pipefd);
 				dprintf(2, "\033[35melem.cmd = %s\033[0m\n", elem_lst->cmd);
 				if (pipe(exec->pipefd) == -1)
 					perror("minishell: ");
@@ -332,7 +267,6 @@ void	main_loop(t_exec *exec)
 					dprintf(2, "\033[32melem.cmd = %s\033[0m\n", elem_lst->cmd);
 					if (is_builtin(elem_lst->cmd))
 					{
-						// dprintf(2, "hello\n");
 						dprintf(2, "\033[31melem.cmd = %s | arg[1] = %s\033[0m\n", elem_lst->cmd, elem_lst->args[1]);
 						builtin_process(exec, elem_lst);
 						exit(0);
@@ -356,8 +290,6 @@ void	main_loop(t_exec *exec)
 	}
 	if (exec->infile >= 0)
 		close(exec->infile);
-	// if (exec->nbr_cmd == 0)
-	// 	close(0);
 	wait_loop(exec);
 }
 
@@ -368,11 +300,9 @@ void	executer(void)
 
 	i = 0;
 	exec = garbage_alloc(&g_data.garb_lst, sizeof(t_exec));
-//	printf("input = < in cat | ls > out\n");
 	exec = init_exec_structure(exec);
 	if (exec == NULL)
 		return ;
-	// builtin_process(exec, g_data.parser_lst);
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }

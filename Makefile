@@ -21,6 +21,8 @@ SRC_EXEC 		= read_input.c \
 					exec_cmd.c \
 					close_and_exit.c \
 					exec_utils.c \
+					builtin_process.c \
+					heredoc_process.c \
 					# lst_exec.c
 
 SRC_BUILTINS 	= echo.c \
