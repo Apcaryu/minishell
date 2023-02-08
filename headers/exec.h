@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 17:06:51 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 19:41:47 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 t_bool		is_builtin(char *cmd);
 t_bool		check_all_builtin(t_elem_pars *elem);
 void		builtin_process(t_exec *exec, t_elem_pars *elem);
-
-// void		check_builtin(char *input);
 
 // heredoc_process.c
 void		read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec);
@@ -51,7 +49,6 @@ void		exec_path(t_elem_pars *start, t_exec *exec);
 void		exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem);
 
 // Init exec
-// void		init_test_exec();
 void		open_inout_fds(t_exec *exec, t_elem_pars *elem);
 t_exec		*init_exec_structure(t_exec *exec);
 
