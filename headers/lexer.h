@@ -5,9 +5,9 @@
 
 void	print_lst(t_token *token_lst);
 
-void	infile_or_heredoc(t_token *token, unsigned int *idx);
-void	outfile_or_append(t_token *token, unsigned int *idx);
-t_bool	is_pipe(t_token *token, unsigned int *idx);
+void	infile_or_heredoc(char *input, t_token *token, unsigned int *idx);
+void	outfile_or_append(char *input, t_token *token, unsigned int *idx);
+t_bool	is_pipe(char *input, t_token *token, unsigned int *idx);
 void	quote(t_data *data, t_token *token, unsigned int *idx);
 void	variable_token(t_data *data, t_token *token, unsigned int *idx);
 
