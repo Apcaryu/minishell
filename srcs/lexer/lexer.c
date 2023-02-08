@@ -24,9 +24,9 @@ void	set_ntoken(t_token *token, unsigned int *idx)
 	else if (g_data.input[*idx] == '>')
 		outfile_or_append(token, idx);
 	else if (is_pipe(token, idx))
-		quote(token, idx);
-	else if (is_quote(token, idx))
 		return ;
+	else if (is_quote(token, idx))
+		quote(token, idx) ;
 	else if (g_data.input[*idx] == ' ')
 		space(token, idx);
 	else if (g_data.input[*idx] == '$')
