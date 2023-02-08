@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/18 15:29:24 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:02:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,76 @@
 
 extern t_data	g_data;
 
-void	init_test_exec()
-{
-	t_elem_pars *element;
+// void	init_test_exec()
+// {
+// 	t_elem_pars *element;
 
-	/*for: < in cat | ls | rev > out*/
+// 	/*for: < in cat | ls | rev > out*/
 	
-	element = NULL;
+// 	element = NULL;
 
-	// g_data.parser_lst = NULL;
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = INFILE;
-	// element->cmd = NULL;
-	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	// element->args[0] = "in";
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// g_data.parser_lst = NULL;
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = INFILE;
+// 	// element->cmd = NULL;
+// 	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+// 	// element->args[0] = "in";
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	element = new_elem_pars(&g_data.garb_lst);
-	element->type = COMMAND;
-	element->cmd = "echo";
-	element->args = garbage_alloc(&g_data.garb_lst, 5 * sizeof(char *));
-	element->args[0] = "echo";
-	element->args[1] = "-nnnnnnnn";
-	element->args[2] = "nyuthvgbyugb";
-	element->args[3] = "-nnnnnnnn";
-	element->args[4] = NULL;
-	elem_pars_add_back(&g_data.parser_lst, element);
+// 	element = new_elem_pars(&g_data.garb_lst);
+// 	element->type = COMMAND;
+// 	element->cmd = "echo";
+// 	element->args = garbage_alloc(&g_data.garb_lst, 5 * sizeof(char *));
+// 	element->args[0] = "echo";
+// 	element->args[1] = "-nnnnnnnn";
+// 	element->args[2] = "nyuthvgbyugb";
+// 	element->args[3] = "-nnnnnnnn";
+// 	element->args[4] = NULL;
+// 	elem_pars_add_back(&g_data.parser_lst, element);
 	
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = PIPE;
-	// element->cmd = NULL;
-	// element->args = NULL;
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = PIPE;
+// 	// element->cmd = NULL;
+// 	// element->args = NULL;
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	// g_data.parser_lst = NULL;
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = INFILE;
-	// element->cmd = NULL;
-	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	// element->args[0] = "in2";
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// g_data.parser_lst = NULL;
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = INFILE;
+// 	// element->cmd = NULL;
+// 	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+// 	// element->args[0] = "in2";
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = COMMAND;
-	// element->cmd = "rev";
-	// element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
-	// element->args[0] = "rev";
-	// element->args[1] = NULL;
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = COMMAND;
+// 	// element->cmd = "rev";
+// 	// element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
+// 	// element->args[0] = "rev";
+// 	// element->args[1] = NULL;
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = PIPE;
-	// element->cmd = NULL;
-	// element->args = NULL;
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = PIPE;
+// 	// element->cmd = NULL;
+// 	// element->args = NULL;
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = COMMAND;
-	// element->cmd = "rev";
-	// element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
-	// element->args[0] = "rev";
-	// element->args[1] = NULL;
-	// elem_pars_add_back(&g_data.parser_lst, element);
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = COMMAND;
+// 	// element->cmd = "rev";
+// 	// element->args = garbage_alloc(&g_data.garb_lst, 2 * sizeof(char *));
+// 	// element->args[0] = "rev";
+// 	// element->args[1] = NULL;
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
 
-	// element = new_elem_pars(&g_data.garb_lst);
-	// element->type = OUTFILE;
-	// element->cmd = NULL;
-	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
-	// element->args[0] = "out";
-	// elem_pars_add_back(&g_data.parser_lst, element);
-}
+// 	// element = new_elem_pars(&g_data.garb_lst);
+// 	// element->type = OUTFILE;
+// 	// element->cmd = NULL;
+// 	// element->args = garbage_alloc(&g_data.garb_lst, 1 * sizeof(char *));
+// 	// element->args[0] = "out";
+// 	// elem_pars_add_back(&g_data.parser_lst, element);
+// }
 
 void	open_inout_fds(t_exec *exec, t_elem_pars *elem)
 {
