@@ -59,11 +59,11 @@ void	quote(t_token *token, unsigned int *idx)
 		token->type = SINGLE_QUOTE;
 	else if (g_data.input[*idx] == '\"')
 		token->type = DOUBLE_QUOTE;
-	token->content = set_content(token, idx);
+	token->content = set_content(idx);
 }
 
 void	variable_token(t_token *token, unsigned int *idx)
 {
 	token->type = VARIABLE;
-	token->content = set_content(token, idx);
+	token->content = set_content(idx);
 }

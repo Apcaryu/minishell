@@ -59,20 +59,17 @@ int	size_of_quote(char *input, unsigned int idx, char type_quote)
 		if (input[sub_idx] == type_quote)
 		{
 			size_out++;
-			sub_idx++;
 			break ;
 		}
 	}
 	return (size_out);
 }
 
-char	*set_content(t_token *token, unsigned int *idx)
+char	*set_content(unsigned int *idx)
 {
-	unsigned int	sub_idx;
 	int				size;
 	char			*content;
 
-	sub_idx = *idx;
 	size = 0;
 	content = NULL;
 	if (g_data.input[*idx] == '$')

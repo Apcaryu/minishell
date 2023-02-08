@@ -14,7 +14,7 @@
 
 extern t_data	g_data;
 
-void	set_ntoken(t_token *token, unsigned int *idx)
+void	set_token(t_token *token, unsigned int *idx)
 {
 	printf("input[%u] = %c\n", *idx, g_data.input[*idx]);
 	if (g_data.input[*idx] == '<')
@@ -25,7 +25,7 @@ void	set_ntoken(t_token *token, unsigned int *idx)
 		outfile_or_append(token, idx);
 	else if (is_pipe(token, idx))
 		return ;
-	else if (is_quote(token, idx))
+	else if (is_quote(idx))
 		quote(token, idx) ;
 	else if (g_data.input[*idx] == ' ')
 		space(token, idx);
@@ -44,7 +44,7 @@ void	lexer(void)
 	while (idx < ft_strlen(g_data.input))
 	{
 		token = new_token(&g_data.garb_lst);
-		set_ntoken(token, &idx);
+		set_token(token, &idx);
 		token_add_back(&g_data.lexer_lst, token);
 	}
 	print_lst(g_data.lexer_lst);

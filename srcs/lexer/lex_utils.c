@@ -22,7 +22,7 @@ t_bool	is_word(char chr)
 	return (false);
 }
 
-t_bool	is_quote(t_token *token, unsigned int *idx)
+t_bool	is_quote(unsigned int *idx)
 {
 	if (g_data.input[*idx] == '\'' || g_data.input[*idx] == '\"')
 		return (true);
