@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/06 15:41:26 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:18:09 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 		{
 			exec->exit_code = execve(path, start->args, g_data.tab);
 			if (exec->exit_code == -1)
+			{
 				perror("execve: ");
+				exit(127);
+			}
 		}
 		free(path);
 		i++;
@@ -80,14 +83,13 @@ void exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem)
 	{
 		start = start->next;
 		if (start == NULL)
-			return;
+			exit (127);
 	}
 	// dprintf(2, "*exec->cmds = %s\n", *exec->cmds);
-	// if (start->cmd != NULL)
-	// 	access_out = access(start->cmd, F_OK);
-	// if (access_out == 0)
-	// 	execve("/bin/", elem->args, NULL /*g_data.env*/);
-	if (start->type == COMMAND)
+	if (start->cmd != NULL)
+		access_out = access(start->cmd, F_OK);
+	if (access_out == 0)
+		execve(start->cmd, elem->args, g_data.tab);
+	if (start && start->type == COMMAND)
 		exec_path(start, exec);
-	// exit (127);
 }

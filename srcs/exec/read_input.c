@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 13:14:01 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:38:39 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int	ft_heredoc(t_elem_pars *elem, t_exec *exec)
 	int	fd;
 
 	dprintf(2, "args[0] = %s\n", elem->args[0]);
-	fd = open("heredoc_tmp.txt", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
 	read_line_heredoc(fd, elem, exec);
-	fd = open("heredoc_tmp.txt", O_RDONLY, 0644);
+	fd = open(".here_doc", O_RDONLY, 0644);
 	if (fd < 0)
-		unlink("heredoc_tmp.txt");
+		unlink(".here_doc");
 	return (fd);
 }
 
