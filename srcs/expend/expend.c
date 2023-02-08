@@ -119,9 +119,7 @@ void	remove_quote(char *str)
 
 	idx = 0;
 	size = ft_strlen(str);
-	printf("str = %s\n", str); // TODO remove
-	printf("size = %u\n", size); // TODO remove
-	while(idx < size - 1/*str[idx + 1] != '\0'*/)
+	while (idx < size - 1)
 	{
 		str[idx] = str[idx + 1];
 		idx++;
@@ -130,7 +128,6 @@ void	remove_quote(char *str)
 		str[idx] = '\0';
 	else
 		str[idx - 1] = '\0';
-	printf("str = %s\n", str); // TODO remove
 }
 
 void	set_var_content(t_token *token)
