@@ -12,22 +12,22 @@
 
 #include "../../headers/lexer.h"
 
-void	set_token(char *input, t_token *token, unsigned int *idx)
+void	set_token(t_data *data, t_token *token, unsigned int *idx)
 {
-	if (input[*idx] == '<')
+	if (data->input[*idx] == '<')
 		infile_or_heredoc(token, idx);
-	else if (input[*idx] == '>')
+	else if (data->input[*idx] == '>')
 		outfile_or_append(token, idx);
 	else if (is_pipe(token, idx))
 		return ;
 	else if (is_quote(idx))
-		quote(token, idx);
-	else if (input[*idx] == ' ')
+		quote(data, token, idx);
+	else if (data->input[*idx] == ' ')
 		space(token, idx);
-	else if (input[*idx] == '$')
-		variable_token(token, idx);
-	else if (is_word(input[*idx]))
-		word(token, idx);
+	else if (data->input[*idx] == '$')
+		variable_token(data, token, idx);
+	else if (is_word(data->input[*idx]))
+		word(data, token, idx);
 }
 
 void	lexer(t_data *data)
@@ -39,7 +39,7 @@ void	lexer(t_data *data)
 	while (idx < ft_strlen(data->input))
 	{
 		token = new_token(&data->garb_lst);
-		set_token(data->input, token, &idx);
+		set_token(data, token, &idx);
 		token_add_back(&data->lexer_lst, token);
 	}
 	print_lst(data->lexer_lst);

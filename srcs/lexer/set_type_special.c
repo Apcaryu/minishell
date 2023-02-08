@@ -53,17 +53,17 @@ t_bool	is_pipe(t_token *token, unsigned int *idx)
 	return (false);
 }
 
-void	quote(t_token *token, unsigned int *idx)
+void	quote(t_data *data, t_token *token, unsigned int *idx)
 {
 	if (g_data.input[*idx] == '\'')
 		token->type = SINGLE_QUOTE;
 	else if (g_data.input[*idx] == '\"')
 		token->type = DOUBLE_QUOTE;
-	token->content = set_content(idx);
+	token->content = set_content(data, idx);
 }
 
-void	variable_token(t_token *token, unsigned int *idx)
+void	variable_token(t_data *data, t_token *token, unsigned int *idx)
 {
 	token->type = VARIABLE;
-	token->content = set_content(idx);
+	token->content = set_content(data, idx);
 }

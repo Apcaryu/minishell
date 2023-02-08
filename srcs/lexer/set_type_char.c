@@ -21,8 +21,8 @@ void	space(t_token *token, unsigned int *idx)
 		*idx += 1;
 }
 
-void	word(t_token *token, unsigned int *idx)
+void	word(t_data *data, t_token *token, unsigned int *idx)
 {
 	token->type = COMMAND;
-	token->content = set_content(idx);
+	token->content = set_content(data, idx);
 }
