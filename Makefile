@@ -33,7 +33,8 @@ SRC_BUILTINS 	= echo.c \
 					exit.c
 
 SRC_LEXER 		= lexer.c \
-					lst_lexer.c
+					lst_lexer.c \
+					print_lst.c
 
 SRC_PARSER 		= parser.c \
 					lst_parser.c

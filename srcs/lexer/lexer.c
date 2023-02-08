@@ -2,14 +2,6 @@
 
 extern t_data	g_data;
 
-void	print_lst(t_token *token_lst)
-{
-	if (token_lst == NULL)
-		return ;
-	while (token_lst->next != NULL)
-		token_lst = token_lst->next;
-}
-
 t_bool	is_word(char chr)
 {
 	if (chr != '<' && chr != '>' && chr != '|' && chr != ' ' && chr != '\'' \
