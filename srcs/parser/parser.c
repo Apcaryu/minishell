@@ -43,11 +43,10 @@ void	p_elem(t_elem_pars *elem)
 	printf("next = %p\n", elem->next);
 }
 
-void p_lst_elem(t_elem_pars *lst)
+void	p_lst_elem(t_elem_pars *lst)
 {
-	if (lst == NULL) {
-		return;
-	}
+	if (lst == NULL)
+		return ;
 	while (lst->next != NULL)
 	{
 		p_elem(lst);
