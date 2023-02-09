@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 12:36:27 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:37:41 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 extern t_data	g_data;
 
+// ^ KEEP
 void	wait_loop(t_exec *exec)
 {
 	close(exec->pipefd[0]);
@@ -27,132 +28,7 @@ void	wait_loop(t_exec *exec)
 	}
 }
 
-int	open_inout(t_elem_pars *elem, t_exec *exec)
-{
-	int	file;
-
-	file = -1;
-	if (elem->args != NULL && elem->type == INFILE)
-	{
-		file = open(elem->args[0], O_RDONLY, 0644);
-		if (file == -1)
-		{
-			error_msgs(g_data.parser_lst->args[0], strerror(errno));
-			write(2, "\n", 1);
-			exit(0);
-		}
-	}
-	else if (elem->args != NULL && elem->type == OUTFILE)
-	{
-		file = open(elem->args[0], O_CREAT | O_WRONLY | O_TRUNC, 0644);
-		if (file == -1)
-		{
-			error_msgs(g_data.parser_lst->args[0], strerror(errno));
-			write(2, "\n", 1);
-			exit(1);
-		}
-	}
-	else if (elem->args != NULL && elem->type == APPEND)
-	{
-		file = open(elem->args[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
-		if (file == -1)
-		{
-			error_msgs(g_data.parser_lst->args[0], strerror(errno));
-			write(2, "\n", 1);
-			exit(1);
-		}
-	}
-	else if (elem->args != NULL && elem->type == HEREDOC)
-	{
-		file = ft_heredoc(elem, exec);
-	}
-	return (file);
-}
-
-void	child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
-{
-	char	*cmd;
-	int		infile;
-	int		outfile;
-
-	infile = -2;
-	outfile = -2;
-	while ((elem->next != NULL && start != elem) \
-		|| (elem->next == NULL && start != NULL))
-	{
-		if (start->type == INFILE)
-			infile = open_inout(start, exec);
-		else if (start->type == COMMAND)
-			cmd = start->cmd;
-		else if (start->type == OUTFILE)
-			outfile = open_inout(start, exec);
-		else if (start->type == APPEND)
-			outfile = open_inout(start, exec);
-		else if (start->type == HEREDOC)
-		{
-			infile = open_inout(start, exec);
-		}
-		start = start->next;
-	}
-	close(exec->pipefd[0]);
-	if (infile >= 0)
-	{
-		dprintf(2, "fd:%d\n", infile);
-		dup2(infile, 0);
-		close(infile);
-	}
-	else if (exec->infile >= 0)
-	{
-		dup2(exec->infile, 0);
-		close(exec->infile);
-	}
-	if (outfile >= 0)
-	{
-		dup2(outfile, 1);
-		close(outfile);
-	}	
-	else if (elem->type == PIPE && outfile == -2)
-		dup2(exec->pipefd[1], 1);
-	if (exec->nbr_cmd == 0)
-		exit (0);
-	close(exec->pipefd[1]);
-}
-
-void	inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
-{
-	char	*cmd;
-	int		infile;
-	int		outfile;
-
-	infile = -2;
-	outfile = -2;
-	while ((elem->next != NULL && start != elem) \
-		|| (elem->next == NULL && start != NULL))
-	{
-		if (start->type == INFILE)
-			infile = open_inout(start, exec);
-		else if (start->type == COMMAND)
-			cmd = start->cmd;
-		else if (start->type == OUTFILE)
-			outfile = open_inout(start, exec);
-		else if (start->type == APPEND)
-			outfile = open_inout(start, exec);
-		else if (start->type == HEREDOC)
-			infile = open_inout(start, exec);
-		start = start->next;
-	}
-	if (infile >= 0)
-	{
-		dup2(infile, 0);
-		close(infile);
-	}
-	if (outfile >= 0)
-	{
-		dup2(outfile, 1);
-		close(outfile);
-	}
-}
-
+// & PIPE
 void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
 {
 	child_open(start, elem_lst, exec);
@@ -168,6 +44,7 @@ void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
 		exec_cmd(exec, start, elem_lst);
 }
 
+// & PIPE
 void	pipe_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec, int i)
 {
 	while (elem_lst != NULL)
@@ -200,6 +77,7 @@ void	pipe_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec, int i
 	}
 }
 
+// ^ Keep
 void	main_loop(t_exec *exec)
 {
 	int			i;
@@ -229,6 +107,7 @@ void	main_loop(t_exec *exec)
 	wait_loop(exec);
 }
 
+// ^ Keep
 void	executer(void)
 {
 	int		i;
@@ -243,6 +122,7 @@ void	executer(void)
 	g_data.exec_struct = exec;
 }
 
+// ^ Keep
 void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
