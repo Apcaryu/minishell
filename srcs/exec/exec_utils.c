@@ -1,78 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/08 19:38:34 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/02/08 19:43:33 by meshahrv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/minishell.h"
 
 extern t_data	g_data;
-
-t_env   *new_env_line(char *env_line)
-{
-	t_env	*env;
-
-	env = malloc(sizeof(t_env));
-	if(!env)
-		return (NULL);
-	env->line = ft_strdup(env_line);
-	env->prev = NULL;
-	env->next = NULL;
-	return (env);
-}
-
-void	free_env(t_env *env)
-{
-	t_env	*current;
-
-	while (env)
-	{
-		current = env;
-		env = env->next;
-		free(current->line);
-		free(current);
-	}
-}
-
-void	add_env_line(t_env *env, t_env *new)
-{
-	// dprintf(2, "ICI\n");
-	// dprintf(2, "new = %s\n", new->line);
-	while (env && env->next)
-	{
-		// dprintf(2, "env = %p\n", env);
-		env = env->next;
-	}
-	// dprintf(2, "env = %s\n", env->line);
-	new->prev = env;
-	// dprintf(2, "prev = %s\n", new->prev->line);
-	new->next = NULL;
-	env->next = new;
-	// dprintf(2, "env->next = %s\n", env->next->line);
-}
-
-t_env   *create_env(char **env)
-{
-	t_env   *head;
-	t_env   *new;
-
-	head = NULL;
-	while (*env)
-	{
-		new = new_env_line(*env);
-		// dprintf(2, "env = %p\n", env);
-
-		// dprintf(2, "new line = %s\n", new->line);
-		if (!new)
-		{
-			if (head)
-				free_env(head);
-			return (NULL);
-		}
-		if (!head)
-			head = new;
-		else
-		{
-			add_env_line(head, new);
-		}
-		env++;
-	}
-	return (head);
-}
 
 int	ft_lstenv_size(t_env *lst)
 {

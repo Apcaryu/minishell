@@ -29,7 +29,7 @@ int	main(int argc, char *argv[], char  **envp)
 	while (1)
 	{
 		g_data.is_interactive = true;
-		g_data.input = readline("minishell-0.1$ ");
+		g_data.input = readline("\033[38;5;140mminishell-0.1$ \033[0m");
 		g_data.is_interactive = false;
 		if (g_data.input == NULL)
 		{
