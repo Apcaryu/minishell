@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 13:37:41 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 13:58:46 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,55 +25,6 @@ void	wait_loop(t_exec *exec)
 		wait(&exec->pid);
 		if (WIFEXITED(exec->status))
 			exec->exit_code = WEXITSTATUS(exec->status);
-	}
-}
-
-// & PIPE
-void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
-{
-	child_open(start, elem_lst, exec);
-	dprintf(2, "\033[32melem.cmd = %s\033[0m\n", elem_lst->cmd);
-	if (is_builtin(elem_lst->cmd))
-	{
-		dprintf(2, "\033[31melem.cmd = %s | arg[1] = %s\033[0m\n", \
-			elem_lst->cmd, elem_lst->args[1]);
-		builtin_process(exec, elem_lst);
-		exit(0);
-	}
-	else
-		exec_cmd(exec, start, elem_lst);
-}
-
-// & PIPE
-void	pipe_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec, int i)
-{
-	while (elem_lst != NULL)
-	{
-		if (elem_lst->type == PIPE || !elem_lst->next)
-		{
-			dprintf(2, "\033[35melem.cmd = %s\033[0m\n", elem_lst->cmd);
-			if (pipe(exec->pipefd) == -1)
-				perror("minishell: ");
-			exec->pid = fork();
-			if (exec->pid == -1)
-			{
-				perror("minishell: ");
-				exit(1);
-			}
-			else if (exec->pid == 0)
-				child_process(start, elem_lst, exec);
-			else
-			{
-				close(exec->pipefd[1]);
-				if (exec->infile >= 0)
-					close(exec->infile);
-				exec->infile = exec->pipefd[0];
-				if (elem_lst->next)
-					start = elem_lst->next;
-			}
-			i++;
-		}
-		elem_lst = elem_lst->next;
 	}
 }
 
@@ -101,7 +52,7 @@ void	main_loop(t_exec *exec)
 		dup2(1, stdout_cpy);
 	}
 	else
-		pipe_process(start, elem_lst, exec, i);
+		pipe_proc(start, elem_lst, exec, i);
 	if (exec->infile >= 0)
 		close(exec->infile);
 	wait_loop(exec);

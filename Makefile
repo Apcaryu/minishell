@@ -25,7 +25,7 @@ SRC_EXEC 		= read_input.c \
 					heredoc_process.c \
 					env_utils.c \
 					open_fds.c \
-					# lst_exec.c
+					pipe_process.c \
 
 SRC_BUILTINS 	= echo.c \
 					cd.c \
