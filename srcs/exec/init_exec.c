@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 19:57:48 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:41:40 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	open_inout_fds(t_exec *exec, t_elem_pars *elem)
 
 void	init_exec_utils(t_exec *exec)
 {
-	dprintf(2, "hello hello hello \n");
 	exec->pid = 0;
 	exec->pipefd[0] = -1;
 	exec->pipefd[1] = -1;
