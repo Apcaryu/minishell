@@ -1,14 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 16:31:37 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/09 16:31:37 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/parser.h"
 
 extern t_data	g_data;
 
-// ---------- ONLY FOR TEST ---------- //
-// TODO remove
 void	p_token(t_token *token)
 {
 	if (token == NULL)
 		return ;
-	printf("token = %p | type = %d | content = %s | next = %p\n", token, token->type, token->content, token->next);
+	printf("token = %p | type = %d | content = %s | next = %p\n", token, \
+	token->type, token->content, token->next);
 }
 
 void	p_elem(t_elem_pars *elem)
@@ -44,7 +55,6 @@ void p_lst_elem(t_elem_pars *lst)
 	}
 	p_elem(lst);
 }
-// ---------- END ---------- //
 
 unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 {
