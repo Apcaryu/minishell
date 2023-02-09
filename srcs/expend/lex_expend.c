@@ -1,35 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lex_expend.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 14:01:09 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/09 14:01:11 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../headers/expend.h"
 
-extern t_data g_data;
+extern t_data	g_data;
 
-char	*le_set_content(t_token *token, char *input, unsigned int *idx)
+int	word_size(char *input, unsigned int idx)
 {
 	unsigned int	sub_idx;
 	int				size;
+
+	sub_idx = idx;
+	size = 0;
+	while (input[sub_idx] != ' ' && input[sub_idx] != '\0')
+	{
+		size++;
+		sub_idx++;
+	}
+	return (size);
+}
+
+char	*le_set_content(t_token *token, char *input, unsigned int *idx)
+{
+	int				size;
 	char			*content;
 
-	sub_idx = *idx;
-	size = 0;
 	content = NULL;
 	while (input[*idx] == ' ')
 	{
 		token->type = C_SPACE;
 		*idx += 1;
 	}
-	if(token->type == C_SPACE)
+	if (token->type == C_SPACE)
 		return (NULL);
 	else
 		token->type = COMMAND;
-	while (input[sub_idx] != ' ' && input[sub_idx] != '\0')
-	{
-		size++;
-		sub_idx++;
-	}
-//	printf("size = %u | sub_idx = %u\n", size, sub_idx);
+	size = word_size(input, *idx);
 	if (size == 0)
 		return (input);
 	content = garbage_alloc(&g_data.garb_lst, sizeof(char) * size + 1);
-//	printf("content = %p\n", content);
 	if (!content)
 		return (input);
 	ft_strlcpy(content, input + *idx, size + 1);
@@ -39,8 +57,8 @@ char	*le_set_content(t_token *token, char *input, unsigned int *idx)
 
 t_token	*lex_expend(char *input)
 {
-	t_token	*out_lst;
-	t_token *new;
+	t_token			*out_lst;
+	t_token			*new;
 	unsigned int	idx;
 
 	out_lst = NULL;
