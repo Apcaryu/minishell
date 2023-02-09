@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:51 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 16:17:09 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:18:21 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	exit_exec(t_exec *exec)
 		}
 		exec->exit_code = ft_atoi(g_data.parser_lst->args[1]);
 	}
-	exit(exec->exit_code);
+	clean_cmds(g_data.tab); // creer une fonction qui erase tableau de tableau TO DO
+	free_env(g_data.env_bis);
+	ft_lstclear(&g_data.garb_lst, &free);
+	exit(0);
 }
 
 // TODO :  changer atoi, long long int

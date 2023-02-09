@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 13:58:46 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:33:40 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,24 @@ void	main_loop(t_exec *exec)
 	int			i;
 	t_elem_pars	*start;
 	t_elem_pars	*elem_lst;
-	int			stdin_cpy;
-	int			stdout_cpy;
 
 	i = 1;
-	stdin_cpy = -1;
-	stdout_cpy = -1;
 	start = g_data.parser_lst;
 	elem_lst = g_data.parser_lst;
 	if (exec->nbr_pipes == 0 && check_all_builtin(elem_lst))
 	{
-		stdin_cpy = dup(0);
-		stdout_cpy = dup(1);
+		exec->stdsave[0] = dup(0);
+		exec->stdsave[1] = dup(1);
 		inout_before_proc(start, elem_lst, exec);
 		builtin_process(exec, elem_lst);
-		dup2(0, stdin_cpy);
-		dup2(1, stdout_cpy);
+		if (exec->stdsave[0] >= 0){
+			dup2(0, exec->stdsave[0]);
+			close(exec->stdsave[0]);
+		}
+		if (exec->stdsave[1] >= 0){
+			dup2(1, exec->stdsave[1]);
+			close(exec->stdsave[1]);
+		}
 	}
 	else
 		pipe_proc(start, elem_lst, exec, i);
