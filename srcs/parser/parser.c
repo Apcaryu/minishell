@@ -126,9 +126,9 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 
 	nb_move = 0;
 	elem_pars->cmd = token->content;
-	elem_pars->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * (nargs_count(token) + 1));
+	elem_pars->args = garbage_alloc(&g_data.garb_lst, \
+	sizeof(char *) * (nargs_count(token) + 1));
 	elem_pars->args[0] = token->content;
-//	dprintf(2, "nb_args = %u\n", nargs_count(token));
 	return (nb_move);
 }
 
