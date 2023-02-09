@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 16:20:26 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/02/09 16:20:27 by meshahrv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/builtins.h"
 #include "../../headers/minishell.h"
 
@@ -58,12 +70,8 @@ void	unset_exec(char *str)
 
 	data = g_data;
 	if (!data.env_bis || !is_not_a_variable(str))
-	{
-		// printf("%s : is not a variable\n", str);
 		return ;
-	}
 	unset_node(&data, str);
-	// dprintf(2, "UNSET\n");
 	data.tab = convert_lst_to_tab(data);
 	g_data.tab = data.tab;
 }
