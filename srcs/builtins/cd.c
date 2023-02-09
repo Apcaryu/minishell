@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:53:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/01/17 17:54:25 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 16:21:45 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	count_args(t_data data)
 	int	i;
 
 	i = 0;
-	// dprintf(2, "cd->cmd = %s\n", data.parser_lst->cmd);
-	// dprintf(2, "cd->args = %s\n", data.parser_lst->args[1]);
 	if (data.parser_lst->args == NULL)
 	{
 		i = 1;
@@ -33,11 +31,9 @@ int	count_args(t_data data)
 
 void	update_pwd(void)
 {
-	// printf("exec cd\n");
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
 
-	// dprintf(2, "cwd = %s\n", getcwd(cwd, PATH_MAX));
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
 		perror("pwd : ");
@@ -47,13 +43,12 @@ void	update_pwd(void)
 	if (!oldpwd)
 		return ;
 	export_exec(oldpwd);
-	// dprintf(2, "oldpwd = %s\n", oldpwd);
 	free(oldpwd);
 }
 
 void	void_cd(void)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (g_data.tab[i])
@@ -77,24 +72,14 @@ void	cd_exec(t_elem_pars *elem)
 	int		res;
 
 	data = g_data;
-	if (elem->args[1] == NULL){
+	if (elem->args[1] == NULL)
+	{
 		void_cd();
-		return;
+		return ;
 	}
 	if (count_args(data) <= 2)
 	{
 		update_pwd();
-		printf("chdir = %d\n",chdir(elem->args[1]));
+		printf("chdir = %d\n", chdir(elem->args[1]));
 	}
 }
-
-// ^ $OLDPWD
-/* 
-	le dernier répertoire visité 
-	par l'utilisateur connecté
-*/ 
-
-// ^ $PWD
-/* 
-	Répertoire courant
-*/ 
