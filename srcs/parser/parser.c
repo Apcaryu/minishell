@@ -90,12 +90,20 @@ unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 	return (1);
 }
 
+t_bool	is_redirect(t_type type)
+{
+	if (type == INFILE || type == HEREDOC || type == OUTFILE || \
+	type == APPEND || type == PIPE)
+		return (true);
+	return (false);
+}
+
 unsigned int	nb_arg(t_token *token)
 {
 	unsigned int	nb_arg;
 
 	nb_arg = 0;
-	while (token->next != NULL)
+	while (token != NULL)
 	{
 		if (token->type == C_SPACE)
 		{
@@ -104,21 +112,15 @@ unsigned int	nb_arg(t_token *token)
 			else
 				token = token->next;
 		}
-		if (token->type == INFILE || token->type == HEREDOC || \
-		token->type == OUTFILE || token->type == APPEND || token->type == PIPE)
+		if (is_redirect(token->type))
 			return (nb_arg);
 		if (token->type == COMMAND)
 			nb_arg++;
-		if (token->next == NULL)
+		if (token == NULL)
 			return (nb_arg);
 		else
 			token = token->next;
 	}
-	if (token->type == INFILE || token->type == HEREDOC || token->type == C_SPACE || \
-		token->type == OUTFILE || token->type == APPEND || token->type == PIPE)
-		return (nb_arg);
-	else
-		nb_arg++;
 	return (nb_arg);
 }
 
