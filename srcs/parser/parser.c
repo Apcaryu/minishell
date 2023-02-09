@@ -90,40 +90,6 @@ unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 	return (1);
 }
 
-t_bool	is_redirect(t_type type)
-{
-	if (type == INFILE || type == HEREDOC || type == OUTFILE || \
-	type == APPEND || type == PIPE)
-		return (true);
-	return (false);
-}
-
-unsigned int	nb_arg(t_token *token)
-{
-	unsigned int	nb_arg;
-
-	nb_arg = 0;
-	while (token != NULL)
-	{
-		if (token->type == C_SPACE)
-		{
-			if (token->next == NULL)
-				return (nb_arg);
-			else
-				token = token->next;
-		}
-		if (is_redirect(token->type))
-			return (nb_arg);
-		if (token->type == COMMAND)
-			nb_arg++;
-		if (token == NULL)
-			return (nb_arg);
-		else
-			token = token->next;
-	}
-	return (nb_arg);
-}
-
 t_bool	is_in_here_out_append(t_type type)
 {
 	if (type == INFILE || type == HEREDOC || type == OUTFILE || type == APPEND)
@@ -164,14 +130,6 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 	elem_pars->args[0] = token->content;
 //	dprintf(2, "nb_args = %u\n", nargs_count(token));
 	return (nb_move);
-}
-
-void	get_args(t_elem_pars *command, t_token *token)
-{
-	static int	idx = 1;
-
-	command->args[idx] = token->content;
-	idx++;
 }
 
 unsigned int	set_elem_pars(t_elem_pars *elem_pars, t_token *token, t_elem_pars *command_elem, unsigned int *idx)
