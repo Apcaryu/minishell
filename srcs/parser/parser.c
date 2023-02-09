@@ -65,7 +65,7 @@ unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 	if (token->next != NULL)
 		token = token->next;
 	else
-		return(nb_move);
+		return (nb_move);
 	if (token->type == C_SPACE)
 	{
 		nb_move++;
@@ -81,7 +81,7 @@ unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 		elem->args[0] = token->content;
 		elem->args[1] = NULL;
 	}
-	return(nb_move);
+	return (nb_move);
 }
 
 unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
