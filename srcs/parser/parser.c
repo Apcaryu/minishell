@@ -132,7 +132,7 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 	return (nb_move);
 }
 
-unsigned int	set_elem_pars(t_elem_pars *elem_pars, t_token *token, \
+unsigned int	set_elem(t_elem_pars *elem_pars, t_token *token, \
 t_elem_pars *command_elem, unsigned int *idx)
 {
 	unsigned int	nb_move;
@@ -162,73 +162,91 @@ t_elem_pars *command_elem, unsigned int *idx)
 	return (nb_move);
 }
 
+t_elem_pars	*create_elem(t_elem_pars *elem)
+{
+	if (elem == NULL)
+		return (elem);
+	else
+	{
+		if (elem->type != ARGS)
+			elem = new_elem_pars(&g_data.garb_lst);
+	}
+	return (elem);
+}
+
+void	add_elem(t_data *data, t_elem_pars *elem)
+{
+	if (elem->type != ARGS)
+		elem_pars_add_back(&data->parser_lst, elem);
+}
+
+t_elem_pars	*init_command_elem(void)
+{
+	t_elem_pars	*command_elem;
+
+	command_elem = garbage_alloc(&g_data.garb_lst, sizeof(t_elem_pars) * 1);
+	command_elem->type = NONE;
+	return (command_elem);
+}
+
+t_token	*move_tlst(t_token *lex_lst, unsigned int nb_move)
+{
+	while (nb_move != 0)
+	{
+		if (lex_lst->next == NULL)
+		{
+			lex_lst = NULL;
+			break ;
+		}
+		lex_lst = lex_lst->next;
+		nb_move--;
+	}
+	return (lex_lst);
+}
+
+t_elem_pars	*set_cmd(t_elem_pars *elem, t_elem_pars *cmd_elem)
+{
+	if (elem->type == COMMAND)
+		cmd_elem = elem;
+	else if (elem->type == PIPE)
+		cmd_elem = init_command_elem();
+	return (cmd_elem);
+}
+
+t_token	*space_jump(t_token *lex_lst)
+{
+	if (lex_lst->next == NULL)
+		return (lex_lst);
+	if (lex_lst->type == C_SPACE)
+		lex_lst = lex_lst->next;
+	return (lex_lst);
+}
+
 void	parser(void)
 {
-	t_token	*lex_lst;
+	t_token			*lex_lst;
 	t_elem_pars		*elem;
-	unsigned int	nb_move;
-	t_bool			is_last;
-	t_elem_pars		*command_elem;
+	t_elem_pars		*cmd_elem;
 	unsigned int	idx;
 
 	idx = 1;
 	lex_lst = g_data.lexer_lst;
-	command_elem = garbage_alloc(&g_data.garb_lst, sizeof(t_elem_pars) * 1);
-	command_elem->type = NONE;
-	elem = new_elem_pars(&g_data.garb_lst);
+	cmd_elem = init_command_elem();
 	while (lex_lst != NULL)
 	{
-		is_last = false;
-		nb_move = 0;
-		if (lex_lst->next == NULL)
-			is_last = true;
-//		printf("lex_lst = %p\n", lex_lst);
-		if (elem != NULL) {
-			if (elem->type != ARGS)
-				elem = new_elem_pars(&g_data.garb_lst);
-		}
-		nb_move = set_elem_pars(elem, lex_lst, command_elem, &idx);
-		if (elem->type == COMMAND)
-			command_elem = elem;
-		else if (elem->type == PIPE) {
-			command_elem = garbage_alloc(&g_data.garb_lst, sizeof(t_elem_pars) * 1);
-			command_elem->type = NONE;
-		}
-		p_elem(elem);
-//		printf("elem = %p | type = %d | cmd = %s | next = %p\n", elem, elem->type, elem->cmd, elem->next);
-		if (elem->type != ARGS)
-			elem_pars_add_back(&g_data.parser_lst, elem);
-		while (nb_move != 0)
-		{
-			if (lex_lst->next == NULL)
-			{
-				lex_lst = NULL;
-				break;
-			}
-			lex_lst = lex_lst->next;
-//			printf("lex_lst = %p | next = %p\n", lex_lst, lex_lst->next);
-			nb_move--;
-//			printf("nb_move = %u\n", nb_move);
-		}
+		elem = create_elem(elem);
+		lex_lst = move_tlst(lex_lst, set_elem(elem, lex_lst, cmd_elem, &idx));
+		cmd_elem = set_cmd(elem, cmd_elem);
+		add_elem(&g_data, elem);
 		if (lex_lst == NULL)
 			break ;
-		if (lex_lst->type == C_SPACE && lex_lst->next != NULL)
-			lex_lst = lex_lst->next;
+		lex_lst = space_jump(lex_lst);
 		if (lex_lst->next == NULL)
 		{
-			if (is_last == false)
-			{
-				if (elem->type != ARGS)
-					elem = new_elem_pars(&g_data.garb_lst);
-				set_elem_pars(elem, lex_lst, command_elem, &idx);
-				p_elem(elem);
-				if (elem->type != ARGS)
-					elem_pars_add_back(&g_data.parser_lst, elem);
-			}
+			elem = create_elem(elem);
+			set_elem(elem, lex_lst, cmd_elem, &idx);
+			add_elem(&g_data, elem);
 			break ;
 		}
-//		elem = NULL;
-//		sleep(1);
 	}
-	p_lst_elem(g_data.parser_lst);
 }
