@@ -1,10 +1,20 @@
-#include "../../headers/lexer.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_lexer.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/08 14:23:27 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/08 14:23:28 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern t_data g_data;
+#include "../../headers/lexer.h"
 
 t_token	*new_token(t_list **garb_lst)
 {
-	t_token *new;
+	t_token	*new;
 
 	new = garbage_alloc(garb_lst, sizeof(t_token) + 1);
 	if (new == NULL)
@@ -15,7 +25,7 @@ t_token	*new_token(t_list **garb_lst)
 	return (new);
 }
 
-t_token *token_last(t_token *token_lst)
+t_token	*token_last(t_token *token_lst)
 {
 	if (token_lst != NULL)
 	{
@@ -27,7 +37,7 @@ t_token *token_last(t_token *token_lst)
 
 void	token_add_back(t_token **token_lst, t_token *token)
 {
-	t_token *last_token;
+	t_token	*last_token;
 
 	if (!token_lst || !token)
 		return ;

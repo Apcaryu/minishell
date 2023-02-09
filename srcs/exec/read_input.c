@@ -77,7 +77,7 @@ void	executer(void)
 void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
-	lexer();
+	lexer(data);
 	expend();
 	parser();
 	executer();

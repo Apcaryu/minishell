@@ -4,6 +4,7 @@
 //# include <stdlib.h>
 //# include <readline/readline.h>
 //# include <readline/history.h>
+# include <signal.h>
 # include "main.h"
 //# include "../libft_42/includes_libft/libft.h"
 //# include "../libft_42/includes_libft/garbage.h"
