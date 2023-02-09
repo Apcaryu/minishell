@@ -124,7 +124,7 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 {
 	unsigned int	nb_move;
 
-	nb_move = 0;
+	nb_move = 1;
 	elem_pars->cmd = token->content;
 	elem_pars->args = garbage_alloc(&g_data.garb_lst, \
 	sizeof(char *) * (nargs_count(token) + 1));
@@ -132,37 +132,33 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 	return (nb_move);
 }
 
-unsigned int	set_elem_pars(t_elem_pars *elem_pars, t_token *token, t_elem_pars *command_elem, unsigned int *idx)
+unsigned int	set_elem_pars(t_elem_pars *elem_pars, t_token *token, \
+t_elem_pars *command_elem, unsigned int *idx)
 {
 	unsigned int	nb_move;
 
-	nb_move = 0;
-	if (token->type == INFILE || token->type == HEREDOC || \
-		token->type == OUTFILE || token->type == APPEND)
+	nb_move = 1;
+	if (is_in_here_out_append(token->type))
 		nb_move = in_her_out_app(elem_pars, token);
-	else if (token->type == PIPE) {
+	else if (token->type == PIPE)
+	{
 		nb_move = pipe_operator(elem_pars, token);
 		*idx = 1;
 	}
-	else if (token->type == COMMAND) {
-//		nb_move = command(elem_pars, token);
-		if (command_elem->type == NONE) {
+	else if (token->type == COMMAND)
+	{
+		if (command_elem->type == NONE)
+		{
 			elem_pars->type = COMMAND;
 			nb_move = ncommand(elem_pars, token);
 		}
-		else {
+		else
+		{
 			elem_pars->type = ARGS;
-			dprintf(2, "idx = %u\n", *idx);
 			command_elem->args[*idx] = token->content;
 			*idx += 1;
-//			get_args(command_elem, token);
-			dprintf(2, "/033[33margs[%u] = %s/033[0m\n", *idx, command_elem->args[*idx]);
 		}
 	}
-	// ----- ONLY FOR TEST -----//
-	if (nb_move == 0)
-		nb_move++;
-	// ----- END -----//
 	return (nb_move);
 }
 
