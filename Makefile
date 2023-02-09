@@ -43,7 +43,8 @@ SRC_LEXER 		= lexer.c \
 SRC_PARSER 		= parser.c \
 					lst_parser.c
 SRC_EXPEND = expend.c \
-				lex_expend.c
+				lex_expend.c \
+				utils.c
 
 SRC_SIGNAL = use_signal.c
 

@@ -14,22 +14,6 @@
 
 extern t_data	g_data;
 
-t_bool	is_type_word(t_type type)
-{
-	if (type == COMMAND || type == SINGLE_QUOTE || type == DOUBLE_QUOTE || \
-	type == VARIABLE)
-		return (true);
-	return (false);
-}
-
-void	init_varenv(t_varenv *varenv)
-{
-	varenv->var_name = NULL;
-	varenv->var_content = NULL;
-	varenv->var_size = 0;
-	varenv->var_content_size = 0;
-}
-
 unsigned int	detect_dollar(char *word, unsigned int idx)
 {
 	while (word[idx] != '\0')

@@ -11,6 +11,9 @@ typedef struct	s_varenv
 	unsigned int	var_content_size;
 }	t_varenv;
 
+t_bool	is_type_word(t_type type);
+void	init_varenv(t_varenv *varenv);
+
 void	expend(void);
 
 t_token	*lex_expend(char *input);
