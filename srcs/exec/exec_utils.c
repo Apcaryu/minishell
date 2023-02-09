@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_and_exit.c                                   :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/08 17:11:16 by meshahrv         ###   ########.fr       */
+/*   Created: 2023/02/08 19:38:34 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/02/08 19:43:33 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,37 @@
 
 extern t_data	g_data;
 
-void	close_fd(t_exec *exec)
+int	ft_lstenv_size(t_env *lst)
 {
-	close(exec->pipefd[0]);
-	close(exec->pipefd[1]);
-	close(exec->infile);
-}
+	int	count;
 
-// ft_lstclear(&g_data.garb_lst, &free);
-// exit(exit_code);
-
-int	exiteur(int exit_code, t_exec *exec)
-{
-	close(exec->pid);
-	return (exit_code);
-}
-
-char	**clean_cmds(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != NULL)
+	count = 0;
+	while (lst)
 	{
-		free(str[i]);
+		lst = lst->next;
+		count++;
+	}
+	return (count);
+}
+
+char	**convert_lst_to_tab(t_data data)
+{
+	t_env	*lst;
+	char	**dest;
+	int		i;
+
+	dest = NULL;
+	i = 0;
+	lst = data.env_bis;
+	dest = (char **)malloc(sizeof(char *) * (ft_lstenv_size(lst) + 1));
+	if (!dest)
+		return (NULL);
+	while (lst)
+	{
+		dest[i] = ft_strdup(lst->line);
+		lst = lst->next;
 		i++;
 	}
-	free(str);
-	return (NULL);
+	dest[i] = NULL;
+	return (dest);
 }

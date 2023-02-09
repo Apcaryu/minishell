@@ -11,14 +11,21 @@
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
+#include "../../headers/minishell.h"
 
 extern t_data	g_data;
 
-void	exit_exec(void)
+void	exit_exec(t_exec *exec)
 {
 	unsigned long long int idx;
 	
 	idx = 0;
+	// dprintf(2, "ICI == %p\n", g_data.parser_lst->args);
+	if (!g_data.parser_lst->args)
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	if (g_data.parser_lst->args[1])
 	{
 		printf("exit\n");
@@ -28,7 +35,7 @@ void	exit_exec(void)
 		{
 			if (!ft_isdigit(g_data.parser_lst->args[1][idx]))
 			{
-				printf("numeric argument required\n");
+				error_msgs(g_data.parser_lst->args[1], "numeric argument required\n");
 				exit(2);
 			}
 			idx++;
@@ -38,14 +45,14 @@ void	exit_exec(void)
 		{
 			if (idx == 2)
 			{
-				printf("too many arguments\n");
+				error_msgs(g_data.parser_lst->cmd, "too many arguments\n");
 				return ;
 			}
 			idx++;
 		}
-		g_data.exec_struct->exit_code = ft_atoi(g_data.parser_lst->args[1]);
+		exec->exit_code = ft_atoi(g_data.parser_lst->args[1]);
 	}
-	exit(g_data.exec_struct->exit_code);
+	exit(exec->exit_code);
 }
 
 // TODO :  changer atoi, long long int

@@ -33,7 +33,8 @@ typedef enum	e_ntype
 	DOUBLE_QUOTE,
 	COMMAND,
 	C_SPACE,
-	VARIABLE
+	VARIABLE,
+	ARGS
 }	t_type;
 
 typedef struct s_token
@@ -80,6 +81,12 @@ typedef struct s_exec
 
 // };
 
+typedef struct	s_env
+{
+	char			*line;
+	struct s_env	*prev;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_data
 {
@@ -89,7 +96,12 @@ typedef struct s_data
 	t_elem_pars	*parser_lst;
 	t_exec		*exec_struct;
 	char		**env;
+	t_env		*env_bis;
+	char		**tab;
+	t_bool		is_interactive;
 }	t_data;
+
+
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);
 

@@ -14,9 +14,7 @@
 
 extern t_data	g_data;
 
-
-
-void	echo_exec(void)
+void	echo_exec(t_elem_pars *elem)
 {
 	t_bool	n;
 	int		i;
@@ -27,37 +25,37 @@ void	echo_exec(void)
 	si = i;
 	count_args = 0;
 	n = true;
-	if (!g_data.parser_lst->args[1])
-		write(1, "\n", 5);
-	while (g_data.parser_lst->args[count_args])
+	if (!elem->args[1])
+		write(1, "\n", 1);
+	while (elem->args[count_args])
 		count_args++;
-	// while (g_data.parser_lst->args[i])
+	// while (elem->args[i])
 	while (i < count_args)
 	{
-		if (i == 1 && g_data.parser_lst->args[i][0] == '-')
+		if (i == 1 && elem->args[i][0] == '-')
 		{
 			si++;
-			while (g_data.parser_lst->args[i][si] == 'n')
+			while (elem->args[i][si] == 'n')
 			{
 				si++;
 			}
-			if (g_data.parser_lst->args[i][si] == ' ' || g_data.parser_lst->args[i][si] == '\0')
+			if (elem->args[i][si] == ' ' || elem->args[i][si] == '\0')
 			{
 				i++;
 				n = false;
 			}
 		}
-		// if (i == 1 && g_data.parser_lst->args[i]
-		// 	&& ft_strncmp(g_data.parser_lst->args[i],
-		// 	"-n", ft_strlen(g_data.parser_lst->args[i])) == 0)
+		// if (i == 1 && elem->args[i]
+		// 	&& ft_strncmp(elem->args[i],
+		// 	"-n", ft_strlen(elem->args[i])) == 0)
 		// {
 		// 	i++;
 		// 	n = false;
 		// }
-		if (g_data.parser_lst->args[i] != NULL)
+		if (elem->args[i] != NULL)
 		{
-			write(1, g_data.parser_lst->args[i], ft_strlen(g_data.parser_lst->args[i]));
-			// if (g_data.parser_lst->args[i + 1])
+			write(1, elem->args[i], ft_strlen(elem->args[i]));
+			// if (elem->args[i + 1])
 			if (i != count_args - 1)
 				write(1, " ", 1);
 		}

@@ -7,6 +7,7 @@ SRC_BUILTINS_PATH = srcs/builtins/
 SRC_LEXER_PATH = srcs/lexer/
 SRC_PARSER_PATH = srcs/parser/
 SRC_EXPEND_PATH = srcs/expend/
+SRC_SIGNAL_PATH = srcs/signal/
 
 CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
@@ -20,7 +21,12 @@ SRC_EXEC 		= read_input.c \
 					print_exec.c \
 					exec_cmd.c \
 					close_and_exit.c \
-					# lst_exec.c
+					exec_utils.c \
+					builtin_process.c \
+					heredoc_process.c \
+					env_utils.c \
+					open_fds.c \
+					pipe_process.c \
 
 SRC_BUILTINS 	= echo.c \
 					cd.c \
@@ -31,12 +37,22 @@ SRC_BUILTINS 	= echo.c \
 					exit.c
 
 SRC_LEXER 		= lexer.c \
-					lst_lexer.c
+					lst_lexer.c \
+					print_lst.c \
+					set_type_special.c \
+					get_content.c \
+					set_type_char.c \
+					lex_utils.c
 
 SRC_PARSER 		= parser.c \
 					lst_parser.c
 SRC_EXPEND = expend.c \
-				lex_expend.c
+				lex_expend.c \
+				utils.c \
+				var_info.c \
+				set_var_content.c
+
+SRC_SIGNAL = use_signal.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))
@@ -44,13 +60,15 @@ SRCS_BUILTINS = $(addprefix $(SRC_BUILTINS_PATH), $(SRC_BUILTINS))
 SRCS_LEXER = $(addprefix $(SRC_LEXER_PATH), $(SRC_LEXER))
 SRCS_PARSER =$(addprefix $(SRC_PARSER_PATH), $(SRC_PARSER))
 SRCS_EXPEND = $(addprefix $(SRC_EXPEND_PATH), $(SRC_EXPEND))
+SRCS_SIGNAL = $(addprefix $(SRC_SIGNAL_PATH), $(SRC_SIGNAL))
 OBJ		  = $(SRC:.c=.o)
 OBJ_EXEC  = $(SRC_EXEC:.c=.o)
 OBJ_BUILTINS = $(SRC_BUILTINS:.c=.o)
 OBJ_LEXER = $(SRC_LEXER:.c=.o)
 OBJ_PARSER = $(SRC_PARSER:.c=.o)
 OBJ_EXPEND = $(SRC_EXPEND:.c=.o)
-OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS) $(OBJ_LEXER) $(OBJ_PARSER) $(OBJ_EXPEND))
+OBJ_SIGNAL = $(SRC_SIGNAL:.c=.o)
+OBJS	  = $(addprefix $(OBJ_PATH), $(OBJ) $(OBJ_EXEC) $(OBJ_BUILTINS) $(OBJ_LEXER) $(OBJ_PARSER) $(OBJ_EXPEND) $(OBJ_SIGNAL))
 DEPS	  = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 HEADERS	  = -I./headers/
 LIB 	  = -L./libft_42/ -lft -lreadline
@@ -87,6 +105,10 @@ $(OBJ_PATH)%.o: $(SRC_PARSER_PATH)%.c
 	@$(CC) $(HEADERS) $(CFLAGS) -o $@ -c $<
 
 $(OBJ_PATH)%.o: $(SRC_EXPEND_PATH)%.c
+	@mkdir -p $(OBJ_PATH)
+	@$(CC) $(HEADERS) -o $@ -c $<
+
+$(OBJ_PATH)%.o: $(SRC_SIGNAL_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
 	@$(CC) $(HEADERS) -o $@ -c $<
 
