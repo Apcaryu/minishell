@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 12:30:04 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 12:49:03 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,17 @@ int	env_line_already_exist(t_env *new)
 	return (1);
 }
 
+void	check_env_before_add(t_data data, t_env *new)
+{
+	if (!data.env_bis)
+		data.env_bis = new;
+	else
+	{
+		if (env_line_already_exist(new) == 0)
+			add_env_line(data.env_bis, new);
+	}
+}
+
 void	export_exec(char *str)
 {
 	int		i;
@@ -75,13 +86,7 @@ void	export_exec(char *str)
 		return ;
 	}
 	free(new_env);
-	if (!data.env_bis)
-		data.env_bis = new;
-	else
-	{
-		if (env_line_already_exist(new) == 0)
-			add_env_line(data.env_bis, new);
-	}
+	check_env_before_add(data, new);
 	data.tab = convert_lst_to_tab(data);
 	if (!data.tab)
 		return ;
