@@ -76,7 +76,9 @@ t_varenv	set_var(t_token *token, unsigned int idx)
 	var_out.var_size = variable_size(token->content, idx);
 	var_out.var_name = variable_name(token->content, idx, var_out.var_size);
 	var_out.var_content_size = var_content_size(var_out.var_name);
-	var_out.var_content = getenv(var_out.var_name + 1);
+//	dprintf(2, "mini_getenv = %s\n", mini_getenv(&g_data, "a"));
+	var_out.var_content = mini_getenv(&g_data, var_out.var_name + 1);
+//	var_out.var_content = getenv(var_out.var_name + 1);
 	return (var_out);
 }
 
