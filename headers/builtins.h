@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtins.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/10 13:04:04 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/02/10 13:04:09 by meshahrv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUILTINS_H
 # define BUILTINS_H
 # include <stdio.h>
@@ -11,7 +23,6 @@ typedef enum e_builtins
 	export = 3,
 	unset = 4,
 	env = 5,
-	// exit = 6
 }	t_builtins;
 
 void	echo_exec(t_elem_pars *elem);
