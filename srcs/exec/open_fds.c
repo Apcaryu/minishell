@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 12:52:16 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 16:35:06 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:22:38 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,7 @@ void	child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 		start = start->next;
 	}
 	close(exec->pipefd[0]);
-	if (file[1] == 1)
-	{
-		dup2(file[0], 0);
-		close(file[0]);
-	}
-	else if (exec->infile >= 0)
-	{
-		dup2(exec->infile, 0);
-		close(exec->infile);
-	}
+	child_open_utils(exec, file[1], file[0]);
 	if (file[1] == 2)
 	{
 		dup2(file[0], 1);

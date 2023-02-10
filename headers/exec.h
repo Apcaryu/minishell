@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 16:29:29 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:24:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, \
 void		close_fd(t_exec *exec);
 char		**clean_cmds(char **str);
 void		wait_loop(t_exec *exec);
+
+// exec_utils.c
+void		child_open_utils(t_exec *exec, int fileone, int filezero);
 
 // Pipes And Commands
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
