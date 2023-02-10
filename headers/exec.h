@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 13:46:47 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:25:55 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define EXEC_H
 # include <stdio.h>
 # include "main.h"
-//# include "../libft_42/includes_libft/libft.h"
-//# include "lexer.h"
 # include "builtins.h"
 
 // builtin_process.c
@@ -35,11 +33,14 @@ void		main_loop(t_exec *exec);
 // open_fds.c
 int			open_inout(t_elem_pars *elem, t_exec *exec);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
-void		inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
+void		inout_before_proc(t_elem_pars *start, \
+								t_elem_pars *elem, t_exec *exec);
 
 // pipe_process.c
-void		child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec);
-void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);
+void		child_process(t_elem_pars *start, \
+							t_elem_pars *elem_lst, t_exec *exec);
+void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, \
+											t_exec *exec, int i);
 
 // Pipes And Commands
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
