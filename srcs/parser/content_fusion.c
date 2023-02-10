@@ -16,21 +16,22 @@ extern t_data	g_data;
 
 char	*fusion_arg(t_token *token_lst, char *arg, unsigned int *nb_move)
 {
-	char *tmp_content;
+	char	*tmp_content;
 
 	arg = token_lst->content;
-	if(token_lst->next == NULL)
+	if (token_lst->next == NULL)
 		return (arg);
 	else
 		token_lst = token_lst->next;
 	if (token_lst->type == COMMAND)
 	{
-		while (token_lst->type == COMMAND) {
-			tmp_content = garbage_alloc(&g_data.garb_lst, ft_strlen(arg) +
-														  ft_strlen(token_lst->content) + 1);
+		while (token_lst->type == COMMAND)
+		{
+			tmp_content = garbage_alloc(&g_data.garb_lst, \
+			ft_strlen(arg) + ft_strlen(token_lst->content) + 1);
 			ft_strlcpy(tmp_content, arg, ft_strlen(arg) + 1);
-			ft_strlcat(tmp_content, token_lst->content, ft_strlen(token_lst->content) +
-														ft_strlen(tmp_content) + 1);
+			ft_strlcat(tmp_content, token_lst->content, \
+			ft_strlen(token_lst->content) + ft_strlen(tmp_content) + 1);
 			arg = tmp_content;
 			token_lst = token_lst->next;
 			nb_move += 1;
