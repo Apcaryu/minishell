@@ -50,7 +50,7 @@ unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 }
 
 unsigned int	set_elem(t_elem_pars *elem_pars, t_token *token, \
-t_elem_pars *command_elem, unsigned int *idx)
+t_elem_pars *cmd, unsigned int *idx)
 {
 	unsigned int	nb_move;
 
@@ -64,7 +64,7 @@ t_elem_pars *command_elem, unsigned int *idx)
 	}
 	else if (token->type == COMMAND)
 	{
-		if (command_elem->type == NONE)
+		if (cmd->type == NONE)
 		{
 			elem_pars->type = COMMAND;
 			nb_move = ncommand(elem_pars, token);
@@ -72,8 +72,8 @@ t_elem_pars *command_elem, unsigned int *idx)
 		else
 		{
 			elem_pars->type = ARGS;
-			command_elem->args[*idx] = token->content;
-			*idx += 1;
+			cmd->args[*idx] = fusion_arg(token, cmd->args[*idx], &nb_move);
+			*idx += nb_move;
 		}
 	}
 	return (nb_move);

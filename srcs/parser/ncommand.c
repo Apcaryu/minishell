@@ -42,7 +42,7 @@ unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
 	unsigned int	nb_move;
 
 	nb_move = 1;
-	elem_pars->cmd = token->content;
+	nb_move = content_fusion_cmd(token, elem_pars, nb_move);
 	elem_pars->args = garbage_alloc(&g_data.garb_lst, \
 	sizeof(char *) * (nargs_count(token) + 1));
 	elem_pars->args[0] = token->content;
