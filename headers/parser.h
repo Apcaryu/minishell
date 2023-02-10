@@ -12,6 +12,8 @@ t_token	*move_tlst(t_token *lex_lst, unsigned int nb_move);
 t_token	*space_jump(t_token *lex_lst);
 void	add_elem(t_data *data, t_elem_pars *elem);
 
+unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token);
+
 t_elem_pars *new_elem_pars(t_list **garb_list);
 t_elem_pars *elem_pars_last(t_elem_pars *elem_lst);
 void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem);

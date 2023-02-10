@@ -49,40 +49,6 @@ unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 	return (1);
 }
 
-unsigned int	nargs_count(t_token *token)
-{
-	unsigned int	count;
-	t_token			*prev;
-
-	count = 0;
-	prev = token;
-	while (token != NULL)
-	{
-		if (token->type == COMMAND && !is_in_here_out_append(prev->type))
-			count++;
-		if (token->type != C_SPACE)
-			prev = token;
-		token = token->next;
-		if (token != NULL)
-		{
-			if (token->type == PIPE)
-				break ;
-		}
-	}
-	return (count);
-}
-
-unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token)
-{
-	unsigned int	nb_move;
-
-	nb_move = 1;
-	elem_pars->cmd = token->content;
-	elem_pars->args = garbage_alloc(&g_data.garb_lst, \
-	sizeof(char *) * (nargs_count(token) + 1));
-	elem_pars->args[0] = token->content;
-	return (nb_move);
-}
 
 unsigned int	set_elem(t_elem_pars *elem_pars, t_token *token, \
 t_elem_pars *command_elem, unsigned int *idx)
