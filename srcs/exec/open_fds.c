@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 12:52:16 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 18:45:00 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 13:34:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,8 @@
 
 extern t_data	g_data;
 
-// ~ OPEN
-int	open_inout(t_elem_pars *elem, t_exec *exec)
+static int	infile_or_outfile(t_elem_pars *elem, t_exec *exec, int file)
 {
-	int	file;
-
-	file = -1;
 	if (elem->args != NULL && elem->type == INFILE)
 	{
 		file = open(elem->args[0], O_RDONLY, 0644);
@@ -41,7 +37,12 @@ int	open_inout(t_elem_pars *elem, t_exec *exec)
 			exit(1);
 		}
 	}
-	else if (elem->args != NULL && elem->type == APPEND)
+	return (file);
+}
+
+static int	append_or_heredoc(t_elem_pars *elem, t_exec *exec, int file)
+{
+	if (elem->args != NULL && elem->type == APPEND)
 	{
 		file = open(elem->args[0], O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (file == -1)
@@ -52,9 +53,18 @@ int	open_inout(t_elem_pars *elem, t_exec *exec)
 		}
 	}
 	else if (elem->args != NULL && elem->type == HEREDOC)
-	{
 		file = ft_heredoc(elem, exec);
-	}
+	return (file);
+}
+
+// ~ OPEN
+int	open_inout(t_elem_pars *elem, t_exec *exec)
+{
+	int	file;
+
+	file = -1;
+	file = infile_or_outfile(elem, exec, file);
+	file = append_or_heredoc(elem, exec, file);
 	return (file);
 }
 
