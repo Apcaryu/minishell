@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 18:15:02 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 15:40:05 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	path_is_null(t_elem_pars *start)
 	else
 	{
 		error_msgs(*start->args, "command not found\n");
-		// clean_cmds(start->args);
 		ft_lstclear(&g_data.garb_lst, &free);
 		exit(127);
 	}
@@ -89,7 +88,7 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 	if (ft_isalnum(start->cmd[0]))
 		error_msgs(start->cmd, "command not found\n");
 	clean_cmds(tab);
-	clean_cmds(g_data.tab); // creer une fonction qui erase tableau de tableau TO DO
+	clean_cmds(g_data.tab);
 	free_env(g_data.env_bis);
 	ft_lstclear(&g_data.garb_lst, &free);
 	exit(127);
