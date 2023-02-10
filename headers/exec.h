@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 15:52:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:29:29 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // open_fds.c
-int			open_inout(t_elem_pars *elem, t_exec *exec);
+void		open_inout(t_elem_pars *elem, t_exec *exec, int *file);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 void		inout_before_proc(t_elem_pars *start, \
 								t_elem_pars *elem, t_exec *exec);
