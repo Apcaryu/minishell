@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lst_parser.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/09 16:27:32 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/09 16:27:32 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../headers/parser.h"
 
-extern t_data g_data;
+extern t_data	g_data;
 
-t_elem_pars *new_elem_pars(t_list **garb_list)
+t_elem_pars	*new_elem_pars(t_list **garb_list)
 {
-	t_elem_pars  *new;
+	t_elem_pars	*new;
 
 	new = garbage_alloc(garb_list, sizeof(t_elem_pars) + 1);
 	if (new == NULL)
@@ -17,7 +29,7 @@ t_elem_pars *new_elem_pars(t_list **garb_list)
 	return (new);
 }
 
-t_elem_pars *elem_pars_last(t_elem_pars *elem_lst)
+t_elem_pars	*elem_pars_last(t_elem_pars *elem_lst)
 {
 	if (elem_lst != NULL)
 	{
@@ -29,7 +41,7 @@ t_elem_pars *elem_pars_last(t_elem_pars *elem_lst)
 
 void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem)
 {
-	t_elem_pars *last_elem_pars;
+	t_elem_pars	*last_elem_pars;
 
 	if (!elem_lst || !elem)
 		return ;
