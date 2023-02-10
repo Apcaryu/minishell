@@ -41,23 +41,25 @@ char	*fusion_arg(t_token *token_lst, char *arg, unsigned int *nb_move)
 	return (arg);
 }
 
-unsigned int	content_fusion_cmd(t_token *token_lst, t_elem_pars *elem, unsigned int nb_move)
+unsigned int	content_fusion_cmd(t_token *token_lst, t_elem_pars *elem, \
+unsigned int nb_move)
 {
-	char *tmp_content;
+	char	*tmp_content;
 
 	elem->cmd = token_lst->content;
-	if(token_lst->next == NULL)
+	if (token_lst->next == NULL)
 		return (nb_move);
 	else
 		token_lst = token_lst->next;
 	if (token_lst->type == COMMAND)
 	{
-		while (token_lst->type == COMMAND) {
-			tmp_content = garbage_alloc(&g_data.garb_lst, ft_strlen(elem->cmd) +
-														  ft_strlen(token_lst->content) + 1);
+		while (token_lst->type == COMMAND)
+		{
+			tmp_content = garbage_alloc(&g_data.garb_lst, \
+			ft_strlen(elem->cmd) + ft_strlen(token_lst->content) + 1);
 			ft_strlcpy(tmp_content, elem->cmd, ft_strlen(elem->cmd) + 1);
-			ft_strlcat(tmp_content, token_lst->content, ft_strlen(token_lst->content) +
-														ft_strlen(tmp_content) + 1);
+			ft_strlcat(tmp_content, token_lst->content, \
+			ft_strlen(token_lst->content) + ft_strlen(tmp_content) + 1);
 			elem->cmd = tmp_content;
 			token_lst = token_lst->next;
 			nb_move++;
