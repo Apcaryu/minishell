@@ -14,6 +14,8 @@ void	add_elem(t_data *data, t_elem_pars *elem);
 
 unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token);
 
+unsigned int	content_fusion_cmd(t_token *token_lst, t_elem_pars *elem, unsigned int	nb_move);
+
 unsigned int	set_elem(t_elem_pars *elem_pars, t_token *token, \
 t_elem_pars *command_elem, unsigned int *idx);
 
