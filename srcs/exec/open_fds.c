@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 12:52:16 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 12:52:45 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/09 18:45:00 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,9 +137,13 @@ void	inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 		dup2(infile, 0);
 		close(infile);
 	}
+	else
+		close(exec->stdsave[0]);
 	if (outfile >= 0)
 	{
 		dup2(outfile, 1);
 		close(outfile);
 	}
+	else
+		close(exec->stdsave[1]);
 }

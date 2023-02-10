@@ -58,6 +58,7 @@ typedef struct s_exec
 {
 	pid_t	pid;
 	int		pipefd[2];
+	int		stdsave[2];
 	int		status;
 	int 	exit_code;
 	int		nbr_cmd;
