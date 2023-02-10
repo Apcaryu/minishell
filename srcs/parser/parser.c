@@ -49,13 +49,6 @@ unsigned int	pipe_operator(t_elem_pars *elem, t_token *token)
 	return (1);
 }
 
-t_bool	is_in_here_out_append(t_type type)
-{
-	if (type == INFILE || type == HEREDOC || type == OUTFILE || type == APPEND)
-		return (true);
-	return (false);
-}
-
 unsigned int	nargs_count(t_token *token)
 {
 	unsigned int	count;
@@ -133,36 +126,6 @@ t_elem_pars	*create_elem(t_elem_pars *elem)
 	return (elem);
 }
 
-void	add_elem(t_data *data, t_elem_pars *elem)
-{
-	if (elem->type != ARGS)
-		elem_pars_add_back(&data->parser_lst, elem);
-}
-
-t_elem_pars	*init_command_elem(void)
-{
-	t_elem_pars	*command_elem;
-
-	command_elem = garbage_alloc(&g_data.garb_lst, sizeof(t_elem_pars) * 1);
-	command_elem->type = NONE;
-	return (command_elem);
-}
-
-t_token	*move_tlst(t_token *lex_lst, unsigned int nb_move)
-{
-	while (nb_move != 0)
-	{
-		if (lex_lst->next == NULL)
-		{
-			lex_lst = NULL;
-			break ;
-		}
-		lex_lst = lex_lst->next;
-		nb_move--;
-	}
-	return (lex_lst);
-}
-
 t_elem_pars	*set_cmd(t_elem_pars *elem, t_elem_pars *cmd_elem)
 {
 	if (elem->type == COMMAND)
@@ -170,15 +133,6 @@ t_elem_pars	*set_cmd(t_elem_pars *elem, t_elem_pars *cmd_elem)
 	else if (elem->type == PIPE)
 		cmd_elem = init_command_elem();
 	return (cmd_elem);
-}
-
-t_token	*space_jump(t_token *lex_lst)
-{
-	if (lex_lst->next == NULL)
-		return (lex_lst);
-	if (lex_lst->type == C_SPACE)
-		lex_lst = lex_lst->next;
-	return (lex_lst);
 }
 
 void	parser(void)
