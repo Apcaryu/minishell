@@ -14,6 +14,9 @@ void	add_elem(t_data *data, t_elem_pars *elem);
 
 unsigned int	ncommand(t_elem_pars *elem_pars, t_token *token);
 
+unsigned int	set_elem(t_elem_pars *elem_pars, t_token *token, \
+t_elem_pars *command_elem, unsigned int *idx);
+
 t_elem_pars *new_elem_pars(t_list **garb_list);
 t_elem_pars *elem_pars_last(t_elem_pars *elem_lst);
 void	elem_pars_add_back(t_elem_pars **elem_lst, t_elem_pars *elem);

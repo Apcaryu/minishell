@@ -48,7 +48,8 @@ SRC_PARSER 		= parser.c \
 					lst_parser.c \
 					printer.c \
 					p_utils.c \
-					ncommand.c
+					ncommand.c \
+					set_elem.c
 SRC_EXPEND = expend.c \
 				lex_expend.c \
 				utils.c \
