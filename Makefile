@@ -45,7 +45,8 @@ SRC_LEXER 		= lexer.c \
 					lex_utils.c
 
 SRC_PARSER 		= parser.c \
-					lst_parser.c
+					lst_parser.c \
+					printer.c
 SRC_EXPEND = expend.c \
 				lex_expend.c \
 				utils.c \

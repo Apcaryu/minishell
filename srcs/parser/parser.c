@@ -14,47 +14,6 @@
 
 extern t_data	g_data;
 
-void	p_token(t_token *token)
-{
-	if (token == NULL)
-		return ;
-	printf("token = %p | type = %d | content = %s | next = %p\n", token, \
-	token->type, token->content, token->next);
-}
-
-void	p_elem(t_elem_pars *elem)
-{
-	unsigned int	idx;
-
-	idx = 0;
-	if (elem == NULL)
-		return ;
-	printf("elem = %p | type = %d | cmd = %s | ", elem, elem->type, elem->cmd);
-	if (elem->args != NULL)
-	{
-		printf("arg = ");
-		while (elem->args[idx] != NULL)
-		{
-			printf("%s, ", elem->args[idx]);
-			idx++;
-		}
-		printf("| ");
-	}
-	printf("next = %p\n", elem->next);
-}
-
-void	p_lst_elem(t_elem_pars *lst)
-{
-	if (lst == NULL)
-		return ;
-	while (lst->next != NULL)
-	{
-		p_elem(lst);
-		lst = lst->next;
-	}
-	p_elem(lst);
-}
-
 unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 {
 	unsigned int	nb_move;
