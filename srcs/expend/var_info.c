@@ -48,12 +48,12 @@ char	*variable_name(char *str, unsigned int idx, unsigned int var_size)
 	return (var_name);
 }
 
-unsigned int	var_content_size(char *var_name)
+unsigned int	var_content_size(t_data *data, t_varenv varenv)
 {
 	unsigned int	size;
 	char			*tmp;
 
-	tmp = getenv(var_name + 1);
+	tmp = mini_getenv(data, varenv.var_name + 1);
 	if (tmp == NULL)
 		return (0);
 	size = ft_strlen(tmp);
