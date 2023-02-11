@@ -35,7 +35,7 @@ char	*get_value(t_data *data, char *var_name)
 
 char	*check_var(t_data *data, char *var_env, char *var_name)
 {
-	char	*value_out;
+	char			*value_out;
 	unsigned int	size_var_env;
 	unsigned int	size_var_name;
 
@@ -46,14 +46,13 @@ char	*check_var(t_data *data, char *var_env, char *var_name)
 		return (NULL);
 	if (!ft_strncmp(var_env, var_name, size_var_name))
 		value_out = get_value(data, var_env + size_var_env + 1);
-//	printf("s_env = %u | s_name = %u\n", size_var_env, size_var_name);
 	return (value_out);
 }
 
 char	*var_value(t_data *data, char **env, char *var_name)
 {
 	unsigned int	idx;
-	char 			*value_out;
+	char			*value_out;
 
 	idx = 0;
 	value_out = NULL;
@@ -72,5 +71,5 @@ char	*mini_getenv(t_data *data, char *var_name)
 	char	*value;
 
 	value = var_value(data, data->tab, var_name);
-	return value;
+	return (value);
 }
