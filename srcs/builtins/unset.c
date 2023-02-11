@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:20:26 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/11 16:08:36 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:50:30 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,21 @@ void	unset_node(t_data *data, char *str)
 
 void	unset_exec(char *str)
 {
+	int		i;
 	t_data	data;
+	char	*tmp;
 
+	i = 0;
+	tmp = str;
 	data = g_data;
 	if (!data.env_bis || !is_not_a_variable(str))
 		return ;
+	while (tmp[i])
+	{
+		if (tmp[i] && tmp[0] == '_' && !tmp[1])
+			return ;
+		i++;
+	}
 	unset_node(&data, str);
 	data.tab = convert_lst_to_tab(data);
 	g_data.tab = data.tab;
