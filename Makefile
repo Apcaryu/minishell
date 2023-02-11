@@ -51,11 +51,13 @@ SRC_PARSER 		= parser.c \
 					ncommand.c \
 					set_elem.c \
 					content_fusion.c
+
 SRC_EXPEND = expend.c \
 				lex_expend.c \
 				utils.c \
 				var_info.c \
-				set_var_content.c
+				set_var_content.c \
+				mini_getenv.c
 
 SRC_SIGNAL = use_signal.c
 

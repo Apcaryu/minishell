@@ -11,6 +11,8 @@ typedef struct	s_varenv
 	unsigned int	var_content_size;
 }	t_varenv;
 
+char	*mini_getenv(t_data *data, char *var_name);
+
 t_bool	is_type_word(t_type type);
 void	init_varenv(t_varenv *varenv);
 
