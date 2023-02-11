@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 13:46:47 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:24:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define EXEC_H
 # include <stdio.h>
 # include "main.h"
-//# include "../libft_42/includes_libft/libft.h"
-//# include "lexer.h"
 # include "builtins.h"
 
 // builtin_process.c
@@ -33,21 +31,27 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // open_fds.c
-int			open_inout(t_elem_pars *elem, t_exec *exec);
+void		open_inout(t_elem_pars *elem, t_exec *exec, int *file);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
-void		inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
+void		inout_before_proc(t_elem_pars *start, \
+								t_elem_pars *elem, t_exec *exec);
 
 // pipe_process.c
-void		child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec);
-void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i);
+void		child_process(t_elem_pars *start, \
+							t_elem_pars *elem_lst, t_exec *exec);
+void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, \
+											t_exec *exec, int i);
+
+// close_and_exit.c
+void		close_fd(t_exec *exec);
+char		**clean_cmds(char **str);
+void		wait_loop(t_exec *exec);
+
+// exec_utils.c
+void		child_open_utils(t_exec *exec, int fileone, int filezero);
 
 // Pipes And Commands
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
-void		wait_loop(t_exec *exec);
-
-// Close fds
-void		close_fd(t_exec *exec);
-char		**clean_cmds(char **str);
 
 // Execution and Env PATH
 char		**get_env(t_exec *exec);
@@ -62,11 +66,6 @@ t_exec		*init_exec_structure(t_exec *exec);
 void		print_elem_lst(t_elem_pars *lst); // TODO remove;
 void		print_exec_struct(t_exec *exec); // TODO remove;
 void		error_msgs(char *cmd, char *err);
-
-// Exec chain-lists
-t_exec		*new_exec(t_list **garb_list);
-t_exec		*exec_last(t_exec *exec_lst);
-void		exec_add_back(t_exec **exec_lst, t_exec *elem);
 
 // Env utils
 void		free_env(t_env *env);
