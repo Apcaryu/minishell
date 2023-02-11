@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 12:49:03 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/11 15:46:11 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	env_line_already_exist(t_env *new)
 	head = g_data.env_bis;
 	while (new->line[len] && new->line[len] != '=')
 		len++;
-	while (head && ft_strncmp(head->line, new->line, len) != 0)
+	while (head && ft_strncmp(head->line, new->line, len + 1) != 0)
 		head = head->next;
 	if (head == NULL)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:51 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 12:26:05 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:40:58 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,31 @@
 #include "../../headers/minishell.h"
 
 extern t_data	g_data;
+
+long long int	ft_atol(const char *str)
+{
+	int				i;
+	int				sign;
+	long long int	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	while ((str[i] >= 8 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	if ((str[i] == '-') || (str[i] == '+'))
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (sign * res);
+}
 
 void	clear_and_exit_builtin(t_data data, t_exec *exec, t_bool too_many_args)
 {
@@ -52,7 +77,7 @@ t_bool	exit_process(t_exec *exec, unsigned long long int idx, \
 		}
 		idx++;
 	}
-	exec->exit_code = ft_atoi(g_data.parser_lst->args[1]);
+	exec->exit_code = ft_atol(g_data.parser_lst->args[1]);
 	return (too_many_args);
 }
 
@@ -72,5 +97,3 @@ void	exit_exec(t_exec *exec)
 		too_many_args = exit_process(exec, idx, too_many_args);
 	clear_and_exit_builtin(g_data, exec, too_many_args);
 }
-
-// TODO :  changer atoi, long long int

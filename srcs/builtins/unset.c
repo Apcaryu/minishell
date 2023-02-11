@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:20:26 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 16:20:27 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/11 16:08:36 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,24 @@ void	unset_first_node(t_env *node_to_unset, t_data *data)
 void	unset_node(t_data *data, char *str)
 {
 	t_env	*env;
+	int		len;
 	t_env	*node_to_unset;
 
+	len = 0;
 	env = data->env_bis;
 	node_to_unset = NULL;
-	if (env && ft_strncmp(env->line, str, ft_strlen(str)) == 0)
+	while (env->line[len] && env->line[len] != '=')
+		len++;
+	if (env && ft_strncmp(env->line, str, len + 1) == 0)
 		unset_first_node(node_to_unset, data);
 	else
 	{
 		while (env)
 		{
-			if (ft_strncmp(env->line, str, ft_strlen(str)) == 0)
+			len = 0;
+			while (env->line[len] && env->line[len] != '=')
+					len++;
+			if (ft_strncmp(env->line, str, len) == 0)
 			{
 				node_to_unset = env;
 				env->prev->next = node_to_unset->next;
