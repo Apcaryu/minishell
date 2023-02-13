@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../headers/parser.h"
+#include "../../headers/lexer.h"
 
 extern t_data	g_data;
 
@@ -42,6 +43,7 @@ void	parser(void)
 	t_elem_pars		*cmd_elem;
 	unsigned int	idx;
 
+	print_lst(g_data.lexer_lst);
 	idx = 1;
 	lex_lst = g_data.lexer_lst;
 	cmd_elem = init_command_elem();
@@ -62,4 +64,5 @@ void	parser(void)
 			break ;
 		}
 	}
+	p_lst_elem(g_data.parser_lst);
 }

@@ -34,7 +34,7 @@ char	*fusion_arg(t_token *token_lst, char *arg, unsigned int *nb_move)
 			ft_strlen(token_lst->content) + ft_strlen(tmp_content) + 1);
 			arg = tmp_content;
 			token_lst = token_lst->next;
-			nb_move += 1;
+			*nb_move += 1;
 			if (token_lst == NULL)
 				break ;
 		}
