@@ -61,6 +61,17 @@ t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 		return (true);
 }
 
+t_bool	check_quote(t_token *token)
+{
+	if (token->is_closed == false)
+	{
+		printf("unclosed quote\n");
+		return (false);
+	}
+	else
+		return (true);
+}
+
 t_bool	check_token(t_token *token, t_process_validation *check_proc)
 {
 	if (token->type == INFILE || token->type == HEREDOC || \
@@ -68,6 +79,8 @@ t_bool	check_token(t_token *token, t_process_validation *check_proc)
 		return (check_redirect(token, check_proc));
 	else if (token->type == PIPE)
 		return (check_pipe(token, check_proc));
+	else if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
+		return (check_quote(token));
 	else
 		return (true);
 }
