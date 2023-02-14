@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:45:18 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 15:33:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:10:45 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
 // & PIPE
 void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 {
+	t_bool	has_cmd;
+
+	has_cmd = false;
 	while (elem != NULL)
 	{
-		if (elem->type == PIPE || !elem->next)
+		if (elem->type == COMMAND)
+			has_cmd = true;
+		if (has_cmd && (elem->type == PIPE || !elem->next))
 		{
 			if (pipe(exec->pipefd) == -1)
 				perror("minishell: ");
@@ -58,6 +63,7 @@ void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 					start = elem->next;
 			}
 			i++;
+			has_cmd = false;
 		}
 		elem = elem->next;
 	}

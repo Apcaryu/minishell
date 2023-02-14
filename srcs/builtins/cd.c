@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:53:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 16:18:33 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:35:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	void_cd(void)
 			break ;
 		}
 		i++;
-		if (g_data.tab[i] == NULL)
-			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 	}
+	if (g_data.tab[i] == NULL)
+		ft_putstr_fd("minishell: cd: HOME not set\n", 2);
 }
 
 void	cd_exec(t_elem_pars *elem)
@@ -82,7 +82,7 @@ void	cd_exec(t_elem_pars *elem)
 		update_pwd();
 		chdir(elem->args[1]);
 	}
-	if (count_args(data) > 2)
+	else if (count_args(data) > 2)
 		error_msgs(elem->args[0], "too many arguments\n");
 	else
 	{

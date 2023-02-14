@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/13 18:31:18 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/14 17:11:12 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@ extern t_data	g_data;
 
 void	dup_close_zero(t_exec *exec)
 {
-	// dup2(0, exec->stdsave[0]);
 	dup2(exec->stdsave[0], 0);
 	close(exec->stdsave[0]);
 }
 
 void	dup_close_one(t_exec *exec)
 {
-	// dup2(1, exec->stdsave[1]);
 	dup2(exec->stdsave[1], 1);
 	close(exec->stdsave[1]);
 }
@@ -46,9 +44,8 @@ void	main_loop(t_exec *exec)
 		builtin_process(exec, elem_lst);
 		if (exec->stdsave[0] >= 0)
 			dup_close_zero(exec);
-		if (exec->stdsave[1] >= 0){
+		if (exec->stdsave[1] >= 0)
 			dup_close_one(exec);
-		}
 	}
 	else
 	{
@@ -82,6 +79,5 @@ void	read_input(t_data *data)
 	lexer(data);
 	expend();
 	parser();
-	// TODO read heredoc
 	executer();
 }
