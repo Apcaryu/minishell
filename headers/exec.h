@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 17:24:06 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/14 13:17:02 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,12 @@ t_bool		check_all_builtin(t_elem_pars *elem);
 void		builtin_process(t_exec *exec, t_elem_pars *elem);
 
 // heredoc_process.c
-void		read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec);
-int			ft_heredoc(t_elem_pars *elem, t_exec *exec);
+void		read_line_heredoc(int fd, t_elem_pars *elem);
+// void		read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec);
+// int			ft_heredoc(t_elem_pars *elem, t_exec *exec);
+// void		ft_heredoc(t_elem_pars *elem);
+char*		ft_heredoc(t_elem_pars *elem, int nb_hd);
+void		open_heredoc(t_elem_pars *elem);
 
 // Exec functions
 void		read_input(t_data *data);
@@ -31,10 +35,11 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // open_fds.c
-void		open_inout(t_elem_pars *elem, t_exec *exec, int *file);
+// void		open_inout(t_elem_pars *elem, t_exec *exec, int *file);
+int			open_inout(t_elem_pars *elem, t_exec *exec);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
-void		inout_before_proc(t_elem_pars *start, \
-								t_elem_pars *elem, t_exec *exec);
+void		inout_before_proc(t_elem_pars *start, t_exec *exec);
+// void	inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 
 // pipe_process.c
 void		child_process(t_elem_pars *start, \

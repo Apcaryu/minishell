@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/11 15:46:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:02:55 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,7 @@ void	export_exec(char *str)
 	i = 0;
 	while (data.tab[i + 1] != NULL)
 		i++;
+	if (g_data.tab)
+		clean_cmds(g_data.tab);
 	g_data.tab = data.tab;
 }

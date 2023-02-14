@@ -10,6 +10,15 @@ void	init_data(t_data *data, char **env)
 	data->parser_lst = NULL;
 	data->exec_struct = NULL;
 	data->env = env;
+	if (*env == NULL)
+	{
+		// TODO : si env -i, afficher les 3 lignes (!env[0] a tester si jamais)
+		/*
+		PWD=/mnt/nfs/homes/meshahrv/Documents/Circle_3/MINISHELL_GIT
+		SHLVL=1
+		_=/usr/bin/env
+		*/
+	}
 	data->env_bis = create_env(data->env);
 	data->tab = convert_lst_to_tab(*data);
 }

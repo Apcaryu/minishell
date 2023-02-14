@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 15:52:40 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/13 14:00:03 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ char	**clean_cmds(char **str)
 
 void	wait_loop(t_exec *exec)
 {
-	close(exec->pipefd[0]);
-	close(exec->pipefd[1]);
+	if (exec->pipefd[0] >= 0)
+		close(exec->pipefd[0]);
+	if (exec->pipefd[1] >= 0)
+		close(exec->pipefd[1]);
 	while (errno != ECHILD)
 	{
 		wait(&exec->pid);

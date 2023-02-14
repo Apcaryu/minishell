@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 18:26:25 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/11 19:53:14 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/13 16:23:15 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,3 @@ void	pwd_exec(void)
 	else if (getcwd(cwd, PATH_MAX))
 		printf("%s\n", cwd);
 }
- 
