@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:53:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 16:21:45 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/11 17:34:23 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,6 @@ void	cd_exec(t_elem_pars *elem)
 	if (count_args(data) <= 2)
 	{
 		update_pwd();
-		printf("chdir = %d\n", chdir(elem->args[1]));
+		chdir(elem->args[1]);
 	}
 }

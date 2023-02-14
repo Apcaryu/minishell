@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:51 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 12:26:05 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/13 18:20:16 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,38 @@
 
 extern t_data	g_data;
 
-void	clear_and_exit_builtin(t_data data, t_exec *exec, t_bool too_many_args)
+long long int	ft_atol(const char *str)
 {
-	if (too_many_args == true)
-		return ;
+	int				i;
+	int				sign;
+	long long int	res;
+
+	i = 0;
+	sign = 1;
+	res = 0;
+	while ((str[i] >= 8 && str[i] <= 13) || (str[i] == 32))
+		i++;
+	if ((str[i] == '-') || (str[i] == '+'))
+	{
+		if (str[i] == '-')
+			sign = -sign;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = res * 10 + (str[i] - '0');
+		i++;
+	}
+	return (sign * res);
+}
+
+void	clear_and_exit_builtin(t_data data, t_exec *exec, int exit_code)
+{
 	clean_cmds(data.tab);
 	free_env(data.env_bis);
 	ft_lstclear(&data.garb_lst, &free);
 	ft_putstr_fd("exit\n", 2);
-	exit(exec->exit_code);
+	exit(exit_code);
 }
 
 t_bool	exit_process(t_exec *exec, unsigned long long int idx, \
@@ -52,7 +75,7 @@ t_bool	exit_process(t_exec *exec, unsigned long long int idx, \
 		}
 		idx++;
 	}
-	exec->exit_code = ft_atoi(g_data.parser_lst->args[1]);
+	exec->exit_code = ft_atol(g_data.parser_lst->args[1]);
 	return (too_many_args);
 }
 
@@ -70,7 +93,7 @@ void	exit_exec(t_exec *exec)
 	}
 	if (g_data.parser_lst->args[1])
 		too_many_args = exit_process(exec, idx, too_many_args);
-	clear_and_exit_builtin(g_data, exec, too_many_args);
+	if (too_many_args == true)
+		return ;
+	clear_and_exit_builtin(g_data, exec, exec->exit_code);
 }
-
-// TODO :  changer atoi, long long int
