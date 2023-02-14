@@ -51,22 +51,6 @@ t_bool	is_pipe(char *input, t_token *token, unsigned int *idx)
 	return (false);
 }
 
-t_bool	quote_closed(char *content)
-{
-	char quote_type;
-	unsigned int	idx;
-
-	quote_type = content[0];
-	idx = 1;
-	while (content[idx] != '\0')
-	{
-		if (content[idx] == quote_type)
-			return (true);
-		idx++;
-	}
-	return (false);
-}
-
 void	quote(t_data *data, t_token *token, unsigned int *idx)
 {
 	if (data->input[*idx] == '\'')

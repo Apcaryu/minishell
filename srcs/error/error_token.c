@@ -12,16 +12,9 @@
 
 #include "../../headers/error_msg.h"
 
-void	init_process_validate(t_process_validation *check_proc)
-{
-	check_proc->infile = true;
-	check_proc->outfile = true;
-	check_proc->pipe = true;
-}
-
 t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 {
-	if(token->next == NULL)
+	if (token->next == NULL)
 	{
 		check_proc->infile = false;
 		printf("unexpected token\n");
@@ -87,9 +80,9 @@ t_bool	check_token(t_token *token, t_process_validation *check_proc)
 
 t_bool	error_token(t_data *data)
 {
-	t_bool	error_detected;
-	t_process_validation check_proc;
-	t_token	*token_lst;
+	t_bool					error_detected;
+	t_process_validation	check_proc;
+	t_token					*token_lst;
 
 	error_detected = true;
 	init_process_validate(&check_proc);

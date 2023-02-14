@@ -62,7 +62,8 @@ SRC_EXPEND = expend.c \
 
 SRC_SIGNAL = use_signal.c
 
-SRC_ERROR = error_token.c
+SRC_ERROR = error_token.c \
+			error_utils.c
 
 SRCS	  = $(addprefix $(SRC_PATH), $(SRC))
 SRCS_EXEC = $(addprefix $(SRC_EXEC_PATH), $(SRC_EXEC))

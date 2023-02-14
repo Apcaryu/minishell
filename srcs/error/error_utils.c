@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_msg.h                                        :+:      :+:    :+:   */
+/*   error_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/13 15:24:15 by apellegr          #+#    #+#             */
-/*   Updated: 2023/02/13 15:24:17 by apellegr         ###   ########.fr       */
+/*   Created: 2023/02/14 19:19:06 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/14 19:19:08 by apellegr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_MSG_H
-# define ERROR_MSG_H
-# include "main.h"
+#include "../../headers/error_msg.h"
 
-typedef struct	s_process_validation
+void	init_process_validate(t_process_validation *check_proc)
 {
-	t_bool	infile;
-	t_bool	outfile;
-	t_bool	pipe;
-}	t_process_validation;
-
-void	init_process_validate(t_process_validation *check_proc);
-t_bool	error_token(t_data *data);
-
-#endif
+	check_proc->infile = true;
+	check_proc->outfile = true;
+	check_proc->pipe = true;
+}

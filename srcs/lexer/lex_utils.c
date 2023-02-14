@@ -26,3 +26,19 @@ t_bool	is_quote(char chr)
 		return (true);
 	return (false);
 }
+
+t_bool	quote_closed(char *content)
+{
+	char			quote_type;
+	unsigned int	idx;
+
+	quote_type = content[0];
+	idx = 1;
+	while (content[idx] != '\0')
+	{
+		if (content[idx] == quote_type)
+			return (true);
+		idx++;
+	}
+	return (false);
+}
