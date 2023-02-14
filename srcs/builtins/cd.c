@@ -6,11 +6,12 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:53:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/11 17:34:23 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:18:33 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/builtins.h"
+#include "../../headers/minishell.h"
 
 extern t_data	g_data;
 
@@ -39,7 +40,7 @@ void	update_pwd(void)
 		perror("pwd : ");
 		return ;
 	}
-	oldpwd = ft_strjoin("OLDPWD=", cwd);
+	oldpwd = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
 	if (!oldpwd)
 		return ;
 	export_exec(oldpwd);
@@ -55,7 +56,6 @@ void	void_cd(void)
 	{
 		if (ft_strnstr(g_data.tab[i], "HOME", 4))
 		{
-			dprintf(2, "\033[32mtab[%d] = %s\n\033[0m", i, g_data.tab[i]);
 			update_pwd();
 			chdir(g_data.tab[i] + 5);
 			break ;
@@ -82,4 +82,13 @@ void	cd_exec(t_elem_pars *elem)
 		update_pwd();
 		chdir(elem->args[1]);
 	}
+	if (count_args(data) > 2)
+		error_msgs(elem->args[0], "too many arguments\n");
+	else
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(elem->args[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+	}			
 }
