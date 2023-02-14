@@ -24,6 +24,7 @@ t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 	if(token->next == NULL)
 	{
 		check_proc->infile = false;
+		printf("unexpected token\n");
 		return (false);
 	}
 	token = token->next;
@@ -40,15 +41,33 @@ t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 	}
 }
 
+t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
+{
+	if (token->next == NULL)
+	{
+		check_proc->pipe = false;
+		printf("unexpected token\n");
+		return (false);
+	}
+	token = token->next;
+	if (token->type == C_SPACE)
+		token = token->next;
+	if (token == NULL)
+	{
+		printf("unexpected token\n");
+		return (false);
+	}
+	else
+		return (true);
+}
+
 t_bool	check_token(t_token *token, t_process_validation *check_proc)
 {
 	if (token->type == INFILE || token->type == HEREDOC || \
 	token->type == OUTFILE || token->type == APPEND)
 		return (check_redirect(token, check_proc));
-	else if (token->type == PIPE) {
-		printf("check pipe\n");
-		return (true);
-	}
+	else if (token->type == PIPE)
+		return (check_pipe(token, check_proc));
 	else
 		return (true);
 }
@@ -66,7 +85,10 @@ t_bool	error_token(t_data *data)
 	{
 		error_detected = check_token(token_lst, &check_proc);
 		if (!error_detected)
+		{
+			data->exit_code = 2;
 			return (error_detected);
+		}
 		if (token_lst == NULL)
 			break ;
 		else
