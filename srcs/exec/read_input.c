@@ -12,6 +12,7 @@
 
 #include "../../headers/minishell.h"
 #include "../../libft_42/includes_libft/get_next_line_bonus.h"
+#include "../../headers/error_msg.h"
 
 extern t_data	g_data;
 
@@ -77,7 +78,9 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	lexer(data);
-	expend();
-	parser();
-	executer();
+	if (error_token(data)) {
+		expend();
+		parser();
+		executer();
+	}
 }

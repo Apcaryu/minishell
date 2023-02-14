@@ -58,6 +58,7 @@ void	quote(t_data *data, t_token *token, unsigned int *idx)
 	else if (data->input[*idx] == '\"')
 		token->type = DOUBLE_QUOTE;
 	token->content = set_content(data, idx);
+	token->is_closed = quote_closed(token->content);
 }
 
 void	variable_token(t_data *data, t_token *token, unsigned int *idx)
