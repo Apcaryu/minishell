@@ -91,15 +91,16 @@ typedef struct	s_env
 
 typedef struct s_data
 {
-	char 		*input;
-	t_list 		*garb_lst;
-	t_token		*lexer_lst;
-	t_elem_pars	*parser_lst;
-	t_exec		*exec_struct;
-	char		**env;
-	t_env		*env_bis;
-	char		**tab;
-	t_bool		is_interactive;
+	char 			*input;
+	t_list 			*garb_lst;
+	t_token			*lexer_lst;
+	t_elem_pars		*parser_lst;
+	t_exec			*exec_struct;
+	char			**env;
+	t_env			*env_bis;
+	char			**tab;
+	t_bool			is_interactive;
+	unsigned char	exit_code;
 }	t_data;
 
 
