@@ -6,7 +6,7 @@
 /*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:31:56 by apellegr          #+#    #+#             */
-/*   Updated: 2023/02/08 18:31:58 by apellegr         ###   ########.fr       */
+/*   Updated: 2023/02/16 00:11:14 by apellegr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ t_token	*special_heredoc(t_token *token_lst)
 	return (token_lst);
 }
 
-void	call_lex(t_data *data, t_token *token_lst, t_token *start, t_token *end)
+t_token	*call_lex(t_data *data, t_token *token_lst, t_token *start, \
+					t_token *end)
 {
 	if (start == NULL)
 		data->lexer_lst = lex_expend(token_lst->content);
@@ -50,6 +51,7 @@ void	call_lex(t_data *data, t_token *token_lst, t_token *start, t_token *end)
 			token_lst = token_lst->next;
 		token_lst->next = end;
 	}
+	return (token_lst);
 }
 
 void	expend(void)
@@ -71,12 +73,11 @@ void	expend(void)
 			if (token_lst == NULL)
 				return ;
 		}
-		if (token_lst->type != VARIABLE)
-			start = token_lst;
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
 		if (token_lst->type == VARIABLE)
-			call_lex(&g_data, token_lst, start, end);
+			token_lst = call_lex(&g_data, token_lst, start, end);
+		start = token_lst;
 		token_lst = token_lst->next;
 	}
 }
