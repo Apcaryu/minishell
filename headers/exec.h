@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 12:18:27 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 13:02:42 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ void		builtin_process(t_exec *exec, t_elem_pars *elem);
 
 // heredoc_process.c
 void		read_line_heredoc(int fd, t_elem_pars *elem);
-// void		read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec);
-// int			ft_heredoc(t_elem_pars *elem, t_exec *exec);
-// void		ft_heredoc(t_elem_pars *elem);
 char		*ft_heredoc(t_elem_pars *elem, int nb_hd);
 void		open_heredoc(t_elem_pars *elem);
 
@@ -35,17 +32,14 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // open_fds.c
-// void		open_inout(t_elem_pars *elem, t_exec *exec, int *file);
 int			open_inout(t_elem_pars *elem, t_exec *exec);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 void		inout_before_proc(t_elem_pars *start, t_exec *exec);
-// void	inout_before_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 
 // pipe_process.c
 void		child_process(t_elem_pars *start, \
 							t_elem_pars *elem_lst, t_exec *exec);
-void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, \
-											t_exec *exec, int i);
+void		pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 
 // close_and_exit.c
 void		close_fd(t_exec *exec);
@@ -68,8 +62,8 @@ void		open_inout_fds(t_exec *exec, t_elem_pars *elem);
 t_exec		*init_exec_structure(t_exec *exec);
 
 // Print elements
-void		print_elem_lst(t_elem_pars *lst); // TODO remove;
-void		print_exec_struct(t_exec *exec); // TODO remove;
+void		print_elem_lst(t_elem_pars *lst);
+void		print_exec_struct(t_exec *exec);
 void		error_msgs(char *cmd, char *err);
 
 // Env utils
