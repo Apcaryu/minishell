@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:47:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 18:14:39 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:31:11 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ char	*ft_heredoc(t_elem_pars *elem, int nb_hd)
 	here_file = "/tmp/.here_doc";
 	here_file_joined = ft_strjoin(here_file, nb);
 	set_garb_lst(&g_data.garb_lst, here_file_joined);
-	dprintf(2, "here_file_joined = %s\n", here_file_joined);
 	fd = open(here_file_joined, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (NULL);
