@@ -14,22 +14,27 @@
 
 extern t_data	g_data;
 
-void	special_heredoc(t_token *token_lst)
+t_token	*special_heredoc(t_token *token_lst)
 {
 	token_lst = token_lst->next;
 	if (token_lst == NULL)
-		return ;
+		return (token_lst);
 	else
 	{
 		if (token_lst->type == C_SPACE)
 			token_lst = token_lst->next;
 		if (token_lst == NULL)
-			return ;
+			return (token_lst);
 		else
+		{
+			if (token_lst->type == VARIABLE)
+				token_lst->type = COMMAND;
 			token_lst = token_lst->next;
+		}
 		if (token_lst == NULL)
-			return ;
+			return (token_lst);
 	}
+	return (token_lst);
 }
 
 void	call_lex(t_data *data, t_token *token_lst, t_token *start, t_token *end)
@@ -61,7 +66,11 @@ void	expend(void)
 	while (token_lst != NULL)
 	{
 		if (token_lst->type == HEREDOC)
-			special_heredoc(token_lst);
+		{
+			token_lst = special_heredoc(token_lst);
+			if (token_lst == NULL)
+				return ;
+		}
 		if (token_lst->type != VARIABLE)
 			start = token_lst;
 		if (is_type_word(token_lst->type))
