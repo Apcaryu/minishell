@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 13:17:02 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:18:27 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void		read_line_heredoc(int fd, t_elem_pars *elem);
 // void		read_line_heredoc(int fd, t_elem_pars *elem, t_exec *exec);
 // int			ft_heredoc(t_elem_pars *elem, t_exec *exec);
 // void		ft_heredoc(t_elem_pars *elem);
-char*		ft_heredoc(t_elem_pars *elem, int nb_hd);
+char		*ft_heredoc(t_elem_pars *elem, int nb_hd);
 void		open_heredoc(t_elem_pars *elem);
 
 // Exec functions
@@ -77,6 +77,7 @@ void		free_env(t_env *env);
 void		add_env_line(t_env *env, t_env *new);
 t_env		*create_env(char **env);
 t_env		*new_env_line(char *env_line);
+int			env_len(int len, t_env *env);
 
 char		**convert_lst_to_tab(t_data data);
 

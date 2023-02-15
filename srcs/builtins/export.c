@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/13 18:02:55 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 11:37:05 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@ void	check_env_before_add(t_data data, t_env *new)
 	}
 }
 
+void	check_data_exists(t_data data)
+{
+	if (data.tab)
+		clean_cmds(data.tab);
+}
+
 void	export_exec(char *str)
 {
 	int		i;
@@ -93,7 +99,6 @@ void	export_exec(char *str)
 	i = 0;
 	while (data.tab[i + 1] != NULL)
 		i++;
-	if (g_data.tab)
-		clean_cmds(g_data.tab);
+	check_data_exists(g_data);
 	g_data.tab = data.tab;
 }
