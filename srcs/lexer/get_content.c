@@ -19,6 +19,8 @@ int	size_of_var(char *input, unsigned int idx)
 
 	sub_idx = idx + 1;
 	size_out = 1;
+	if (input[sub_idx] == '?')
+		return (2);
 	while (ft_isalnum(input[sub_idx]) || input[sub_idx] == '_')
 	{
 		size_out++;
