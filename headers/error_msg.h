@@ -24,4 +24,6 @@ typedef struct	s_process_validation
 void	init_process_validate(t_process_validation *check_proc);
 t_bool	error_token(t_data *data);
 
+t_bool is_empty_line(char *input);
+
 #endif
