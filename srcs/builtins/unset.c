@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:20:26 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/13 18:03:39 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:18:45 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,23 @@ void	unset_first_node(t_env *node_to_unset, t_data *data)
 	free(node_to_unset);
 }
 
+void	unset_right_node(t_env *env, t_env *node_to_unset)
+{
+	node_to_unset = env;
+	env->prev->next = node_to_unset->next;
+	if (env->next != NULL)
+		env->next->prev = node_to_unset->prev;
+	free(node_to_unset->line);
+	free(node_to_unset);
+}
+
+// int	env_len(int len, t_env *env)
+// {
+// 	while (env->line[len] && env->line[len] != '=')
+// 		len++;
+// 	return (len);
+// }
+
 void	unset_node(t_data *data, char *str)
 {
 	t_env	*env;
@@ -54,16 +71,10 @@ void	unset_node(t_data *data, char *str)
 		while (env)
 		{
 			len = 0;
-			while (env->line[len] && env->line[len] != '=')
-					len++;
+			len = env_len(len, env);
 			if (ft_strncmp(env->line, str, len) == 0)
 			{
-				node_to_unset = env;
-				env->prev->next = node_to_unset->next;
-				if (env->next != NULL)
-					env->next->prev = node_to_unset->prev;
-				free(node_to_unset->line);
-				free(node_to_unset);
+				unset_right_node(env, node_to_unset);
 				break ;
 			}
 			env = env->next;
