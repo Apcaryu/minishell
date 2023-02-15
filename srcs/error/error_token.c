@@ -25,7 +25,7 @@ t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 	{
 		token = token->next;
 	}
-	if (token->type == COMMAND)
+	if (token->type == COMMAND || token->type == VARIABLE)
 		return (true);
 	else
 	{

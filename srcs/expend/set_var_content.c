@@ -93,7 +93,7 @@ void	set_var_content(t_token *token)
 		if (idx == UINT_MAX || token->content[idx] == '\0')
 			break ;
 		if (ft_isalnum(token->content[idx + 1]) || \
-		token->content[idx + 1] == '_')
+		token->content[idx + 1] == '_' || token->content[1] == '?')
 		{
 			var = set_var(token, idx);
 			token->content = include_var_content(token->content, idx, var);

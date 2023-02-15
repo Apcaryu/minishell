@@ -18,7 +18,7 @@ extern t_data	g_data;
 t_elem_pars	*create_elem(t_elem_pars *elem)
 {
 	if (elem == NULL)
-		return (elem);
+		return (new_elem_pars(&g_data.garb_lst));
 	else
 	{
 		if (elem->type != ARGS)
@@ -36,6 +36,21 @@ t_elem_pars	*set_cmd(t_elem_pars *elem, t_elem_pars *cmd_elem)
 	return (cmd_elem);
 }
 
+t_elem_pars	*combine_cmd_add(t_data *data, t_elem_pars *elem, \
+								t_elem_pars *cmd_elem)
+{
+	cmd_elem = set_cmd(elem, cmd_elem);
+	add_elem(data, elem);
+	return (cmd_elem);
+}
+
+t_token	*init_parser(t_data *data, t_token *lex_lst, t_elem_pars **elem)
+{
+	lex_lst = data->lexer_lst;
+	*elem = NULL;
+	return (lex_lst);
+}
+
 void	parser(void)
 {
 	t_token			*lex_lst;
@@ -43,16 +58,14 @@ void	parser(void)
 	t_elem_pars		*cmd_elem;
 	unsigned int	idx;
 
-	print_lst(g_data.lexer_lst);
 	idx = 1;
-	lex_lst = g_data.lexer_lst;
 	cmd_elem = init_command_elem();
+	lex_lst = init_parser(&g_data, lex_lst, &elem);
 	while (lex_lst != NULL)
 	{
 		elem = create_elem(elem);
 		lex_lst = move_tlst(lex_lst, set_elem(elem, lex_lst, cmd_elem, &idx));
-		cmd_elem = set_cmd(elem, cmd_elem);
-		add_elem(&g_data, elem);
+		cmd_elem = combine_cmd_add(&g_data, elem, cmd_elem);
 		if (lex_lst == NULL)
 			break ;
 		lex_lst = space_jump(lex_lst);

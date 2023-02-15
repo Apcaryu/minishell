@@ -1,5 +1,6 @@
 #include "../headers/minishell.h"
 #include "../headers/use_signal.h"
+#include "../headers/error_msg.h"
 
 t_data g_data;
 
@@ -21,6 +22,7 @@ void	init_data(t_data *data, char **env)
 	}
 	data->env_bis = create_env(data->env);
 	data->tab = convert_lst_to_tab(*data);
+	data->exit_code = 0;
 }
 
 void	init_signal(void)
