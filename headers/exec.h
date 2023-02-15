@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 13:02:42 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:46:18 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char		**clean_cmds(char **str);
 void		wait_loop(t_exec *exec);
 
 // exec_utils.c
-void		child_open_utils(t_exec *exec, int fileone, int filezero);
+void		file_dup(int file, int dupnbr);
 
 // Pipes And Commands
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
@@ -65,6 +65,7 @@ t_exec		*init_exec_structure(t_exec *exec);
 void		print_elem_lst(t_elem_pars *lst);
 void		print_exec_struct(t_exec *exec);
 void		error_msgs(char *cmd, char *err);
+void		error_endl(int exit_nbr, char *cmd, char *err);
 
 // Env utils
 void		free_env(t_env *env);

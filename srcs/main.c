@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char  **envp)
 		g_data.parser_lst = NULL;
 		g_data.exec_struct = NULL;
 		g_data.input = NULL;
-		ft_lstclear(&g_data.garb_lst, &free);
+		// ft_lstclear(&g_data.garb_lst, &free);
 	}
 	return(0);
 }

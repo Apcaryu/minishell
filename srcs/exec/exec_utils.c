@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 19:38:34 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/10 17:22:47 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:25:44 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,15 @@ char	**convert_lst_to_tab(t_data data)
 		i++;
 	}
 	dest[i] = NULL;
+	// set_garb_lst(&g_data.garb_lst, dest);
 	return (dest);
 }
 
-void	child_open_utils(t_exec *exec, int fileone, int filezero)
+void	file_dup(int file, int dupnbr)
 {
-	if (fileone == 1)
+	if (file >= 0)
 	{
-		dup2(filezero, 0);
-		close(filezero);
-	}
-	else if (exec->infile >= 0)
-	{
-		dup2(exec->infile, 0);
-		close(exec->infile);
+		dup2(file, dupnbr);
+		close(file);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/09 16:41:40 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:48:21 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,59 +36,6 @@ void	open_inout_fds(t_exec *exec, t_elem_pars *elem)
 		}
 	}
 }
-
-// void count_process(int nbr_pipe, t_elem_pars *elem)
-// {
-// 	int nbr_process;
-// 	t_elem_pars *tmp;
-// 	t_bool *tab;
-// 	int idx;
-
-// 	tmp = elem;
-// 	idx = 0;
-// 	nbr_process = nbr_pipe + 1;
-// 	dprintf(2, "nbr_process = %d\n", nbr_process);
-// 	tab = malloc(sizeof(t_bool) * nbr_process);
-// 	if (tab == NULL)
-// 		return ;
-// 	while (idx < nbr_process)
-// 	{
-// 		tab[idx] = false;
-// 		idx++;
-// 	}
-// 	idx = 0;
-// 	if (tmp->next == NULL)
-// 	{
-// 		if (tmp->type == COMMAND)
-// 		{
-// 			tab[idx] = true;
-// 			dprintf(2, "tab[0] = %d\n", tab[0]);
-// 			return ;	
-// 		}
-// 	}
-// 	while (tmp->next != NULL)
-// 	{
-// 		if (tmp->type == COMMAND)
-// 			tab[idx] = true;
-// 		if (tmp->type == PIPE)
-// 			idx++;
-// 		tmp = tmp->next;
-// 		if (tmp->next == NULL)
-// 		{
-// 			if (tmp->type == COMMAND)
-// 			{
-// 				tab[idx] = true;
-// 				break ;
-// 			}
-// 		}
-// 	}
-// 	idx = 0;
-// 	while (idx < nbr_process)
-// 	{
-// 		dprintf(2, "tab[%d] = %d\n", idx, tab[idx]);
-// 		idx++;
-// 	}
-// }
 
 void	init_exec_utils(t_exec *exec)
 {

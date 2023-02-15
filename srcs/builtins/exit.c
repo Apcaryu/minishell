@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 14:40:51 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/13 18:20:16 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:23:30 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ long long int	ft_atol(const char *str)
 
 void	clear_and_exit_builtin(t_data data, t_exec *exec, int exit_code)
 {
+	dprintf(2, "HELP\n");
 	clean_cmds(data.tab);
+	dprintf(2, "HELPOO\n");
 	free_env(data.env_bis);
 	ft_lstclear(&data.garb_lst, &free);
 	ft_putstr_fd("exit\n", 2);
