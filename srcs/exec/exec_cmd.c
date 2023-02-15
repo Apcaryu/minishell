@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/11 19:48:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:47:55 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ char	**get_env(t_exec *exec)
 	char	**tab;
 
 	i = 0;
-	while (g_data.tab[i] && ft_strnstr(g_data.tab[i], "PATH", 4) == 0)
+	tab = NULL;
+	if (!g_data.tab)
+		dprintf(2, "PAPA\n");
+	while (g_data.tab && g_data.tab[i] && !ft_strnstr(g_data.tab[i], "PATH", 4))
 		i++;
 	if (g_data.tab[i] == NULL)
 		return (NULL);

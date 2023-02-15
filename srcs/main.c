@@ -47,20 +47,18 @@ int	main(int argc, char *argv[], char  **envp)
 			ft_lstclear(&g_data.garb_lst, &free);
 			exit(127);
 		}
-		if (!is_empty_line(g_data.input)) {
-			add_history(g_data.input);
-			read_input(&g_data);
-			// free(g_data.lexer_lst);
-			ft_lstclear(&g_data.garb_lst, &free);
-			// printf("case_lex = %p | type = %d\n", g_data.lexer_lst, g_data.lexer_lst->type);
-			free(g_data.input);
-//			g_data.lexer_lst = NULL;
-			g_data.lexer_lst = NULL;
-			g_data.parser_lst = NULL;
-			g_data.exec_struct = NULL;
-			g_data.input = NULL;
-			ft_lstclear(&g_data.garb_lst, &free);
-		}
+		add_history(g_data.input);
+		read_input(&g_data);
+		// free(g_data.lexer_lst);
+		ft_lstclear(&g_data.garb_lst, &free);
+		// printf("case_lex = %p | type = %d\n", g_data.lexer_lst, g_data.lexer_lst->type);
+		free(g_data.input);
+//		g_data.lexer_lst = NULL;
+		g_data.lexer_lst = NULL;
+		g_data.parser_lst = NULL;
+		g_data.exec_struct = NULL;
+		g_data.input = NULL;
+		// ft_lstclear(&g_data.garb_lst, &free);
 	}
 	return(0);
 }

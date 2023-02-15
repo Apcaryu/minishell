@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 17:11:12 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:34:32 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,9 @@ void	main_loop(t_exec *exec)
 	}
 	else
 	{
-		pipe_proc(start, elem_lst, exec, i);
+		pipe_proc(start, elem_lst, exec);
 		if (exec->infile >= 0)
-		{
 			close(exec->infile);
-		}
 		wait_loop(exec);
 	}
 }
@@ -78,7 +76,8 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	lexer(data);
-	if (error_token(data)) {
+	if (error_token(data))
+	{
 		expend();
 		parser();
 		executer();

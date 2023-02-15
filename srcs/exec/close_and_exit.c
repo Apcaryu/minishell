@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/13 14:00:03 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 12:29:14 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ void	close_fd(t_exec *exec)
 	close(exec->pipefd[1]);
 	close(exec->infile);
 }
-
-// ft_lstclear(&g_data.garb_lst, &free);
-// exit(exit_code);
 
 int	exiteur(int exit_code, t_exec *exec)
 {

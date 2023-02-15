@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 19:40:41 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 12:17:49 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:26:36 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_env	*create_env(char **env)
 	while (*env)
 	{
 		new = new_env_line(*env);
+		// set_garb_lst(&g_data.garb_lst, new);
 		if (!new)
 		{
 			if (head)

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 13:45:18 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 17:10:45 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:46:51 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	parent_close(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 	exec->infile = exec->pipefd[0];
 }
 
-// & PIPE
 void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
 {
 	child_open(start, elem_lst, exec);
@@ -34,26 +33,34 @@ void	child_process(t_elem_pars *start, t_elem_pars *elem_lst, t_exec *exec)
 		exec_cmd(exec, start, elem_lst);
 }
 
-// & PIPE
-void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
+static t_bool	is_cmd(t_bool has_cmd, t_elem_pars *elem)
+{
+	if (elem->type == COMMAND)
+		has_cmd = true;
+	return (has_cmd);
+}
+
+static void	pid_fail(void)
+{
+	perror("minishell: ");
+	exit(1);
+}
+
+void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 {
 	t_bool	has_cmd;
 
 	has_cmd = false;
 	while (elem != NULL)
 	{
-		if (elem->type == COMMAND)
-			has_cmd = true;
+		has_cmd = is_cmd(has_cmd, elem);
 		if (has_cmd && (elem->type == PIPE || !elem->next))
 		{
 			if (pipe(exec->pipefd) == -1)
 				perror("minishell: ");
 			exec->pid = fork();
 			if (exec->pid == -1)
-			{
-				perror("minishell: ");
-				exit(1);
-			}
+				pid_fail();
 			else if (exec->pid == 0)
 				child_process(start, elem, exec);
 			else
@@ -62,7 +69,6 @@ void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec, int i)
 				if (elem->next)
 					start = elem->next;
 			}
-			i++;
 			has_cmd = false;
 		}
 		elem = elem->next;
