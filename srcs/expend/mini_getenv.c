@@ -70,6 +70,12 @@ char	*mini_getenv(t_data *data, char *var_name)
 {
 	char	*value;
 
+	if (var_name[0] == '?')
+	{
+		value = ft_itoa(data->exit_code);
+		set_garb_lst(&data->garb_lst, value);
+		return (value);
+	}
 	value = var_value(data, data->tab, var_name);
 	return (value);
 }

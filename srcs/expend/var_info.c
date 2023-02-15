@@ -31,6 +31,8 @@ unsigned int	variable_size(const char *str, unsigned int idx)
 
 	len_out = 0;
 	idx++;
+	if (str[1] == '?')
+		return (1);
 	while (ft_isalnum(str[idx]) || str[idx] == '_')
 	{
 		idx++;
