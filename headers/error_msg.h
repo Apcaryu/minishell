@@ -17,6 +17,7 @@
 typedef struct s_process_validation
 {
 	t_bool	infile;
+	t_bool	outfile;
 	t_bool	pipe;
 }	t_process_validation;
 
