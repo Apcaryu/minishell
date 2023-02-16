@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_msg.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:24:15 by apellegr          #+#    #+#             */
-/*   Updated: 2023/02/13 15:24:17 by apellegr         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:58:49 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 typedef struct s_process_validation
 {
+	t_bool	redirection;
 	t_bool	infile;
 	t_bool	cmd;
 	t_bool	pipe;

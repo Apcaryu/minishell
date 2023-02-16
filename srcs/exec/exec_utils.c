@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 19:38:34 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 23:51:16 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:51:20 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	file_dup(int file, int dupnbr)
 		dup2(file, dupnbr);
 		close(file);
 	}
+}
+
+t_bool	is_cmd(t_bool has_cmd, t_elem_pars *elem)
+{
+	if (elem->type == COMMAND)
+		has_cmd = true;
+	return (has_cmd);
 }

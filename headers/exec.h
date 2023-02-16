@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:13:34 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:49:15 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ t_env		*new_env_line(char *env_line);
 int			env_len(int len, t_env *env);
 
 char		**convert_lst_to_tab(t_data data);
+t_bool		is_cmd(t_bool has_cmd, t_elem_pars *elem);
 
 #endif

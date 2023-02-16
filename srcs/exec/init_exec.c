@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:35:14 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:50:47 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_exec_utils(t_exec *exec)
 	exec->cmds = NULL;
 	exec->infile = INT_MIN;
 	exec->outfile = INT_MIN;
+	exec->pid = NULL;
 }
 
 t_exec	*init_exec_structure(t_exec *exec)
