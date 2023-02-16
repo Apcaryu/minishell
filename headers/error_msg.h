@@ -14,16 +14,15 @@
 # define ERROR_MSG_H
 # include "main.h"
 
-typedef struct	s_process_validation
+typedef struct s_process_validation
 {
 	t_bool	infile;
-	t_bool	outfile;
 	t_bool	pipe;
 }	t_process_validation;
 
 void	init_process_validate(t_process_validation *check_proc);
 t_bool	error_token(t_data *data);
 
-t_bool is_empty_line(char *input);
+t_bool	is_empty_line(char *input);
 
 #endif
