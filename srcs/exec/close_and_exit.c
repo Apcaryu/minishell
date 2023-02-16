@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 17:13:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:52:56 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,6 @@ void	close_fd(t_exec *exec)
 	close(exec->pipefd[0]);
 	close(exec->pipefd[1]);
 	close(exec->infile);
-}
-
-int	exiteur(int exit_code, t_exec *exec)
-{
-	close(exec->pid);
-	return (exit_code);
 }
 
 char	**clean_cmds(char **str)
@@ -52,12 +46,14 @@ void	wait_loop(t_exec *exec)
 		close(exec->pipefd[0]);
 	if (exec->pipefd[1] >= 0)
 		close(exec->pipefd[1]);
-	while (errno != ECHILD)
+	while (exec->pid != NULL && errno != ECHILD)
 	{
-		wait(&exec->status);
+		waitpid(exec->pid->pid, &exec->status, 0);
+		printf("pid = %i\n", exec->pid->pid);
 		if (WIFEXITED(exec->status))
 			g_data.exit_code = WEXITSTATUS(exec->status);
 		else if (WIFSIGNALED(exec->status))
 			g_data.exit_code = 128 + WTERMSIG(exec->status);
+		exec->pid = exec->pid->next;
 	}
 }

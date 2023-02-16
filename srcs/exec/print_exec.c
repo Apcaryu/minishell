@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:14:45 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 16:44:51 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 18:53:56 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	print_exec_struct(t_exec *exec)
 	if (exec == NULL)
 		return ;
 	printf("exec structure = %p | pid = %d | pipefd[0] = %d \
-		| pipefd[1] = %d\n", exec, exec->pid, exec->pipefd[0], exec->pipefd[1]);
+		| pipefd[1] = %d\n", exec, exec->pid->pid, \
+		exec->pipefd[0], exec->pipefd[1]);
 }
 
 void	error_msgs(char *cmd, char *err)

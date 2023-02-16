@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 15:24:31 by apellegr          #+#    #+#             */
-/*   Updated: 2023/02/13 15:24:33 by apellegr         ###   ########.fr       */
+/*   Updated: 2023/02/16 19:11:01 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,15 @@
 
 t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 {
+	check_proc->redirection = true;
 	if (token->next == NULL)
-	{
-		printf("minishell: syntax error\n");
-		return (false);
-	}
+		return (print_syntax_error());
 	token = token->next;
 	while (token->type == C_SPACE)
 	{
 		token = token->next;
 		if (token == NULL)
-		{
-			printf("minishell: syntax error\n");
-			return (false);
-		}
+			return (print_syntax_error());
 	}
 	if (token->type == COMMAND || token->type == VARIABLE)
 	{
@@ -35,33 +30,23 @@ t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 		return (true);
 	}
 	else
-	{
-		printf("minishell: syntax error\n");
-		return (false);
-	}
+		return (print_syntax_error());
 }
 
 t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 {
-	if (check_proc->infile == false)
-	{
-		printf("minishell: syntax error\n");
-		return (false);
-	}
+	if (check_proc->infile == false && check_proc->redirection == true)
+		return (print_syntax_error());
 	if (token->next == NULL)
 	{
 		check_proc->pipe = false;
-		printf("minishell: syntax error\n");
-		return (false);
+		return (print_syntax_error());
 	}
 	token = token->next;
 	if (token->type == C_SPACE)
 		token = token->next;
 	if (token == NULL)
-	{
-		printf("minishell: syntax error\n");
-		return (false);
-	}
+		return (print_syntax_error());
 	else
 		return (true);
 }
@@ -69,10 +54,7 @@ t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 t_bool	check_quote(t_token *token)
 {
 	if (token->is_closed == false)
-	{
-		printf("minishell: syntax error\n");
-		return (false);
-	}
+		return (print_syntax_error());
 	else
 		return (true);
 }

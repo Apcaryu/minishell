@@ -66,18 +66,25 @@ typedef struct s_elem_pars
 	struct s_elem_pars	*next;
 }	t_elem_pars;
 
+typedef struct s_lst_pid
+{
+	pid_t				pid;
+	struct s_lst_pid	*next;
+}	t_lst_pid;
+
 typedef struct s_exec
 {
-	pid_t	pid;
-	int		pipefd[2];
-	int		stdsave[2];
-	int		status;
-	int		exit_code;
-	int		nbr_cmd;
-	int		nbr_pipes;
-	char	**cmds;
-	int		infile;
-	int		outfile;
+	t_lst_pid	*pid;
+	int			tmp_pid;
+	int			pipefd[2];
+	int			stdsave[2];
+	int			status;
+	int			exit_code;
+	int			nbr_cmd;
+	int			nbr_pipes;
+	char		**cmds;
+	int			infile;
+	int			outfile;
 }	t_exec;
 
 typedef struct s_env
