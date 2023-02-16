@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:18:10 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 16:46:18 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:13:34 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 # include <stdio.h>
 # include "main.h"
 # include "builtins.h"
+
+# define NAR "numeric argument required\n"
+# define TMA "too many arguments\n"
 
 // builtin_process.c
 t_bool		is_builtin(char *cmd);

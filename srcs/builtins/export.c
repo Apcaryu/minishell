@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 11:37:05 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:18:59 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_syntax(char *str)
 	size = ft_strlen(str);
 	dest = NULL;
 	i = 0;
-	dest = ft_calloc(sizeof(char), ft_strlen(str) +1);
+	dest = ft_calloc(sizeof(char), ft_strlen(str) + 1);
 	ft_strlcpy(dest, str, size +1);
 	return (dest);
 }
@@ -52,8 +52,6 @@ int	env_line_already_exist(t_env *new)
 		head->next->prev = new;
 	new->prev = head->prev;
 	new->next = head->next;
-	free(head->line);
-	free(head);
 	return (1);
 }
 
@@ -82,16 +80,15 @@ void	export_exec(char *str)
 	t_data	data;
 
 	data = g_data;
+	if (!ft_strnstr(str, "=", ft_strlen(str)))
+		return ;
 	new_env = get_syntax(str);
 	if (!new_env)
 		return ;
 	new = new_env_line(new_env);
-	if (!new)
-	{
-		free(new_env);
-		return ;
-	}
 	free(new_env);
+	if (!new)
+		return ;
 	check_env_before_add(data, new);
 	data.tab = convert_lst_to_tab(data);
 	if (!data.tab)
@@ -99,6 +96,5 @@ void	export_exec(char *str)
 	i = 0;
 	while (data.tab[i + 1] != NULL)
 		i++;
-	check_data_exists(g_data);
 	g_data.tab = data.tab;
 }

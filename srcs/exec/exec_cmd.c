@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 17:47:55 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:34:53 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ char	**get_env(t_exec *exec)
 
 	i = 0;
 	tab = NULL;
-	if (!g_data.tab)
-		dprintf(2, "PAPA\n");
-	while (g_data.tab && g_data.tab[i] && !ft_strnstr(g_data.tab[i], "PATH", 4))
+	while (g_data.tab && g_data.tab[i] \
+		&& !ft_strnstr(g_data.tab[i], "PATH=", 5))
 		i++;
 	if (g_data.tab[i] == NULL)
 		return (NULL);
@@ -41,6 +40,7 @@ void	path_is_null(t_elem_pars *start)
 	if (access_out != 0)
 	{
 		error_msgs(start->cmd, "No such file or directory\n");
+		ft_lstclear(&g_data.garb_lst, &free);
 		exit(127);
 	}
 	else
@@ -84,15 +84,13 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 	char	*path;
 
 	i = 0;
+	tab = NULL;
 	tab = get_env(exec);
 	if (tab == NULL)
 		path_is_null(start);
 	path_exist(tab, start, exec);
-	if (ft_isalnum(start->cmd[0]))
-		error_msgs(start->cmd, "command not found\n");
+	error_msgs(start->cmd, "command not found\n");
 	clean_cmds(tab);
-	clean_cmds(g_data.tab);
-	free_env(g_data.env_bis);
 	ft_lstclear(&g_data.garb_lst, &free);
 	exit(127);
 }

@@ -96,7 +96,7 @@ all : $(NAME) thanks
 
 $(NAME) : $(OBJS)
 	make -C ./libft_42/
-	$(CC) $(OBJS) $(LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
@@ -141,5 +141,11 @@ check_leaks:
 	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
 
 thanks :
+	@echo "\033[36mSpecial Thanks To :"
+	@echo "\033[36machane-l"
+	@echo "\033[36mamattei"
+	@echo "\033[36mpgros"
+	@echo "\033[36makouoi"
+	@echo "\033[36maboudjel"
 
 .PHONY : all clean fclean re thanks
