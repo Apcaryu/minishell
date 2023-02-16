@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:07 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 16:48:21 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:35:14 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,9 @@ t_exec	*init_exec_structure(t_exec *exec)
 	while (elem_lst != NULL)
 	{
 		if (elem_lst->type == PIPE)
-		{
 			exec->nbr_pipes++;
-			dprintf(2, "pipes = %d\n", exec->nbr_pipes);
-		}
 		if (elem_lst->type == COMMAND)
-		{
 			exec->nbr_cmd++;
-			printf("cmds = %d\n", exec->nbr_cmd);
-		}
 		if (elem_lst->next == NULL)
 			break ;
 		elem_lst = elem_lst->next;

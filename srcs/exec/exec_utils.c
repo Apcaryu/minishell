@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 19:38:34 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 18:25:44 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 23:51:16 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,12 @@ char	**convert_lst_to_tab(t_data data)
 	while (lst)
 	{
 		dest[i] = ft_strdup(lst->line);
+		set_garb_lst(&g_data.garb_lst, dest[i]);
 		lst = lst->next;
 		i++;
 	}
 	dest[i] = NULL;
-	// set_garb_lst(&g_data.garb_lst, dest);
+	set_garb_lst(&g_data.garb_lst, dest);
 	return (dest);
 }
 

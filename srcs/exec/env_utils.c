@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 19:40:41 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 18:26:36 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:19:34 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_env	*new_env_line(char *env_line)
 	if (!env)
 		return (NULL);
 	env->line = ft_strdup(env_line);
+	set_garb_lst(&g_data.garb_lst, env->line);
+	set_garb_lst(&g_data.garb_lst, env);
 	env->prev = NULL;
 	env->next = NULL;
 	return (env);
@@ -35,9 +37,9 @@ void	free_env(t_env *env)
 	{
 		current = env;
 		env = env->next;
-		free(current->line);
 		free(current);
 	}
+	env = NULL;
 }
 
 void	add_env_line(t_env *env, t_env *new)
@@ -58,7 +60,6 @@ t_env	*create_env(char **env)
 	while (*env)
 	{
 		new = new_env_line(*env);
-		// set_garb_lst(&g_data.garb_lst, new);
 		if (!new)
 		{
 			if (head)

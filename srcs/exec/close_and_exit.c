@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 12:29:14 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/15 20:50:45 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,17 @@ char	**clean_cmds(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i] != NULL)
+	if (str)
 	{
-		free(str[i]);
-		i++;
+		while (str && str[i])
+		{
+			free(str[i]);
+			str[i] = NULL;
+			i++;
+		}
+		free(str);
+		str = NULL;
 	}
-	free(str);
 	return (NULL);
 }
 

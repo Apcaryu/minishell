@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 15:53:28 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/14 17:35:31 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 03:16:50 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ int	count_args(t_data data)
 	return (i);
 }
 
-void	update_pwd(void)
+void	update_pwd(t_elem_pars *elem)
 {
 	char	cwd[PATH_MAX];
 	char	*oldpwd;
+	char	*new_pwd;
 
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
@@ -43,11 +44,21 @@ void	update_pwd(void)
 	oldpwd = ft_strjoin("OLDPWD=", getcwd(cwd, PATH_MAX));
 	if (!oldpwd)
 		return ;
+	if (chdir(elem->args[1]))
+	{
+		ft_putstr_fd("minishell: cd: ", 2);
+		ft_putstr_fd(elem->args[1], 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd("No such file or directory\n", 2);
+	}
+	new_pwd = ft_strjoin("PWD=", getcwd(cwd, PATH_MAX));
+	export_exec(new_pwd);
+	free(new_pwd);
 	export_exec(oldpwd);
 	free(oldpwd);
 }
 
-void	void_cd(void)
+void	void_cd(t_elem_pars *elem)
 {
 	int	i;
 
@@ -56,7 +67,7 @@ void	void_cd(void)
 	{
 		if (ft_strnstr(g_data.tab[i], "HOME", 4))
 		{
-			update_pwd();
+			update_pwd(elem);
 			chdir(g_data.tab[i] + 5);
 			break ;
 		}
@@ -74,21 +85,11 @@ void	cd_exec(t_elem_pars *elem)
 	data = g_data;
 	if (elem->args[1] == NULL)
 	{
-		void_cd();
+		void_cd(elem);
 		return ;
 	}
 	if (count_args(data) <= 2)
-	{
-		update_pwd();
-		chdir(elem->args[1]);
-	}
-	else if (count_args(data) > 2)
-		error_msgs(elem->args[0], "too many arguments\n");
+		update_pwd(elem);
 	else
-	{
-		ft_putstr_fd("minishell: cd: ", 2);
-		ft_putstr_fd(elem->args[1], 2);
-		ft_putstr_fd(": ", 2);
-		ft_putstr_fd("No such file or directory\n", 2);
-	}			
+		error_msgs(elem->args[0], "too many arguments\n");
 }

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 16:20:26 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 12:18:45 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:19:18 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,7 @@ void	unset_right_node(t_env *env, t_env *node_to_unset)
 	env->prev->next = node_to_unset->next;
 	if (env->next != NULL)
 		env->next->prev = node_to_unset->prev;
-	free(node_to_unset->line);
-	free(node_to_unset);
 }
-
-// int	env_len(int len, t_env *env)
-// {
-// 	while (env->line[len] && env->line[len] != '=')
-// 		len++;
-// 	return (len);
-// }
 
 void	unset_node(t_data *data, char *str)
 {
@@ -101,7 +92,5 @@ void	unset_exec(char *str)
 	}
 	unset_node(&data, str);
 	data.tab = convert_lst_to_tab(data);
-	if (g_data.tab)
-		clean_cmds(g_data.tab);
 	g_data.tab = data.tab;
 }

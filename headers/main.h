@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.h                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 07:38:26 by meshahrv          #+#    #+#             */
+/*   Updated: 2023/02/16 07:38:29 by meshahrv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MAIN_H
 # define MAIN_H
 # include <limits.h>
@@ -15,13 +27,13 @@
 # include "../libft_42/includes_libft/libft.h"
 # include "../libft_42/includes_libft/garbage.h"
 
-typedef enum	e_bool
+typedef enum e_bool
 {
 	false,
 	true
 }	t_bool;
 
-typedef enum	e_ntype
+typedef enum e_ntype
 {
 	NONE,
 	INFILE,
@@ -40,17 +52,17 @@ typedef enum	e_ntype
 typedef struct s_token
 {
 	t_type				type;
-	char 				*content;
-	t_bool 				is_closed;
+	char				*content;
+	t_bool				is_closed;
 	struct s_token		*next;
 }	t_token;
 
 typedef struct s_elem_pars
 {
-	t_type			type;
-	char			*cmd;
-	char			**args;
-	t_bool			is_closed;
+	t_type				type;
+	char				*cmd;
+	char				**args;
+	t_bool				is_closed;
 	struct s_elem_pars	*next;
 }	t_elem_pars;
 
@@ -60,7 +72,7 @@ typedef struct s_exec
 	int		pipefd[2];
 	int		stdsave[2];
 	int		status;
-	int 	exit_code;
+	int		exit_code;
 	int		nbr_cmd;
 	int		nbr_pipes;
 	char	**cmds;
@@ -68,21 +80,7 @@ typedef struct s_exec
 	int		outfile;
 }	t_exec;
 
-// typedef struct s_proc
-// {
-// 	t_elem_pars *elem_list;
-// 	int		infile;
-// 	int		outfile;
-// 	char * cmd;
-// 	char** args;
-// 	int		pid[2];
-// 	int		pipefd[2];
-// 	int		status;
-// 	int 	exit_code;
-
-// };
-
-typedef struct	s_env
+typedef struct s_env
 {
 	char			*line;
 	struct s_env	*prev;
@@ -91,8 +89,8 @@ typedef struct	s_env
 
 typedef struct s_data
 {
-	char 			*input;
-	t_list 			*garb_lst;
+	char			*input;
+	t_list			*garb_lst;
 	t_token			*lexer_lst;
 	t_elem_pars		*parser_lst;
 	t_exec			*exec_struct;
@@ -102,8 +100,6 @@ typedef struct s_data
 	t_bool			is_interactive;
 	unsigned char	exit_code;
 }	t_data;
-
-
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);
 

@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:14:45 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 19:19:58 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 07:20:35 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,14 @@ void	error_msgs(char *cmd, char *err)
 
 void	error_endl(int exit_nbr, char *cmd, char *err)
 {
+	int	i;
+
 	error_msgs(cmd, err);
 	write(2, "\n", 1);
+	ft_lstclear(&g_data.garb_lst, &free);
+	i = 2;
+	while (++i < 123)
+		close(i);
 	ft_lstclear(&g_data.garb_lst, &free);
 	exit(exit_nbr);
 }
