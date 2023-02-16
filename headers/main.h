@@ -105,7 +105,9 @@ typedef struct s_data
 	t_env			*env_bis;
 	char			**tab;
 	t_bool			is_interactive;
+	t_bool			is_heredoc;
 	unsigned char	exit_code;
+	int				tmp_fd;
 }	t_data;
 
 char	**garb_split(char const *s, char c, t_list *garb_lst);

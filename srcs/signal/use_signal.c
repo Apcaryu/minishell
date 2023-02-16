@@ -27,7 +27,23 @@ void	ctrl_c(int code)
 	return ;
 }
 
-void	ctrl_d(int code)
+void	ctrl_c_here(int code)
 {
+	g_data.exit_code = 130;
+	close(g_data.tmp_fd);
+	write(0, "\n", 1);
 	return ;
+}
+
+void	ctrl_quit(int code)
+{
+	if (!g_data.is_heredoc)
+	{
+		printf("Quit (core dump)\n");
+		g_data.exit_code = 131;
+	}
+	else
+	{
+		write(0, "\b\b  \b\b", 6);
+	}
 }

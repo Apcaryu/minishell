@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:47:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 12:31:11 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:14:52 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,19 @@ void	read_line_heredoc(int fd, t_elem_pars *elem)
 	int		len_limit;
 
 	limiter = elem->args[0];
+	g_data.tmp_fd = dup(0);
 	while (1)
 	{
 		write(1, "> ", 2);
-		line = get_next_lino(0);
+		line = get_next_lino(g_data.tmp_fd);
+		if (line == NULL)
+		{
+			if (g_data.exit_code == 130)
+				dup2(0, g_data.tmp_fd);
+			else
+				printf("\nminishell: warning eof\n");
+			break ;
+		}
 		len_limit = ft_strlen(limiter);
 		if (ft_strnstr(line, limiter, len_limit) && line[len_limit] == '\n')
 			break ;
@@ -102,6 +111,7 @@ void	open_heredoc(t_elem_pars *elem)
 	static int		nb_hd = 0;
 	char			**args;
 
+	g_data.is_heredoc = true;
 	while (elem != NULL)
 	{
 		if (elem->type == HEREDOC)
@@ -109,7 +119,10 @@ void	open_heredoc(t_elem_pars *elem)
 			elem->args[0] = ft_heredoc(elem, nb_hd);
 			elem->type = INFILE;
 			nb_hd++;
+			if (g_data.exit_code == 130)
+				return ;
 		}
 		elem = elem->next;
 	}
+	g_data.is_heredoc = false;
 }

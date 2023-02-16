@@ -15,5 +15,7 @@
 # include "minishell.h"
 
 void	ctrl_c(int code);
+void	ctrl_c_here(int code);
+void	ctrl_quit(int code);
 
 #endif

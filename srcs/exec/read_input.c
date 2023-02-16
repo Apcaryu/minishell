@@ -6,13 +6,14 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 13:01:46 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 22:15:24 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../headers/minishell.h"
 #include "../../libft_42/includes_libft/get_next_line_bonus.h"
 #include "../../headers/error_msg.h"
+#include "../../headers/use_signal.h"
 
 extern t_data	g_data;
 
@@ -67,7 +68,14 @@ void	executer(void)
 	exec = init_exec_structure(exec);
 	if (exec == NULL)
 		return ;
+	signal(SIGQUIT, &ctrl_quit);
+	signal(SIGINT, &ctrl_c_here);
 	open_heredoc(g_data.parser_lst);
+	if (g_data.exit_code == 130)
+	{
+		g_data.exit_code = 0 ;
+		return ;
+	}
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }

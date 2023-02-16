@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:37:50 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 13:17:24 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 20:55:01 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_data(t_data *data, char **env)
 	data->env_bis = create_env(data->env);
 	data->tab = convert_lst_to_tab(*data);
 	data->exit_code = 0;
+	data->is_heredoc = false;
 }
 
 void	init_signal(void)
@@ -45,9 +46,9 @@ void	data_null(t_data *data)
 int	main(int argc, char *argv[], char **envp)
 {
 	init_data(&g_data, envp);
-	init_signal();
 	while (1)
 	{
+		init_signal();
 		g_data.is_interactive = true;
 		g_data.input = readline("\033[38;5;140mminishell-0.1$ \033[0m");
 		if (g_data.input == NULL)
