@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 12:30:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:18:59 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:06:34 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,18 @@ void	check_env_before_add(t_data data, t_env *new)
 	}
 }
 
-void	check_data_exists(t_data data)
+t_bool	check_export_arg(char *str)
 {
-	if (data.tab)
-		clean_cmds(data.tab);
+	if (!ft_strnstr(str, "=", ft_strlen(str)))
+	{
+		return (false);
+	}
+	else if (str[0] == '=')
+	{
+		error_msgs(str, "not a valid identifier\n");
+		return (false);
+	}
+	return (true);
 }
 
 void	export_exec(char *str)
@@ -79,9 +87,9 @@ void	export_exec(char *str)
 	t_env	*new;
 	t_data	data;
 
-	data = g_data;
-	if (!ft_strnstr(str, "=", ft_strlen(str)))
+	if (!check_export_arg(str))
 		return ;
+	data = g_data;
 	new_env = get_syntax(str);
 	if (!new_env)
 		return ;

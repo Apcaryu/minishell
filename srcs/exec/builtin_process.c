@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:17:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 13:35:58 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 14:07:12 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 
 	while (elem != NULL)
 	{
+		if (elem->type == NONE)
+			return ;
 		if (elem->type == COMMAND \
 			&& !ft_strncmp("export", elem->cmd, ft_strlen(elem->cmd)))
 		{
@@ -77,12 +79,9 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 		else if (elem->type == COMMAND \
 			&& !ft_strncmp("unset", elem->cmd, ft_strlen(elem->cmd)))
 		{
-			i = 0;
-			while (elem->args[i])
-			{
+			i = -1;
+			while (elem->args[++i])
 				unset_exec(elem->args[i]);
-				i++;
-			}
 		}
 		else
 			builtin_process_utils(exec, elem);
