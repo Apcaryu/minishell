@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:36:59 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/15 20:50:45 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 17:13:31 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ void	wait_loop(t_exec *exec)
 		close(exec->pipefd[1]);
 	while (errno != ECHILD)
 	{
-		wait(&exec->pid);
+		wait(&exec->status);
 		if (WIFEXITED(exec->status))
-			exec->exit_code = WEXITSTATUS(exec->status);
+			g_data.exit_code = WEXITSTATUS(exec->status);
+		else if (WIFSIGNALED(exec->status))
+			g_data.exit_code = 128 + WTERMSIG(exec->status);
 	}
 }

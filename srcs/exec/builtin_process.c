@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 16:17:03 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 14:07:12 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:32:06 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	builtin_process(t_exec *exec, t_elem_pars *elem)
 			while (elem->args[++i])
 				unset_exec(elem->args[i]);
 		}
-		else
+		else if (elem->type == COMMAND)
 			builtin_process_utils(exec, elem);
 		elem = elem->next;
 	}

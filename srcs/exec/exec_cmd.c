@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:24:01 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:34:53 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:56:17 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	exec_path(t_elem_pars *start, t_exec *exec)
 	error_msgs(start->cmd, "command not found\n");
 	clean_cmds(tab);
 	ft_lstclear(&g_data.garb_lst, &free);
+	g_data.exit_code = 127;
 	exit(127);
 }
 
