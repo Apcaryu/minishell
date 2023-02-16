@@ -1,6 +1,18 @@
-# include "../headers/use_signal.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   use_signal.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/16 16:46:07 by apellegr          #+#    #+#             */
+/*   Updated: 2023/02/16 16:46:07 by apellegr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-extern t_data g_data;
+#include "../headers/use_signal.h"
+
+extern t_data	g_data;
 
 void	ctrl_c(int code)
 {
