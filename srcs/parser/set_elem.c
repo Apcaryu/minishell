@@ -73,7 +73,7 @@ t_elem_pars *cmd, unsigned int *idx)
 		{
 			elem_pars->type = ARGS;
 			cmd->args[*idx] = fusion_arg(token, cmd->args[*idx], &nb_move);
-			*idx += nb_move;
+			*idx += 1;
 		}
 	}
 	return (nb_move);
