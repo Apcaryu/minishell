@@ -16,6 +16,7 @@ extern t_data	g_data;
 
 void	ctrl_c(int code)
 {
+	g_data.exit_code = 130;
 	if (g_data.is_interactive == true)
 	{
 		printf("\n");

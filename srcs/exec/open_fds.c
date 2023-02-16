@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 12:52:16 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:35:19 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 16:45:15 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	infile_or_outfile(t_elem_pars *elem, t_exec *exec, int file)
 	{
 		file = open(elem->args[0], O_RDONLY, 0644);
 		if (file == -1)
-			error_endl(0, g_data.parser_lst->args[0], strerror(errno));
+			error_endl(1, g_data.parser_lst->args[0], strerror(errno));
 	}
 	else if (elem->args != NULL && elem->type == OUTFILE)
 	{
