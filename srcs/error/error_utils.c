@@ -14,7 +14,7 @@
 
 void	init_process_validate(t_process_validation *check_proc)
 {
-	check_proc->infile = true;
-	check_proc->outfile = true;
-	check_proc->pipe = true;
+	check_proc->infile = false;
+	check_proc->cmd = false;
+	check_proc->pipe = false;
 }
