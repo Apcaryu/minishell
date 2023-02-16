@@ -16,30 +16,42 @@ t_bool	check_redirect(t_token *token, t_process_validation *check_proc)
 {
 	if (token->next == NULL)
 	{
-		check_proc->infile = false;
-		printf("unexpected token\n");
+		printf("minishell: syntax error\n");
 		return (false);
 	}
 	token = token->next;
-	if (token->type == C_SPACE)
+	while (token->type == C_SPACE)
 	{
 		token = token->next;
+		if (token == NULL)
+		{
+			printf("minishell: syntax error\n");
+			return (false);
+		}
 	}
 	if (token->type == COMMAND || token->type == VARIABLE)
+	{
+		check_proc->infile = true;
 		return (true);
+	}
 	else
 	{
-		printf("unexpected token\n");
+		printf("minishell: syntax error\n");
 		return (false);
 	}
 }
 
 t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 {
+	if (check_proc->infile == false)
+	{
+		printf("minishell: syntax error\n");
+		return (false);
+	}
 	if (token->next == NULL)
 	{
 		check_proc->pipe = false;
-		printf("unexpected token\n");
+		printf("minishell: syntax error\n");
 		return (false);
 	}
 	token = token->next;
@@ -47,7 +59,7 @@ t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 		token = token->next;
 	if (token == NULL)
 	{
-		printf("unexpected token\n");
+		printf("minishell: syntax error\n");
 		return (false);
 	}
 	else
@@ -58,7 +70,7 @@ t_bool	check_quote(t_token *token)
 {
 	if (token->is_closed == false)
 	{
-		printf("unclosed quote\n");
+		printf("minishell: syntax error\n");
 		return (false);
 	}
 	else
@@ -74,6 +86,11 @@ t_bool	check_token(t_token *token, t_process_validation *check_proc)
 		return (check_pipe(token, check_proc));
 	else if (token->type == SINGLE_QUOTE || token->type == DOUBLE_QUOTE)
 		return (check_quote(token));
+	else if (token->type == COMMAND || token->type == VARIABLE)
+	{
+		check_proc->cmd = true;
+		return (true);
+	}
 	else
 		return (true);
 }
