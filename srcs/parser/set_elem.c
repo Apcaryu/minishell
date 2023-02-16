@@ -37,7 +37,7 @@ unsigned int	in_her_out_app(t_elem_pars *elem, t_token *token)
 	{
 		nb_move++;
 		elem->args = garbage_alloc(&g_data.garb_lst, sizeof(char *) * 2);
-		elem->args[0] = token->content;
+		elem->args[0] = fusion_arg(token, elem->args[0], &nb_move);
 		elem->args[1] = NULL;
 	}
 	return (nb_move);
