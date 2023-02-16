@@ -76,7 +76,8 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	lexer(data);
-	expend();
+	data->lexer_lst = expend();
+	print_lst(g_data.lexer_lst);
 	if (error_token(data))
 	{
 		parser();

@@ -23,7 +23,7 @@ unsigned int	var_content_size(t_data *data, t_varenv varenv);
 
 void	set_var_content(t_token *token);
 
-void	expend(void);
+t_token	*expend(void);
 
 t_token	*lex_expend(char *input);
 

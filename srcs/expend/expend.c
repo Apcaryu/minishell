@@ -37,14 +37,22 @@ t_token	*special_heredoc(t_token *token_lst)
 	return (token_lst);
 }
 
-t_token	*call_lex(t_data *data, t_token *token_lst, t_token *start, \
-					t_token *end)
+t_token	*call_lex(t_token *token_lst, t_token *start, t_token **final_start)
 {
+	t_token	*end;
+
+	end = token_lst->next;
 	if (start == NULL)
-		data->lexer_lst = lex_expend(token_lst->content);
+	{
+		start = lex_expend(token_lst->content);
+		*final_start = start;
+		token_lst = start;
+		while (token_lst->next != NULL)
+			token_lst = token_lst->next;
+		token_lst->next = end;
+	}
 	else
 	{
-		end = token_lst->next;
 		start->next = lex_expend(token_lst->content);
 		token_lst = start;
 		while (token_lst->next != NULL)
@@ -54,30 +62,40 @@ t_token	*call_lex(t_data *data, t_token *token_lst, t_token *start, \
 	return (token_lst);
 }
 
-void	expend(void)
+t_token	*init_start(t_token *token_lst, t_token *start, t_token **final_start)
+{
+	if (token_lst->type != VARIABLE)
+	{
+		start = token_lst;
+		*final_start = token_lst;
+	}
+	else
+		start = NULL;
+	return (start);
+}
+
+t_token	*expend(void)
 {
 	t_token	*token_lst;
 	t_token	*start;
-	t_token	*end;
+	t_token	*final_start;
 
 	token_lst = g_data.lexer_lst;
-	if (token_lst->type != VARIABLE)
-		start = token_lst;
-	else
-		start = NULL;
+	start = init_start(token_lst, start, &final_start);
 	while (token_lst != NULL)
 	{
 		if (token_lst->type == HEREDOC)
 		{
 			token_lst = special_heredoc(token_lst);
 			if (token_lst == NULL)
-				return ;
+				return (final_start);
 		}
 		if (is_type_word(token_lst->type))
 			set_var_content(token_lst);
 		if (token_lst->type == VARIABLE)
-			token_lst = call_lex(&g_data, token_lst, start, end);
+			token_lst = call_lex(token_lst, start, &final_start);
 		start = token_lst;
 		token_lst = token_lst->next;
 	}
+	return (final_start);
 }
