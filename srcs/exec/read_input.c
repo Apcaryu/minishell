@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 07:21:59 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 13:01:46 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	read_input(t_data *data)
 {
 	printf("input = %s\n", data->input);
 	lexer(data);
+	expend();
 	if (error_token(data))
 	{
-		expend();
 		parser();
 		executer();
 	}

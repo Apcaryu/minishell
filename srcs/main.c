@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 10:37:50 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 10:37:51 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/16 13:17:24 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ void	init_signal(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
+void	data_null(t_data *data)
+{
+	data->lexer_lst = NULL;
+	data->parser_lst = NULL;
+	data->exec_struct = NULL;
+	data->input = NULL;
+}
+
 int	main(int argc, char *argv[], char **envp)
 {
 	init_data(&g_data, envp);
@@ -42,19 +50,19 @@ int	main(int argc, char *argv[], char **envp)
 	{
 		g_data.is_interactive = true;
 		g_data.input = readline("\033[38;5;140mminishell-0.1$ \033[0m");
-		g_data.is_interactive = false;
 		if (g_data.input == NULL)
 		{
 			ft_lstclear(&g_data.garb_lst, &free);
 			exit(127);
 		}
-		add_history(g_data.input);
-		read_input(&g_data);
-		free(g_data.input);
-		g_data.lexer_lst = NULL;
-		g_data.parser_lst = NULL;
-		g_data.exec_struct = NULL;
-		g_data.input = NULL;
+		if (!is_empty_line(g_data.input))
+		{
+			g_data.is_interactive = false;
+			add_history(g_data.input);
+			read_input(&g_data);
+			free(g_data.input);
+			data_null(&g_data);
+		}
 	}
 	if (g_data.garb_lst != NULL)
 		ft_lstclear(&g_data.garb_lst, &free);
