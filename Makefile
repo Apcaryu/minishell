@@ -14,8 +14,7 @@ CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
 CFLAGS			= -MMD -MP -g3 # TODO remove
 
-SRC 			= main.c \
-					garb_split.c
+SRC 			= main.c
 
 SRC_EXEC 		= read_input.c \
 					init_exec.c \
