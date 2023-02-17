@@ -40,14 +40,14 @@ long long int	ft_atol(const char *str)
 	return (sign * res);
 }
 
-void	clear_and_exit_builtin(t_data data, t_exec *exec, int exit_code)
+void	clear_and_exit_builtin(t_data data, int exit_code)
 {
 	ft_lstclear(&data.garb_lst, &free);
 	ft_putstr_fd("exit\n", 2);
 	exit(exit_code);
 }
 
-void	end_exit(t_data data)
+void	end_exit(void)
 {
 	int	tmp;
 
@@ -56,7 +56,7 @@ void	end_exit(t_data data)
 	exit(tmp);
 }
 
-t_bool	exit_process(t_exec *exec, unsigned long long int idx, \
+t_bool	exit_process(unsigned long long int idx, \
 						t_bool too_many_args)
 {
 	if (g_data.parser_lst->args[1][idx] == '-')
@@ -81,7 +81,7 @@ t_bool	exit_process(t_exec *exec, unsigned long long int idx, \
 			return (too_many_args);
 		}
 	}
-	end_exit(g_data);
+	end_exit();
 	return (too_many_args);
 }
 
@@ -98,8 +98,8 @@ void	exit_exec(t_exec *exec)
 		exit(0);
 	}
 	if (g_data.parser_lst->args[1])
-		too_many_args = exit_process(exec, idx, too_many_args);
+		too_many_args = exit_process(idx, too_many_args);
 	if (too_many_args == true)
 		return ;
-	clear_and_exit_builtin(g_data, exec, exec->exit_code);
+	clear_and_exit_builtin(g_data, exec->exit_code);
 }

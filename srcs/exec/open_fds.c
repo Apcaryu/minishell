@@ -15,7 +15,7 @@
 
 extern t_data	g_data;
 
-static int	infile_or_outfile(t_elem_pars *elem, t_exec *exec, int file)
+static int	infile_or_outfile(t_elem_pars *elem, int file)
 {
 	if (elem->args != NULL && elem->type == INFILE)
 	{
@@ -32,7 +32,7 @@ static int	infile_or_outfile(t_elem_pars *elem, t_exec *exec, int file)
 	return (file);
 }
 
-static int	append_or_heredoc(t_elem_pars *elem, t_exec *exec, int file)
+static int	append_or_heredoc(t_elem_pars *elem, int file)
 {
 	char			*here_file;
 	char			*nb;
@@ -58,13 +58,13 @@ static int	append_or_heredoc(t_elem_pars *elem, t_exec *exec, int file)
 	return (file);
 }
 
-int	open_inout(t_elem_pars *elem, t_exec *exec)
+int	open_inout(t_elem_pars *elem)
 {
 	int				file;
 
 	file = -1;
-	file = infile_or_outfile(elem, exec, file);
-	file = append_or_heredoc(elem, exec, file);
+	file = infile_or_outfile(elem, file);
+	file = append_or_heredoc(elem, file);
 	return (file);
 }
 
@@ -76,15 +76,15 @@ void	child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 		|| (elem->next == NULL && start != NULL))
 	{
 		if (start->type == INFILE)
-			exec->infile = open_inout(start, exec);
+			exec->infile = open_inout(start);
 		else if (start->type == COMMAND)
 			cmd = start->cmd;
 		else if (start->type == OUTFILE)
-			exec->outfile = open_inout(start, exec);
+			exec->outfile = open_inout(start);
 		else if (start->type == APPEND)
-			exec->outfile = open_inout(start, exec);
+			exec->outfile = open_inout(start);
 		else if (start->type == HEREDOC)
-			exec->infile = open_inout(start, exec);
+			exec->infile = open_inout(start);
 		start = start->next;
 	}
 	close(exec->pipefd[0]);
@@ -104,15 +104,15 @@ void	inout_before_proc(t_elem_pars *start, t_exec *exec)
 	while (start != NULL)
 	{
 		if (start->type == INFILE)
-			exec->infile = open_inout(start, exec);
+			exec->infile = open_inout(start);
 		else if (start->type == COMMAND)
 			cmd = start->cmd;
 		else if (start->type == OUTFILE)
-			exec->outfile = open_inout(start, exec);
+			exec->outfile = open_inout(start);
 		else if (start->type == APPEND)
-			exec->outfile = open_inout(start, exec);
+			exec->outfile = open_inout(start);
 		else if (start->type == HEREDOC)
-			exec->infile = open_inout(start, exec);
+			exec->infile = open_inout(start);
 		start = start->next;
 	}
 	file_dup(exec->infile, 0);

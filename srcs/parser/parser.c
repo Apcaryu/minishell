@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../../headers/parser.h"
-#include "../../headers/lexer.h"
 
 extern t_data	g_data;
 
@@ -60,7 +59,9 @@ void	parser(void)
 
 	idx = 1;
 	cmd_elem = init_command_elem();
+	lex_lst = NULL;
 	lex_lst = init_parser(&g_data, lex_lst, &elem);
+	lex_lst = space_jump(lex_lst);
 	while (lex_lst != NULL)
 	{
 		elem = create_elem(elem);
@@ -69,13 +70,6 @@ void	parser(void)
 		if (lex_lst == NULL)
 			break ;
 		lex_lst = space_jump(lex_lst);
-		if (lex_lst->next == NULL)
-		{
-			elem = create_elem(elem);
-			set_elem(elem, lex_lst, cmd_elem, &idx);
-			add_elem(&g_data, elem);
-			break ;
-		}
 	}
 	p_lst_elem(g_data.parser_lst);
 }

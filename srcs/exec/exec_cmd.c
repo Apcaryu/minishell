@@ -14,7 +14,7 @@
 
 extern t_data	g_data;
 
-char	**get_env(t_exec *exec)
+char	**get_env(void)
 {
 	int		i;
 	char	**tab;
@@ -79,13 +79,10 @@ void	path_exist(char **tab, t_elem_pars *start, t_exec *exec)
 
 void	exec_path(t_elem_pars *start, t_exec *exec)
 {
-	int		i;
 	char	**tab;
-	char	*path;
 
-	i = 0;
 	tab = NULL;
-	tab = get_env(exec);
+	tab = get_env();
 	if (tab == NULL)
 		path_is_null(start);
 	path_exist(tab, start, exec);

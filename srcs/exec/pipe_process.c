@@ -15,7 +15,7 @@
 
 extern t_data	g_data;
 
-void	parent_close(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
+void	parent_close(t_exec *exec)
 {
 	close(exec->pipefd[1]);
 	if (exec->infile >= 0)
@@ -87,7 +87,7 @@ void	pipe_proc(t_elem_pars *start, t_elem_pars *elem, t_exec *exec)
 				child_process(start, elem, exec);
 			else
 			{
-				parent_close(start, elem, exec);
+				parent_close(exec);
 				if (elem->next)
 					start = elem->next;
 			}

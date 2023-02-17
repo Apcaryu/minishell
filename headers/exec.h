@@ -35,7 +35,7 @@ void		executer(void);
 void		main_loop(t_exec *exec);
 
 // open_fds.c
-int			open_inout(t_elem_pars *elem, t_exec *exec);
+int			open_inout(t_elem_pars *elem);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 void		inout_before_proc(t_elem_pars *start, t_exec *exec);
 
@@ -56,7 +56,7 @@ void		file_dup(int file, int dupnbr);
 void		child_open(t_elem_pars *start, t_elem_pars *elem, t_exec *exec);
 
 // Execution and Env PATH
-char		**get_env(t_exec *exec);
+char		**get_env(void);
 void		exec_path(t_elem_pars *start, t_exec *exec);
 void		exec_cmd(t_exec *exec, t_elem_pars *start, t_elem_pars *elem);
 

@@ -96,7 +96,6 @@ char	*ft_heredoc(t_elem_pars *elem, int nb_hd)
 void	open_heredoc(t_elem_pars *elem)
 {
 	static int		nb_hd = 0;
-	char			**args;
 
 	g_data.is_heredoc = true;
 	while (elem != NULL)

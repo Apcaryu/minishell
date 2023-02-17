@@ -45,6 +45,8 @@ void	data_null(t_data *data)
 
 int	main(int argc, char *argv[], char **envp)
 {
+	(void)argc;
+	(void)argv;
 	init_data(&g_data, envp);
 	while (1)
 	{

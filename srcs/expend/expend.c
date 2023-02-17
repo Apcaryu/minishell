@@ -81,6 +81,7 @@ t_token	*expend(void)
 	t_token	*final_start;
 
 	token_lst = g_data.lexer_lst;
+	start = NULL;
 	start = init_start(token_lst, start, &final_start);
 	while (token_lst != NULL)
 	{

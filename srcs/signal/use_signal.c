@@ -16,6 +16,7 @@ extern t_data	g_data;
 
 void	ctrl_c(int code)
 {
+	(void)code;
 	g_data.exit_code = 130;
 	if (g_data.is_interactive == true)
 	{
@@ -29,6 +30,7 @@ void	ctrl_c(int code)
 
 void	ctrl_c_here(int code)
 {
+	(void)code;
 	g_data.exit_code = 130;
 	close(g_data.tmp_fd);
 	write(0, "\n", 1);
@@ -37,6 +39,7 @@ void	ctrl_c_here(int code)
 
 void	ctrl_quit(int code)
 {
+	(void)code;
 	if (!g_data.is_heredoc)
 	{
 		printf("Quit (core dump)\n");

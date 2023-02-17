@@ -12,7 +12,7 @@ SRC_ERROR_PATH = srcs/error/
 
 CC				= cc
 CFLAGS			= -Wall -Werror -Wextra -MMD -MP -g3
-CFLAGS			= -MMD -MP -g3 # TODO remove
+#CFLAGS			= -MMD -MP -g3 # TODO remove
 
 SRC 			= main.c
 
@@ -137,7 +137,8 @@ fclean : clean
 re : fclean all
 
 check_leaks:
-	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --suppressions=.ignore_readline -q ./minishell
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all \
+			  --suppressions=.ignore_readline -q ./minishell
 
 thanks :
 	@echo "\033[36mSpecial Thanks To :"

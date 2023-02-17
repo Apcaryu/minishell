@@ -80,7 +80,6 @@ void	void_cd(t_elem_pars *elem)
 void	cd_exec(t_elem_pars *elem)
 {
 	t_data	data;
-	int		res;
 
 	data = g_data;
 	if (elem->args[1] == NULL)
