@@ -42,5 +42,4 @@ void	lexer(t_data *data)
 		set_token(data, token, &idx);
 		token_add_back(&data->lexer_lst, token);
 	}
-	print_lst(data->lexer_lst);
 }

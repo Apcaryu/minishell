@@ -79,7 +79,6 @@ void	executer(void)
 
 void	read_input(t_data *data)
 {
-	printf("input = %s\n", data->input);
 	lexer(data);
 	data->lexer_lst = expend();
 	if (error_token(data))

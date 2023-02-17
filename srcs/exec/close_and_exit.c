@@ -49,7 +49,6 @@ void	wait_loop(t_exec *exec)
 	while (exec->pid != NULL && errno != ECHILD)
 	{
 		waitpid(exec->pid->pid, &exec->status, 0);
-		printf("pid = %i\n", exec->pid->pid);
 		if (WIFEXITED(exec->status))
 			g_data.exit_code = WEXITSTATUS(exec->status);
 		else if (WIFSIGNALED(exec->status))

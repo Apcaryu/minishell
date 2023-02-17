@@ -71,5 +71,4 @@ void	parser(void)
 			break ;
 		lex_lst = space_jump(lex_lst);
 	}
-	p_lst_elem(g_data.parser_lst);
 }
