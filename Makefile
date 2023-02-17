@@ -141,11 +141,13 @@ check_leaks:
 			  --suppressions=.ignore_readline -q ./minishell
 
 thanks :
-	@echo "\033[36mSpecial Thanks To :"
+	@echo "\033[40m\033[37m\e[1mThanks to:\033[0m"
 	@echo "\033[36machane-l"
-	@echo "\033[36mamattei"
+	@echo "\033[38;5;209mamattei aka Philanthropist amattei"
 	@echo "\033[36mpgros"
-	@echo "\033[36makouoi"
-	@echo "\033[36maboudjel"
+	@echo "\033[36makouoi aka ZE akouoi"
+	@echo "\033[38;5;209maboudjel aka Bg de la night aboudjel"
+	@echo "\033[36mmaitre de l'evasion sleleu aka Sebastien\033[0m"
+	@echo "\033[5m\033[43m\033[30m<-----Lucas Triolet----->\033[0m"
 
 .PHONY : all clean fclean re thanks
