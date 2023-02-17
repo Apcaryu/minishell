@@ -37,6 +37,8 @@ t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 {
 	if (check_proc->infile == false && check_proc->redirection == true)
 		return (print_syntax_error());
+	else if (check_proc->cmd == false)
+		return (print_syntax_error());
 	if (token->next == NULL)
 	{
 		check_proc->pipe = false;
@@ -48,7 +50,10 @@ t_bool	check_pipe(t_token *token, t_process_validation *check_proc)
 	if (token == NULL)
 		return (print_syntax_error());
 	else
+	{
+		init_process_validate(check_proc);
 		return (true);
+	}
 }
 
 t_bool	check_quote(t_token *token)
