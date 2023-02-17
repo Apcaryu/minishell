@@ -69,8 +69,5 @@ t_token	*lex_expend(char *input)
 		new->content = le_set_content(new, input, &idx);
 		token_add_back(&out_lst, new);
 	}
-	printf("---------- lex_expend ----------\n");
-	print_lst(out_lst);
-	printf("---------- end ----------\n");
 	return (out_lst);
 }
