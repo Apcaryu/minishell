@@ -6,7 +6,7 @@
 /*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 13:50:04 by meshahrv          #+#    #+#             */
-/*   Updated: 2023/02/16 22:15:24 by meshahrv         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:55:47 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	executer(void)
 	open_heredoc(g_data.parser_lst);
 	if (g_data.exit_code == 130)
 		return ;
+	signal(SIGINT, &ctrl_c);
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }
@@ -80,11 +81,14 @@ void	executer(void)
 void	read_input(t_data *data)
 {
 	lexer(data);
-	data->lexer_lst = expend();
 	if (error_token(data))
 	{
-		parser();
-		g_data.exit_code = 0;
-		executer();
+		data->lexer_lst = expend();
+		if (error_token(data))
+		{
+			parser();
+			g_data.exit_code = 0;
+			executer();
+		}
 	}
 }

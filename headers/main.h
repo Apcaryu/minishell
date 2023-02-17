@@ -110,6 +110,7 @@ typedef struct s_data
 	int				tmp_fd;
 }	t_data;
 
+void	closer(void);
 char	**garb_split(char const *s, char c, t_list *garb_lst);
 
 #endif

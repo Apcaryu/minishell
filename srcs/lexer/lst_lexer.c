@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_lexer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: apellegr <apellegr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: meshahrv <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 14:23:27 by apellegr          #+#    #+#             */
-/*   Updated: 2023/02/08 14:23:28 by apellegr         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:54:29 by meshahrv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_token	*new_token(t_list **garb_lst)
 		return (new);
 	new->type = NONE;
 	new->content = NULL;
+	new->is_closed = false;
 	new->next = NULL;
 	return (new);
 }
