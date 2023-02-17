@@ -72,10 +72,7 @@ void	executer(void)
 	signal(SIGINT, &ctrl_c_here);
 	open_heredoc(g_data.parser_lst);
 	if (g_data.exit_code == 130)
-	{
-		g_data.exit_code = 0 ;
 		return ;
-	}
 	main_loop(exec);
 	g_data.exec_struct = exec;
 }
@@ -88,6 +85,7 @@ void	read_input(t_data *data)
 	if (error_token(data))
 	{
 		parser();
+		g_data.exit_code = 0;
 		executer();
 	}
 }

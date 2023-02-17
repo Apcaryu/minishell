@@ -15,24 +15,6 @@
 
 extern t_data	g_data;
 
-char	*ft_strdupo(char *s, int i)
-{
-	int		j;
-	char	*res;
-
-	res = malloc((i + 1) * sizeof (char));
-	if (!res)
-		return (0);
-	j = 0;
-	while (s[j] && j < i)
-	{
-		res[j] = s[j];
-		j++;
-	}
-	res[j] = '\0';
-	return (res);
-}
-
 char	*get_next_lino(int fd)
 {
 	char	heap[100];
@@ -57,6 +39,14 @@ char	*get_next_lino(int fd)
 	return (ft_strdup(heap));
 }
 
+void	prompt_eof(t_data *data)
+{
+	if (data->exit_code == 130)
+		dup2(0, data->tmp_fd);
+	else
+		printf("\nminishell: warning eof\n");
+}
+
 void	read_line_heredoc(int fd, t_elem_pars *elem)
 {
 	char	*line;
@@ -71,10 +61,7 @@ void	read_line_heredoc(int fd, t_elem_pars *elem)
 		line = get_next_lino(g_data.tmp_fd);
 		if (line == NULL)
 		{
-			if (g_data.exit_code == 130)
-				dup2(0, g_data.tmp_fd);
-			else
-				printf("\nminishell: warning eof\n");
+			prompt_eof(&g_data);
 			break ;
 		}
 		len_limit = ft_strlen(limiter);
